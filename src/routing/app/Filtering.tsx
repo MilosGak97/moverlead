@@ -114,6 +114,7 @@ const Filtering = () => {
                                             </a>
                                             <a href="#" className="text-red-700 hover:text-red-800 mr-4">
                                                 Edit<span className="sr-only">, {person.name}</span>
+
                                             </a>
                                         </td>
                                     </tr>
