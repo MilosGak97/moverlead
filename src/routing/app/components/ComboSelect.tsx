@@ -33,7 +33,7 @@ const ComboSelect = () => {
             <Label className="block text-sm/6 font-medium text-gray-900">Select State</Label>
             <div className="relative mt-2">
                 <ComboboxInput
-                    className="block w-full rounded-md bg-white py-1.5 pl-3 pr-12 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                    className="block w-full rounded-md bg-white py-1.5 pl-3 pr-12 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm/6"
                     onChange={(event) => setQuery(event.target.value)}
                     onBlur={() => setQuery('')}
                 />
@@ -47,11 +47,11 @@ const ComboSelect = () => {
                             <ComboboxOption
                                 key={person.id}
                                 value={person}
-                                className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-indigo-600 data-[focus]:text-white data-[focus]:outline-none"
+                                className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-blue-600 data-[focus]:text-white data-[focus]:outline-none"
                             >
                                 <span className="block truncate group-data-[selected]:font-semibold">{person.name}</span>
 
-                                <span className="absolute inset-y-0 right-0 hidden items-center pr-4 text-indigo-600 group-data-[selected]:flex group-data-[focus]:text-white">
+                                <span className="absolute inset-y-0 right-0 hidden items-center pr-4 text-blue-600 group-data-[selected]:flex group-data-[focus]:text-white">
                   <CheckIcon className="size-5" aria-hidden="true" />
                 </span>
                             </ComboboxOption>

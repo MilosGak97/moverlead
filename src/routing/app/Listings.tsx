@@ -75,7 +75,7 @@ const Listings = () => {
                 <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
                     <button
                         type="button"
-                        className="block rounded-md bg-indigo-600 px-3 py-1.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500"
+                        className="block rounded-md bg-[#4379F2] px-3 py-1.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-600"
                     >
                         Add More Leads
                     </button>

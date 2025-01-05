@@ -20,7 +20,7 @@ const navigation = [
 const Sidebar = () => {
     return (
         <>
-            <div className="flex grow flex-col gap-y-4 overflow-y-auto bg-indigo-600 px-6 pb-4">
+            <div className="flex grow flex-col gap-y-4 overflow-y-auto bg-[#4379F2] px-6 pb-4">
                 {/* Logo */}
                 <div className="flex h-16 shrink-0 items-center ">
                     <NavLink to="dashboard">
