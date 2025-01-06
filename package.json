@@ -8,8 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "vite --host --port $PORT",
-    "heroku-postbuild": "npm run build"
+    "start": "vite --host --port $PORT"
+
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
