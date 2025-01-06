@@ -4,10 +4,10 @@ import react from '@vitejs/plugin-react';
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-
-  // Ensure the app builds correctly on Heroku with the correct base path
-  base: '/',
-
+  server: {
+    // Parse process.env.PORT to a number, fallback to 3000 if not set
+    port: process.env.PORT ? parseInt(process.env.PORT, 10) : 3000,
+  },
   build: {
     // Output directory for production build
     outDir: 'dist',
