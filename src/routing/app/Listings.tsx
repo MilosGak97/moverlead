@@ -2,7 +2,7 @@
 
 import { useLayoutEffect, useRef, useState, useEffect } from 'react'
 import {BadgeBlue, BadgeGreen, BadgePink, BadgePurple, BadgeRed, BadgeYellow} from "./components/Badges.tsx";
-import FilterSelection from "./components/FilterSelection.tsx";
+import { FilterListings} from "./components/FilterSelection.tsx";
 
 interface Item {
     zpid: string;
@@ -82,7 +82,7 @@ const Listings = () => {
                 </div>
             </div>
 
-            <FilterSelection />
+            <FilterListings />
             <div className="mt-2 flow-root">
                 <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
