@@ -69,16 +69,15 @@ const Register = () => {
                         autoComplete="new-password"
                         required
                     />
-                    <SelectField
+
+                    <TextField
                         className="col-span-full"
-                        label="How did you hear about us?"
-                        name="referral_source"
-                    >
-                        <option>AltaVista search</option>
-                        <option>Super Bowl commercial</option>
-                        <option>Our route 34 city bus ad</option>
-                        <option>The “Never Use This” podcast</option>
-                    </SelectField>
+                        label="Repeat Password"
+                        name="repeat-password"
+                        type="password"
+                        autoComplete="new-password"
+                        required
+                    />
 
                     <div className="col-span-full">
                         <Button type="submit" variant="solid" color="blue" className="w-full">
