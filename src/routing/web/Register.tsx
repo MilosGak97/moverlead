@@ -1,7 +1,7 @@
 import {SlimLayout} from "./components/SlimLayout.tsx";
 import {Link} from "react-router-dom";
 import {Logo} from "./components/Logo.tsx";
-import {SelectField, TextField} from "./components/Fields.tsx";
+import {TextField} from "./components/Fields.tsx";
 import {Button} from "./components/Button.tsx";
 
 const Register = () => {
