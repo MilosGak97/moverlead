@@ -1,4 +1,4 @@
-import {  UserCircleIcon} from "@heroicons/react/24/solid";
+import { UserCircleIcon} from "@heroicons/react/24/solid";
 import Tabs from "./components/Tabs.tsx";
 import {useState} from "react";
 

@@ -85,7 +85,7 @@ const Filtering = () => {
 
 
             {/* Fixed button on the right side */}
-            <div className="fixed bottom-4 right-8">
+            <div className="fixed md:bottom-4 md:top-auto top-20 right-8">
                 <button
                     className="px-6 py-3 bg-[#4379F2] text-white text-xl font-medium rounded-lg shadow-md hover:bg-[#365bb0] transition-colors duration-300"
                 >

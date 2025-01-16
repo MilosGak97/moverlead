@@ -1,7 +1,13 @@
+import Stats from './components/Stats.tsx'
+import GridList from './components/GridList.tsx'
+
 const Dashboard = () => {
     return(
         <>
-        <h1>Dashboard</h1>
+            <div className="px-8 py-4">
+                <Stats />
+                <GridList />
+            </div>
         </>
     )
 }
