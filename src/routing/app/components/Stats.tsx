@@ -2,9 +2,9 @@ import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/20/solid'
 import { CursorArrowRaysIcon, EnvelopeOpenIcon, UsersIcon } from '@heroicons/react/24/outline'
 
 const stats = [
-    { id: 1, name: 'Total Listings', stat: '71,897', icon: UsersIcon, change: '122', changeType: 'increase' },
-    { id: 2, name: 'This month', stat: '58.16%', icon: EnvelopeOpenIcon, change: '5.4%', changeType: 'increase' },
-    { id: 3, name: 'Last month', stat: '24.57%', icon: CursorArrowRaysIcon, change: '3.2%', changeType: 'increase' },
+    { id: 1, name: 'Total Listings', stat: '259', icon: UsersIcon, change: '122', changeType: 'increase' },
+    { id: 2, name: 'This month', stat: '58', icon: EnvelopeOpenIcon, change: '8', changeType: 'increase' },
+    { id: 3, name: 'Last month', stat: '24', icon: CursorArrowRaysIcon, change: '4', changeType: 'increase' },
 ]
 
 function classNames(...classes:string[]) {
