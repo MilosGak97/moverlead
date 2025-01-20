@@ -13,25 +13,25 @@ import screenshotVatReturns from '../images/screenshots/vat-returns.png'
 
 const features = [
   {
-    title: 'Payroll',
+    title: 'Filtering Feature',
     description:
-      "Keep track of everyone's salaries and whether or not they've been paid. Direct deposit not supported.",
+      "Our filtering tool lets you easily sort through property listings, identifying homes that are furnished or empty.",
     image: screenshotPayroll,
   },
   {
-    title: 'Claim expenses',
+    title: 'Property Listings Management',
     description:
-      "All of your receipts organized into one place, as long as you don't mind typing in the data by hand.",
+    "All property listings in one place for seamless management. Filter, organize, and target the right leads effortlessly",
     image: screenshotExpenses,
   },
   {
-    title: 'VAT handling',
+    title: 'Realtors Information',
     description:
-      "We only sell our software to companies who don't deal with VAT at all, so technically we do all the VAT stuff they need.",
+      "Gain access to realtor information including details to help you connect and enhance your outreach strategy.",
     image: screenshotVatReturns,
   },
   {
-    title: 'Reporting',
+    title: 'Smart Billing',
     description:
       'Easily export your data into an Excel spreadsheet where you can do whatever the hell you want with it.',
     image: screenshotReporting,
@@ -74,11 +74,10 @@ export function PrimaryFeatures() {
       <Container className="relative">
         <div className="max-w-2xl md:mx-auto md:text-center xl:max-w-none">
           <h2 className="font-display text-3xl tracking-tight text-white sm:text-4xl md:text-5xl">
-            Everything you need to run your books.
+            Focus your outreach on homes that matter
           </h2>
           <p className="mt-6 text-lg tracking-tight text-blue-100">
-            Well everything you need if you aren’t that picky about minor
-            details like tax compliance.
+            With our advanced technology, easily analyze Zillow photos to determine if a home is furnished or empty.
           </p>
         </div>
         <TabGroup
