@@ -1,4 +1,3 @@
-import { UserCircleIcon} from "@heroicons/react/24/solid";
 import Tabs from "./components/Tabs.tsx";
 import {useState} from "react";
 
@@ -6,17 +5,17 @@ import {useState} from "react";
 const Settings = () => {
 
     const [tabs, setTabs] = useState([
-        { name: 'Company Information', href: '#company-information', current: true },
-        { name: 'Update Password', href: '#update-password', current: false },
-        { name: 'Payment Methods', href: '#payment-methods', current: false },
+        {name: 'Company Information', href: '#company-information', current: true},
+        {name: 'Update Password', href: '#update-password', current: false},
+        {name: 'Payment Methods', href: '#payment-methods', current: false},
     ]);
 
     const handleTabClick = (name: string) => {
         setTabs((prevTabs) =>
-            prevTabs.map((tab) => ({ ...tab, current: tab.name === name }))
+            prevTabs.map((tab) => ({...tab, current: tab.name === name}))
         );
         const targetSection = document.querySelector(name.toLowerCase());
-        targetSection?.scrollIntoView({ behavior: 'smooth' });
+        targetSection?.scrollIntoView({behavior: 'smooth'});
     };
 
 
@@ -48,10 +47,11 @@ const Settings = () => {
                                             type="name"
                                             autoComplete="name"
                                             className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-[#4379F2] sm:text-sm/6"
+                                            readOnly
                                         />
                                     </div>
                                 </div>
-
+                                {/*
                                 <div className="col-span-full">
                                     <label htmlFor="photo" className="block text-sm/6 font-medium text-gray-900">
                                         Logo
@@ -66,7 +66,7 @@ const Settings = () => {
                                         </button>
                                     </div>
                                 </div>
-
+                                */}
                                 <div className="col-span-full">
                                     <label htmlFor="street-address"
                                            className="block text-sm/6 font-medium text-gray-900">
@@ -197,7 +197,7 @@ const Settings = () => {
 
                                 <div className="sm:col-span-4">
                                     <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
-                                    Current Password
+                                        Current Password
                                     </label>
                                     <div className="mt-2">
                                         <input

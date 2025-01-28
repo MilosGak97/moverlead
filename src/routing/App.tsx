@@ -7,34 +7,44 @@ import {useState} from "react";
 
 const App = () => {
 
-    const [ sidebarOpen, setSidebarOpen] = useState(false)
 
-    const {user} = useAuth();
-    if (!user)
-        return <Navigate to="/login"/>
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const { user, isLoading } = useAuth();
+
+    if (isLoading) {
+        return <div>Loading...</div>; // Show a loader while checking auth
+    }
+
+    if (!user) {
+        console.log("User is not authenticated!");
+        return <Navigate to="/login" />;
+    }
+
+    console.log("User is authenticated:", user);
 
 
     return (
         <>
             <div>
 
-                {/* MOBILE SIDEBAR MENU */ }
-                <MenuSidebar sidebarOpen={sidebarOpen} setSidebarOpen={() => setSidebarOpen(true)} setSidebarClose={() => setSidebarOpen(false)} />
+                {/* MOBILE SIDEBAR MENU */}
+                <MenuSidebar sidebarOpen={sidebarOpen} setSidebarOpen={() => setSidebarOpen(true)}
+                             setSidebarClose={() => setSidebarOpen(false)}/>
 
                 {/* Static sidebar for desktop - not visible on smaller devices*/}
                 <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
                     {/* Sidebar component, swap this element with another sidebar if you like */}
 
-                    <Sidebar />
+                    <Sidebar/>
                 </div>
 
                 <div className="lg:pl-72">
                     {/* My note: Navigation Top Bar - start */}
-                    <NavBar setSidebarOpen={() => setSidebarOpen(true)} />
+                    <NavBar setSidebarOpen={() => setSidebarOpen(true)}/>
 
                     {/* My note: CONTENT  - start */}
                     <main className="py-4">
-                        <Outlet />
+                        <Outlet/>
                     </main>
                 </div>
             </div>

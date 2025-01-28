@@ -33,7 +33,7 @@ const features = [
   {
     title: 'Smart Billing',
     description:
-      'Easily export your data into an Excel spreadsheet where you can do whatever the hell you want with it.',
+        'Pay only for the counties that you need and use.',
     image: screenshotReporting,
   },
 ]

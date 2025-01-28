@@ -10,6 +10,7 @@ import App from "./App.tsx";
 import Dashboard from "./app/Dashboard.tsx";
 import Login from "./web/Login.tsx";
 import Register from "./web/Register.tsx";
+import VerifyEmail from "./app/VerifyEmail.tsx";
 
 const router = createBrowserRouter([
     {
@@ -25,11 +26,12 @@ const router = createBrowserRouter([
         element: <App />,
         children:[
             {path: '/dashboard', element: <Dashboard /> },
-            {path: 'filtering', element: <Filtering /> },
-            {path: 'listings', element: <Listings /> },
-            {path: 'billing', element: <Billing /> },
-            {path: 'subscription', element: <Subscription /> },
-            {path: 'settings', element: <Settings /> },
+            {path: '/filtering', element: <Filtering /> },
+            {path: '/listings', element: <Listings /> },
+            {path: '/billing', element: <Billing /> },
+            {path: '/subscription', element: <Subscription /> },
+            {path: '/settings', element: <Settings /> },
+            {path: '/verify-email', element: <VerifyEmail /> },
         ]
     }
 ])

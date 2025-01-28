@@ -13,8 +13,8 @@ const testimonials = [
       content:
         'TaxPal is so easy to use I can’t help but wonder if it’s really doing the things the government expects me to do.',
       author: {
-        name: 'Sheryl Berge',
-        role: 'CEO at Lynch LLC',
+        name: 'Lazhar Berkat',
+        role: 'CEO at Van Express Moving',
         image: avatarImage1,
       },
     },
@@ -22,8 +22,8 @@ const testimonials = [
       content:
         'I’m trying to get a hold of someone in support, I’m in a lot of trouble right now and they are saying it has something to do with my books. Please get back to me right away.',
       author: {
-        name: 'Amy Hahn',
-        role: 'Director at Velocity Industries',
+        name: 'Djallal ',
+        role: 'CEO at Vite Moving LLC',
         image: avatarImage4,
       },
     },
@@ -33,8 +33,8 @@ const testimonials = [
       content:
         'The best part about TaxPal is every time I pay my employees, my bank balance doesn’t go down like it used to. Looking forward to spending this extra cash when I figure out why my card is being declined.',
       author: {
-        name: 'Leland Kiehn',
-        role: 'Founder of Kiehn and Sons',
+        name: 'Toufik Kiehn',
+        role: 'Founder of TWF Moving',
         image: avatarImage5,
       },
     },
