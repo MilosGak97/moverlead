@@ -1,19 +1,7 @@
-import axios from "axios";
 import {Bars3Icon, BellIcon} from "@heroicons/react/24/outline";
 import {ChevronDownIcon, MagnifyingGlassIcon} from "@heroicons/react/20/solid";
 import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/react";
-
-const logout = async () => {
-    try {
-        await axios.delete("http://localhost:3002/api/auth/logout", {
-            withCredentials: true,
-        });
-        // Redirect to login page or clear local state
-        window.location.href = "/login";
-    } catch (error: any) {
-        console.error(error.response?.data?.message || "Logout failed");
-    }
-};
+import {logout} from "../services/authService.ts";
 
 interface Props {
     setSidebarOpen: () => void;
