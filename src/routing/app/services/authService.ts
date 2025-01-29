@@ -3,8 +3,7 @@ import axios from "axios";
 export const login = async (email: string, password: string) => {
     try {
         const response = await axios.post(
-            "http://moverlead-backend-alb-879292018.us-east-2.elb.amazonaws.com" +
-            "/api/auth",
+            "https://api.moverlead.com/api/auth",
             {email, password},
             {withCredentials: true} // Ensures cookies are sent and received
         );
@@ -19,7 +18,7 @@ export const login = async (email: string, password: string) => {
 // Logout function
 export const logout = async () => {
     try {
-        await axios.delete("http://moverlead-backend-alb-879292018.us-east-2.elb.amazonaws.com/api/auth/logout", {
+        await axios.delete("https://api.moverlead.com/api/auth/logout", {
             withCredentials: true, // Ensures cookies are sent
         });
         console.log("Logout successful");
@@ -43,7 +42,7 @@ export const register = async (userData: {
 }) => {
     try {
         const response = await axios.post(
-            "http://moverlead-backend-alb-879292018.us-east-2.elb.amazonaws.com/api/auth/register",
+            "https://api.moverlead.com/api/auth/register",
             userData,
             { withCredentials: true }
         );
@@ -60,7 +59,7 @@ export const register = async (userData: {
 export const verifyEmail = async (pin: string) => {
     try {
         const response = await axios.post(
-            "http://moverlead-backend-alb-879292018.us-east-2.elb.amazonaws.com/api/auth/verify-email",
+            "https://api.moverlead.com/api/auth/verify-email",
             { pin },
             { withCredentials: true } // Ensures cookies are sent and received
         );

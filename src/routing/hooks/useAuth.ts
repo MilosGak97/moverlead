@@ -15,12 +15,12 @@ const useAuth = () => {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const response = await axios.get("http://localhost:3002/api/auth/who-am-i", {
+                const response = await axios.get("https://api.moverlead.com/api/auth/who-am-i", {
                     withCredentials: true,
                 });
                 setUser({
                     email: response.data.email,
-                    id: response.data.sub,
+                    id: response.data.id,
                 });
             } catch (error: any) {
                 console.error("Error fetching user:", error);
