@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '../../../../routing/hooks/useAuth';
+import { useAuth } from '../../../../hooks/useAuth';
 import { routes } from '../../../../router/routes';
 
 export const PublicRoute = () => {

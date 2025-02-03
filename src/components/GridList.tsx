@@ -6,7 +6,7 @@ import {
   ReceiptRefundIcon,
   UsersIcon,
 } from '@heroicons/react/24/outline';
-import { routes } from '../../../router/routes';
+import { routes } from '../router/routes';
 
 const actions = [
   {

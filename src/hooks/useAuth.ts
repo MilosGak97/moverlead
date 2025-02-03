@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { QueryKeys } from '../../enums/queryKeys';
-import { api } from '../../api/api';
+import { QueryKeys } from '../enums/queryKeys';
+import { api } from '../api/api';
 
 export const useAuth = () => {
   const { data, isLoading, isError, isSuccess } = useQuery({

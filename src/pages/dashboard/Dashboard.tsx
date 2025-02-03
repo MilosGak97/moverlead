@@ -1,5 +1,5 @@
-import Stats from './components/Stats.tsx';
-import GridList from './components/GridList.tsx';
+import GridList from '../../components/GridList';
+import Stats from '../../components/Stats';
 
 const Dashboard = () => {
   return (

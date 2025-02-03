@@ -5,9 +5,9 @@ import {
 } from '@heroicons/react/20/solid';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { api } from '../../../api/api.ts';
+import { api } from '../api/api.ts';
 import { useNavigate } from 'react-router-dom';
-import { routes } from '../../../router/routes.ts';
+import { routes } from '../router/routes.ts';
 
 interface Props {
   setSidebarOpen: () => void;

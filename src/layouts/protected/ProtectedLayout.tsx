@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import MenuSidebar from '../../routing/app/components/MenuSidebar';
-import NavBar from '../../routing/app/components/NavBar';
-import Sidebar from '../../routing/app/components/Sidebar';
+import MenuSidebar from '../../components/MenuSidebar';
+import NavBar from '../../components/NavBar';
+import Sidebar from '../../components/Sidebar';
 
 export const ProtectedLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);

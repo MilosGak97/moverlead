@@ -7,9 +7,9 @@ import {
   CreditCardIcon,
 } from '@heroicons/react/24/outline';
 import SidebarItem from './SidebarItem.tsx';
-import logo from '../../../assets/images/logo.png';
+import logo from '../assets/images/logo.png';
 import { NavLink } from 'react-router-dom';
-import { routes } from '../../../router/routes.ts';
+import { routes } from '../router/routes.ts';
 
 const navigation = [
   {

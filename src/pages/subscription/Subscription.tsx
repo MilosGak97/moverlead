@@ -4,42 +4,68 @@ import {
   BadgeGreen,
   BadgePink,
   BadgePurple,
-  BadgeRed,
   BadgeYellow,
-} from './components/Badges.tsx';
-import { FilterListings } from './components/FilterSelection.tsx';
-import { useQuery } from '@tanstack/react-query';
-import { api } from '../../api/api.ts';
-import { QueryKeys } from '../../enums/queryKeys.ts';
+} from '../../components/Badges.tsx';
+import { FilterSubscription } from '../../components/FilterSelection.tsx';
 
-const Listings = () => {
+interface Item {
+  id: string;
+  county: string;
+  state: string;
+  status: string;
+  price: string;
+  tier: string;
+}
+
+const Subscription = () => {
   const checkbox = useRef<HTMLInputElement>(null);
   const [checked, setChecked] = useState(false);
   const [indeterminate, setIndeterminate] = useState(false);
   const [selectedListings, setSelectedListings] = useState<string[]>([]);
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: [QueryKeys.LISTINGS],
-    queryFn: () => api.properties.propertiesControllerListings({}),
-  });
-
-  const dataLength = data?.length || 0;
+  const listings: Item[] = [
+    {
+      id: '325325325',
+      county: 'Atlantic County',
+      state: 'New Jersey',
+      status: 'Available',
+      price: '25',
+      tier: '1 - List',
+    },
+    {
+      id: '325323825',
+      county: 'Bergen County',
+      state: 'New Jersey',
+      status: 'Available',
+      price: '35',
+      tier: '1 - List',
+    },
+    {
+      id: '3252324325',
+      county: 'Burlington County',
+      state: 'New Jersey',
+      status: 'Subscribed',
+      price: '18',
+      tier: '1 - List',
+    },
+  ];
 
   useLayoutEffect(() => {
     if (checkbox.current) {
       const isIndeterminate =
-        selectedListings.length > 0 && selectedListings.length < dataLength;
-      setChecked(selectedListings.length === dataLength);
+        selectedListings.length > 0 &&
+        selectedListings.length < listings.length;
+      setChecked(selectedListings.length === listings.length);
       setIndeterminate(isIndeterminate);
       checkbox.current.indeterminate = isIndeterminate; // Set indeterminate directly on the DOM element
     }
   }, [selectedListings]);
 
   function toggleAll() {
-    if (selectedListings.length === dataLength) {
+    if (selectedListings.length === listings.length) {
       setSelectedListings([]); // Unselect all
     } else {
-      setSelectedListings((data || [])?.map((p) => p?.zpid || '')); // Select all
+      setSelectedListings(listings.map((p) => p.id)); // Select all
     }
   }
   useEffect(() => {
@@ -56,18 +82,17 @@ const Listings = () => {
     );
   }
 
-  if (isLoading) return <div>Loading...</div>;
-
-  if (isError) return <div>Something went wrong!</div>;
-
   return (
     <>
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
-            <h1 className="text-base font-semibold text-gray-900">Listings</h1>
+            <h1 className="text-base font-semibold text-gray-900">
+              Subscription
+            </h1>
             <p className="mt-2 text-sm text-gray-700">
-              A list of all properties that are on the market in selected areas.
+              A list of all counties that are on the market for property
+              listings subscription.
             </p>
           </div>
 
@@ -81,7 +106,7 @@ const Listings = () => {
           </div>
         </div>
 
-        <FilterListings />
+        <FilterSubscription />
         <div className="mt-2 flow-root">
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
@@ -90,15 +115,9 @@ const Listings = () => {
                   <div className="absolute left-14 top-0 flex h-12 items-center space-x-3 bg-white sm:left-12">
                     <button
                       type="button"
-                      className="inline-flex items-center rounded bg-white px-2 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                      className="inline-flex items-center rounded bg-green-700 text-white px-4 py-1 text-base rounded-md font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-green-800"
                     >
-                      Bulk edit
-                    </button>
-                    <button
-                      type="button"
-                      className="inline-flex items-center rounded bg-white px-2 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                    >
-                      Delete all
+                      Subscribe
                     </button>
                   </div>
                 )}
@@ -118,25 +137,13 @@ const Listings = () => {
                         scope="col"
                         className="py-3.5 pr-3 text-left text-sm font-semibold text-gray-900"
                       >
-                        Address
+                        County
                       </th>
                       <th
                         scope="col"
                         className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                       >
-                        Owner
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                      >
-                        Occupancy
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                      >
-                        Property Value
+                        State
                       </th>
                       <th
                         scope="col"
@@ -148,29 +155,22 @@ const Listings = () => {
                         scope="col"
                         className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                       >
-                        Realtor
-                      </th>
-
-                      <th
-                        scope="col"
-                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                      >
-                        Brokerage
+                        Price
                       </th>
                       <th
                         scope="col"
                         className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                       >
-                        Realtor Phone
+                        Tier
                       </th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200 bg-white">
-                    {data?.map((item) => (
+                    {listings.map((item) => (
                       <tr
-                        key={item.zpid}
+                        key={item.id}
                         className={
-                          selectedListings.includes(item?.zpid || '')
+                          selectedListings.includes(item.id)
                             ? 'bg-gray-50'
                             : undefined
                         }
@@ -179,57 +179,42 @@ const Listings = () => {
                           <input
                             type="checkbox"
                             className="absolute left-4 top-1/2 -mt-2 h-4 w-4"
-                            checked={selectedListings.includes(
-                              item?.zpid || ''
-                            )}
+                            checked={selectedListings.includes(item.id)}
                             onChange={(e) =>
-                              toggleIndividual(
-                                item?.zpid || '',
-                                e.target.checked
-                              )
+                              toggleIndividual(item.id, e.target.checked)
                             }
                           />
                         </td>
                         <td className="whitespace-nowrap py-4 pr-3 text-sm font-medium text-gray-900">
-                          {item?.street_address || ''}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {/* TODO - instead of country use item.owner */}
                           {item.county}
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {item.filtered_status === 'Full' ? (
-                            <BadgeGreen value={item.filtered_status} />
-                          ) : item.filtered_status === 'Empty' ? (
-                            <BadgeRed value={item.filtered_status} />
-                          ) : item.filtered_status === 'No Photos' ? (
-                            <BadgePink value={item.filtered_status} />
+                          {item.state}
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          {item.status === 'Available' ? (
+                            <BadgeGreen value={item.status} />
+                          ) : item.status === 'Subscribed' ? (
+                            <BadgePurple value={item.status} />
+                          ) : item.status === 'No Photos' ? (
+                            <BadgePink value={item.status} />
                           ) : (
-                            item.filtered_status
+                            item.status
                           )}
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                           ${item.price}
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {item.home_status === 'For Sale' ? (
-                            <BadgeYellow value={item.home_status} />
-                          ) : item.home_status === 'Pending' ? (
-                            <BadgeBlue value={item.home_status} />
-                          ) : item.home_status === 'Coming soon' ? (
-                            <BadgePurple value={item.home_status} />
+                          {item.tier === 'For Sale' ? (
+                            <BadgeYellow value={item.tier} />
+                          ) : item.tier === 'Pending' ? (
+                            <BadgeBlue value={item.tier} />
+                          ) : item.tier === 'Coming soon' ? (
+                            <BadgePurple value={item.tier} />
                           ) : (
-                            item.home_status
+                            item.tier
                           )}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {item.realtor_name}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {item.realtor_company}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {item.realtor_phone}
                         </td>
                       </tr>
                     ))}
@@ -244,4 +229,4 @@ const Listings = () => {
   );
 };
 
-export default Listings;
+export default Subscription;
