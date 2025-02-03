@@ -2,18 +2,17 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import basicSsl from '@vitejs/plugin-basic-ssl';
 
-// https://vite.dev/config/
+// Check if we're running on Heroku
+const isHeroku = process.env.NODE_ENV === 'production';
+
 export default defineConfig({
-  plugins: [react(), basicSsl()],
+  plugins: isHeroku ? [react()] : [react(), basicSsl()], // Disable SSL on Heroku
   server: {
-    // Parse process.env.PORT to a number, fallback to 3000 if not set
-    port: process.env.PORT ? parseInt(process.env.PORT, 10) : 3000,
+    host: true, // Allow external connections (important for Heroku)
+    port: process.env.PORT ? parseInt(process.env.PORT, 10) : 3000, // Use Heroku's port
   },
   build: {
-    // Output directory for production build
     outDir: 'dist',
-
-    // Rollup options to ensure correct input and output handling
     rollupOptions: {
       input: './index.html',
     },
