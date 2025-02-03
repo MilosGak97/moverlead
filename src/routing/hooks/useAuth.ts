@@ -1,43 +1,13 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useQuery } from '@tanstack/react-query';
+import { QueryKeys } from '../../enums/queryKeys';
+import { api } from '../../api/api';
 
-interface User {
-    email: string;
-    id: string;
-}
+export const useAuth = () => {
+  const { data, isLoading, isError, isSuccess } = useQuery({
+    queryKey: [QueryKeys.WHO_AM_I],
+    queryFn: () => api.auth.authControllerGetProfile(),
+    retry: false,
+  });
 
-const useAuth = () => {
-    const [user, setUser] = useState<User | null>(null); // Holds user data
-    const [isLoading, setIsLoading] = useState(true); // Tracks loading state
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                const response = await axios.get("https://api.moverlead.com/api/auth/who-am-i", {
-                    withCredentials: true,
-                });
-                setUser({
-                    email: response.data.email,
-                    id: response.data.id,
-                });
-            } catch (error: any) {
-                console.error("Error fetching user:", error);
-
-                if (error.response?.status === 401) {
-                    console.log("Unauthorized12345, redirecting to login...");
-                    navigate("/login");
-                }
-            } finally {
-                setIsLoading(false); // Ensure loading state is updated
-            }
-        };
-
-        fetchUser();
-    }, [navigate]);
-
-    return { user, isLoading };
+  return { data, isLoading, isError, isSuccess };
 };
-
-export default useAuth;

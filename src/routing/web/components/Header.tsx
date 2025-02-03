@@ -1,32 +1,32 @@
-'use client'
-import React from "react";
+'use client';
+import React from 'react';
 import {
   Popover,
   PopoverButton,
   PopoverBackdrop,
   PopoverPanel,
-} from '@headlessui/react'
-import clsx from 'clsx'
+} from '@headlessui/react';
+import clsx from 'clsx';
 
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
-import { Button } from './Button'
-import { Container } from './Container'
-import { Logo } from './Logo.tsx'
-import { NavLink } from './NavLink'
+import { Button } from './Button';
+import { Container } from './Container';
+import { Logo } from './Logo.tsx';
+import { NavLink } from './NavLink';
 
 function MobileNavLink({
   href,
   children,
 }: {
-  href: string
-  children: React.ReactNode
+  href: string;
+  children: React.ReactNode;
 }) {
   return (
     <PopoverButton as="div" className="block w-full p-2">
-     <Link to={href}>  {children} </Link>
+      <Link to={href}> {children} </Link>
     </PopoverButton>
-  )
+  );
 }
 
 function MobileNavIcon({ open }: { open: boolean }) {
@@ -42,18 +42,18 @@ function MobileNavIcon({ open }: { open: boolean }) {
         d="M0 1H14M0 7H14M0 13H14"
         className={clsx(
           'origin-center transition',
-          open && 'scale-90 opacity-0',
+          open && 'scale-90 opacity-0'
         )}
       />
       <path
         d="M2 2L12 12M12 2L2 12"
         className={clsx(
           'origin-center transition',
-          !open && 'scale-90 opacity-0',
+          !open && 'scale-90 opacity-0'
         )}
       />
     </svg>
-  )
+  );
 }
 
 function MobileNavigation() {
@@ -80,7 +80,7 @@ function MobileNavigation() {
         <MobileNavLink href="/login">Sign in</MobileNavLink>
       </PopoverPanel>
     </Popover>
-  )
+  );
 }
 
 export function Header() {
@@ -100,9 +100,9 @@ export function Header() {
           </div>
           <div className="flex items-center gap-x-5 md:gap-x-8">
             <div className="hidden md:block">
-              <NavLink href="/login">Sign in</NavLink>
+              <NavLink href="/auth/login">Sign in</NavLink>
             </div>
-            <Button href="/register" color="blue">
+            <Button href="/auth/register" color="blue">
               <span>
                 Get started <span className="hidden lg:inline">today</span>
               </span>
@@ -114,5 +114,5 @@ export function Header() {
         </nav>
       </Container>
     </header>
-  )
+  );
 }

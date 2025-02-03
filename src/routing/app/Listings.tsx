@@ -8,7 +8,9 @@ import {
   BadgeYellow,
 } from './components/Badges.tsx';
 import { FilterListings } from './components/FilterSelection.tsx';
-import { useQuery, useMutation } from '@tanstack/react-query';
+// import { useQuery } from '@tanstack/react-query';
+// import { api } from '../../api/api.ts';
+// import { QueryKeys } from '../../enums/queryKeys.ts';
 
 interface Item {
   zpid: string;
@@ -27,6 +29,11 @@ const Listings = () => {
   const [checked, setChecked] = useState(false);
   const [indeterminate, setIndeterminate] = useState(false);
   const [selectedListings, setSelectedListings] = useState<string[]>([]);
+
+  // const { data } = useQuery({
+  //   queryKey: [QueryKeys.LISTINGS],
+  //   queryFn: () => api.properties.propertiesControllerListings({}),
+  // });
 
   const listings: Item[] = [
     {
