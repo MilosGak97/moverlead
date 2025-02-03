@@ -6,6 +6,7 @@ import { Button } from './components/Button.tsx';
 import { FormEvent, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { api } from '../../api/api.ts';
+import { routes } from '../../router/routes.ts';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -20,7 +21,7 @@ const Login = () => {
     mutationFn: () =>
       api.auth.authControllerLogin({ requestBody: { email, password } }),
     onSuccess: () => {
-      navigate('/dashboard');
+      navigate(routes.dashboard);
     },
     onError: () => {
       setToast('Invalid email or password. Please try again.');
@@ -53,7 +54,7 @@ const Login = () => {
       <p className="mt-2 text-sm text-gray-700">
         Don’t have an account?{' '}
         <Link
-          to="/register"
+          to={routes.auth.register}
           className="font-medium text-blue-600 hover:underline"
         >
           Sign up

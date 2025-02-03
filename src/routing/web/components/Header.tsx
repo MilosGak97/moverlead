@@ -14,6 +14,7 @@ import { Button } from './Button';
 import { Container } from './Container';
 import { Logo } from './Logo.tsx';
 import { NavLink } from './NavLink';
+import { routes } from '../../../router/routes.ts';
 
 function MobileNavLink({
   href,
@@ -77,7 +78,7 @@ function MobileNavigation() {
         <MobileNavLink href="#testimonials">Testimonials</MobileNavLink>
         <MobileNavLink href="#pricing">Pricing</MobileNavLink>
         <hr className="m-2 border-slate-300/40" />
-        <MobileNavLink href="/login">Sign in</MobileNavLink>
+        <MobileNavLink href={routes.auth.login}>Sign in</MobileNavLink>
       </PopoverPanel>
     </Popover>
   );
@@ -100,9 +101,9 @@ export function Header() {
           </div>
           <div className="flex items-center gap-x-5 md:gap-x-8">
             <div className="hidden md:block">
-              <NavLink href="/auth/login">Sign in</NavLink>
+              <NavLink href={routes.auth.login}>Sign in</NavLink>
             </div>
-            <Button href="/auth/register" color="blue">
+            <Button href={routes.auth.register} color="blue">
               <span>
                 Get started <span className="hidden lg:inline">today</span>
               </span>

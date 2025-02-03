@@ -9,9 +9,7 @@ import { ApiRequestOptions } from '../generated-api/core/ApiRequestOptions';
 import { request } from './axiosInterceptors';
 
 export class CustomAxiosHttpRequest extends BaseHttpRequest {
-  axiosInstance = axios.create({
-    withCredentials: true,
-  });
+  axiosInstance = axios.create();
 
   constructor(config: OpenAPIConfig) {
     super(config);

@@ -1,6 +1,7 @@
-import { Button } from './Button'
-import { Container } from './Container'
-import backgroundImage from '../images/background-call-to-action.jpg'
+import { Button } from './Button';
+import { Container } from './Container';
+import backgroundImage from '../images/background-call-to-action.jpg';
+import { routes } from '../../../router/routes';
 
 export function CallToAction() {
   return (
@@ -24,11 +25,11 @@ export function CallToAction() {
             It’s time to take control of your books. Buy our software so you can
             feel like you’re doing something productive.
           </p>
-          <Button href="/register" color="white" className="mt-10">
+          <Button href={routes.auth.register} color="white" className="mt-10">
             Get 6 months free
           </Button>
         </div>
       </Container>
     </section>
-  )
+  );
 }

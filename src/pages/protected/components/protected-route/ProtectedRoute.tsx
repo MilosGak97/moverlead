@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../../../../routing/hooks/useAuth';
+import { routes } from '../../../../router/routes';
 
 type ProtectedRouteProps = {
   children: ReactNode;
@@ -14,7 +15,7 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   }
 
   if (isError) {
-    return <Navigate to={'/auth/login'} />;
+    return <Navigate to={routes.auth.login} />;
   }
 
   return children;

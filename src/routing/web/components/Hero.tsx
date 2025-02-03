@@ -1,14 +1,13 @@
-import {Container} from "./Container.tsx";
-import {Button} from "./Button.tsx";
+import { Container } from './Container.tsx';
+import { Button } from './Button.tsx';
 
-import logoLaravel from '../images/logos/laravel.svg'
-import logoMirage from '../images/logos/mirage.svg'
-import logoStatamic from '../images/logos/statamic.svg'
-import logoStaticKit from '../images/logos/statickit.svg'
-import logoTransistor from '../images/logos/transistor.svg'
-import logoTuple from '../images/logos/tuple.svg'
-
-
+import logoLaravel from '../images/logos/laravel.svg';
+import logoMirage from '../images/logos/mirage.svg';
+import logoStatamic from '../images/logos/statamic.svg';
+import logoStaticKit from '../images/logos/statickit.svg';
+import logoTransistor from '../images/logos/transistor.svg';
+import logoTuple from '../images/logos/tuple.svg';
+import { routes } from '../../../router/routes.ts';
 
 export function Hero() {
   return (
@@ -29,10 +28,11 @@ export function Hero() {
         for Moving Companies
       </h1>
       <p className="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-slate-700">
-          Maximize your outreach efficiency by targeting furnished, move-ready properties—saving time and cutting marketing costs.
+        Maximize your outreach efficiency by targeting furnished, move-ready
+        properties—saving time and cutting marketing costs.
       </p>
       <div className="mt-10 flex justify-center gap-x-6">
-        <Button href="/register">Create an account</Button>
+        <Button href={routes.auth.register}>Create an account</Button>
         <Button
           href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
           variant="outline"
@@ -48,7 +48,7 @@ export function Hero() {
       </div>
       <div className="mt-36 lg:mt-44">
         <p className="font-display text-base text-slate-900">
-            Trusted by top moving companies nationwide
+          Trusted by top moving companies nationwide
         </p>
         <ul
           role="list"
@@ -82,5 +82,5 @@ export function Hero() {
         </ul>
       </div>
     </Container>
-  )
+  );
 }

@@ -1,5 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../../../../routing/hooks/useAuth';
+import { routes } from '../../../../router/routes';
 
 export const PublicRoute = () => {
   const { isLoading, isSuccess } = useAuth();
@@ -9,7 +10,7 @@ export const PublicRoute = () => {
   }
 
   if (isSuccess) {
-    return <Navigate to={'/dashboard'} />;
+    return <Navigate to={routes.dashboard} />;
   }
 
   return <Outlet />;

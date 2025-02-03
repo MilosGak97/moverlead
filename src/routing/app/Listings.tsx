@@ -8,21 +8,9 @@ import {
   BadgeYellow,
 } from './components/Badges.tsx';
 import { FilterListings } from './components/FilterSelection.tsx';
-// import { useQuery } from '@tanstack/react-query';
-// import { api } from '../../api/api.ts';
-// import { QueryKeys } from '../../enums/queryKeys.ts';
-
-interface Item {
-  zpid: string;
-  address: string;
-  owner: string;
-  occupancy: string;
-  value: string;
-  status: string;
-  realtor: string;
-  brokerage: string;
-  realtor_phone: string;
-}
+import { useQuery } from '@tanstack/react-query';
+import { api } from '../../api/api.ts';
+import { QueryKeys } from '../../enums/queryKeys.ts';
 
 const Listings = () => {
   const checkbox = useRef<HTMLInputElement>(null);
@@ -30,63 +18,28 @@ const Listings = () => {
   const [indeterminate, setIndeterminate] = useState(false);
   const [selectedListings, setSelectedListings] = useState<string[]>([]);
 
-  // const { data } = useQuery({
-  //   queryKey: [QueryKeys.LISTINGS],
-  //   queryFn: () => api.properties.propertiesControllerListings({}),
-  // });
+  const { data, isLoading, isError } = useQuery({
+    queryKey: [QueryKeys.LISTINGS],
+    queryFn: () => api.properties.propertiesControllerListings({}),
+  });
 
-  const listings: Item[] = [
-    {
-      zpid: '325325325',
-      address: '14 Schanck Road, Holmdel, NJ, 07733',
-      owner: 'MOHAMMED W MAQSOOD',
-      occupancy: 'Full',
-      value: '252,000',
-      status: 'For Sale',
-      realtor: 'JATIN MAJMUDAR',
-      brokerage: 'Johnson Realty',
-      realtor_phone: '(251) 565-4896',
-    },
-    {
-      zpid: '325323825',
-      address: '1 Bromley Ct, Lawrence Township, NJ, 08648',
-      owner: 'JACK A SOLOMON',
-      occupancy: 'Full',
-      value: '770,000',
-      status: 'For Sale',
-      realtor: 'JOAQUIN MONTOYA',
-      brokerage: 'M&N Realtors',
-      realtor_phone: '(228) 655-3256',
-    },
-    {
-      zpid: '3252324325',
-      address: '56 Devonshire Dr, Somerset, NJ, 08873',
-      owner: 'CHANAKYA THAKUR',
-      occupancy: 'Empty',
-      value: '911,000',
-      status: 'Pending',
-      realtor: 'MICHELLE KENNER',
-      brokerage: 'New York Realtors',
-      realtor_phone: '(337) 566-7789',
-    },
-  ];
+  const dataLength = data?.length || 0;
 
   useLayoutEffect(() => {
     if (checkbox.current) {
       const isIndeterminate =
-        selectedListings.length > 0 &&
-        selectedListings.length < listings.length;
-      setChecked(selectedListings.length === listings.length);
+        selectedListings.length > 0 && selectedListings.length < dataLength;
+      setChecked(selectedListings.length === dataLength);
       setIndeterminate(isIndeterminate);
       checkbox.current.indeterminate = isIndeterminate; // Set indeterminate directly on the DOM element
     }
   }, [selectedListings]);
 
   function toggleAll() {
-    if (selectedListings.length === listings.length) {
+    if (selectedListings.length === dataLength) {
       setSelectedListings([]); // Unselect all
     } else {
-      setSelectedListings(listings.map((p) => p.zpid)); // Select all
+      setSelectedListings((data || [])?.map((p) => p?.zpid || '')); // Select all
     }
   }
   useEffect(() => {
@@ -102,6 +55,10 @@ const Listings = () => {
         : prevSelected.filter((e) => e !== zpid)
     );
   }
+
+  if (isLoading) return <div>Loading...</div>;
+
+  if (isError) return <div>Something went wrong!</div>;
 
   return (
     <>
@@ -209,11 +166,11 @@ const Listings = () => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200 bg-white">
-                    {listings.map((item) => (
+                    {data?.map((item) => (
                       <tr
                         key={item.zpid}
                         className={
-                          selectedListings.includes(item.zpid)
+                          selectedListings.includes(item?.zpid || '')
                             ? 'bg-gray-50'
                             : undefined
                         }
@@ -222,48 +179,54 @@ const Listings = () => {
                           <input
                             type="checkbox"
                             className="absolute left-4 top-1/2 -mt-2 h-4 w-4"
-                            checked={selectedListings.includes(item.zpid)}
+                            checked={selectedListings.includes(
+                              item?.zpid || ''
+                            )}
                             onChange={(e) =>
-                              toggleIndividual(item.zpid, e.target.checked)
+                              toggleIndividual(
+                                item?.zpid || '',
+                                e.target.checked
+                              )
                             }
                           />
                         </td>
                         <td className="whitespace-nowrap py-4 pr-3 text-sm font-medium text-gray-900">
-                          {item.address}
+                          {item?.street_address || ''}
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {item.owner}
+                          {/* TODO - instead of country use item.owner */}
+                          {item.county}
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {item.occupancy === 'Full' ? (
-                            <BadgeGreen value={item.occupancy} />
-                          ) : item.occupancy === 'Empty' ? (
-                            <BadgeRed value={item.occupancy} />
-                          ) : item.occupancy === 'No Photos' ? (
-                            <BadgePink value={item.occupancy} />
+                          {item.filtered_status === 'Full' ? (
+                            <BadgeGreen value={item.filtered_status} />
+                          ) : item.filtered_status === 'Empty' ? (
+                            <BadgeRed value={item.filtered_status} />
+                          ) : item.filtered_status === 'No Photos' ? (
+                            <BadgePink value={item.filtered_status} />
                           ) : (
-                            item.occupancy
+                            item.filtered_status
                           )}
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          ${item.value}
+                          ${item.price}
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {item.status === 'For Sale' ? (
-                            <BadgeYellow value={item.status} />
-                          ) : item.status === 'Pending' ? (
-                            <BadgeBlue value={item.status} />
-                          ) : item.status === 'Coming soon' ? (
-                            <BadgePurple value={item.status} />
+                          {item.home_status === 'For Sale' ? (
+                            <BadgeYellow value={item.home_status} />
+                          ) : item.home_status === 'Pending' ? (
+                            <BadgeBlue value={item.home_status} />
+                          ) : item.home_status === 'Coming soon' ? (
+                            <BadgePurple value={item.home_status} />
                           ) : (
-                            item.status
+                            item.home_status
                           )}
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {item.realtor}
+                          {item.realtor_name}
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {item.brokerage}
+                          {item.realtor_company}
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                           {item.realtor_phone}

@@ -6,8 +6,7 @@ import { environmentVariables } from '../env/environmentVariables';
 
 const config: Partial<OpenAPIConfig> = {
   BASE: environmentVariables.baseApiUrl,
-  CREDENTIALS: 'include',
-  VERSION: '1',
+  WITH_CREDENTIALS: true,
 };
 
 export const api = new MoverLeadApi(config, CustomAxiosHttpRequest);
