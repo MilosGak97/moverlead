@@ -10,6 +10,7 @@ export default defineConfig({
   server: {
     host: '0.0.0.0', // Allow external access (required on Heroku)
     port: process.env.PORT ? Number(process.env.PORT) : 3000, // Use Heroku’s dynamic port
+    allowedHosts: ['www.moverlead.com', 'https://moverelead-front-b8cd9c553f44.herokuapp.com', 'http://www.moverlead.com', 'https://www.moverlead.com/'], // ✅ Allow your domain
   },
   build: {
     outDir: 'dist',
