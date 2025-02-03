@@ -8,15 +8,19 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "vite --host --port $PORT"
+    "start": "vite --host --port $PORT",
+    "generate-api": "npx dotenv -e .env -- sh -c 'curl -o openapi.json $VITE_BASE_OPENAPI_URL && openapi --input ./openapi.json --output src/api --useUnionTypes --useOptions --client axios --indent 2 --postfixServices Api --name MoverLeadApi'"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
+    "@tanstack/react-query": "^5.66.0",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
     "axios": "^1.7.9",
     "clsx": "^2.1.1",
+    "dotenv-cli": "^8.0.0",
+    "openapi-typescript-codegen": "^0.29.0",
     "postcss": "^8.4.49",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
