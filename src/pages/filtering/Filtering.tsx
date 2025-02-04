@@ -3,7 +3,7 @@ import { api } from '../../api/api';
 import { QueryKeys } from '../../enums/queryKeys';
 import { PageStateContainer } from '../../components/PageStateContainer';
 import { FilteredStatus } from '../../enums/filteredStatus';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const filterButtonOptions = [
   {
@@ -51,6 +51,29 @@ const Filtering = () => {
       }, 5000);
     },
   });
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'e' || event.key === 'ArrowLeft' || event.key === 'E') {
+        mutate(FilteredStatus.EMPTY);
+      } else if (
+        event.key === 'f' ||
+        event.key === 'ArrowRight' ||
+        event.key === 'F'
+      ) {
+        mutate(FilteredStatus.FURNISHED);
+      } else if (
+        event.key === 'n' ||
+        event.key === 'ArrowUp' ||
+        event.key === 'N'
+      ) {
+        mutate(FilteredStatus.NO_DATA);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [mutate]);
 
   return (
     <PageStateContainer
