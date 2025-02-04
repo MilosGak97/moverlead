@@ -118,7 +118,10 @@ const FilterListings = () => {
             </div>
           </div>
         </div>
-        <DisclosurePanel className="border-t border-gray-200 py-10">
+        <DisclosurePanel
+          className="border-t border-gray-200 py-10"
+          unmount={false}
+        >
           <div className="grid grid-cols-4">
             <div className="grid grid-cols-4 col-span-3 gap-x-4 px-4 text-sm sm:px-6 md:gap-x-6 lg:px-8">
               <ComboSelect />
