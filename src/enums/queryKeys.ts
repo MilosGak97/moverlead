@@ -1,4 +1,5 @@
 export enum QueryKeys {
-  LISTINGS = 'LISTING',
+  LISTINGS = 'LISTINGS',
   WHO_AM_I = 'WHO_AM_I',
+  STATES = 'STATES',
 }

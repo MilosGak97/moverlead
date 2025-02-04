@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "start": "vite --host --port $PORT",
-    "generate-api": "npx dotenv -e .env -- sh -c 'curl -o openapi.json $VITE_BASE_OPENAPI_URL && openapi --input ./openapi.json --output src/generated-api --useUnionTypes --useOptions --client axios --indent 2 --postfixServices Api --name MoverLeadApi'"
+    "generate-api": "npx dotenv -e .env -- sh -c ' curl -o openapi.json $VITE_BASE_OPENAPI_URL && openapi --input ./openapi.json --output src/generated-api --useOptions --client axios --indent 2 --postfixServices Api --name MoverLeadApi '"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",

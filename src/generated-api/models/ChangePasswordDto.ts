@@ -2,12 +2,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type RegisterDto = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  companyName: string;
+export type ChangePasswordDto = {
   password: string;
-  repeatPassword: string;
+  newPassword: string;
+  newPasswordRepeat: string;
 };
 

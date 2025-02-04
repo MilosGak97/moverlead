@@ -12,16 +12,52 @@ import { FilterListings } from '../../../components/FilterSelection.tsx';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../../../api/api.ts';
 import { QueryKeys } from '../../../enums/queryKeys.ts';
+import {
+  ListingFilterProvider,
+  useListingFilterContext,
+} from './context/ListingFilterContext.tsx';
 
-const Listings = () => {
+const ListingsView = () => {
   const checkbox = useRef<HTMLInputElement>(null);
   const [checked, setChecked] = useState(false);
   const [indeterminate, setIndeterminate] = useState(false);
   const [selectedListings, setSelectedListings] = useState<string[]>([]);
+  const {
+    date,
+    propertyValue,
+    selectedStatesList,
+    filteredStatus,
+    propertyStatus,
+  } = useListingFilterContext();
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: [QueryKeys.LISTINGS],
-    queryFn: () => api.properties.propertiesControllerListings({}),
+  const {
+    data,
+    isLoading: isLoadingListing,
+    isError: isErrorListing,
+  } = useQuery({
+    queryKey: [
+      QueryKeys.LISTINGS,
+      selectedStatesList,
+      date,
+      propertyValue,
+      filteredStatus,
+      propertyStatus,
+    ],
+    queryFn: () =>
+      api.properties.propertiesControllerListings({
+        state: selectedStatesList,
+        dateTo: date.to || undefined,
+        dateFrom: date.from || undefined,
+        propertyValueTo: propertyValue.to || undefined,
+        propertyValueFrom: propertyValue.from || undefined,
+        filteredStatus,
+        propertyStatus,
+      }),
+  });
+
+  const { isLoading: isLoadingStates, isError: isErrorStates } = useQuery({
+    queryKey: [QueryKeys.STATES],
+    queryFn: () => api.properties.propertiesControllerListStates(),
   });
 
   const dataLength = data?.length || 0;
@@ -57,9 +93,8 @@ const Listings = () => {
     );
   }
 
-  if (isLoading) return <div>Loading...</div>;
-
-  if (isError) return <div>Something went wrong!</div>;
+  const isLoading = isLoadingListing || isLoadingStates;
+  const isError = isErrorListing || isErrorStates;
 
   return (
     <>
@@ -83,160 +118,173 @@ const Listings = () => {
         </div>
 
         <FilterListings />
-        <div className="mt-2 flow-root">
-          <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-              <div className="relative">
-                {selectedListings.length > 0 && (
-                  <div className="absolute left-14 top-0 flex h-12 items-center space-x-3 bg-white sm:left-12">
-                    <button
-                      type="button"
-                      className="inline-flex items-center rounded bg-white px-2 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                    >
-                      Export
-                    </button>
-                  </div>
-                )}
-                <table className="min-w-full table-fixed divide-y divide-gray-300">
-                  <thead>
-                    <tr>
-                      <th scope="col" className="relative px-7 sm:w-12 sm:px-6">
-                        <input
-                          type="checkbox"
-                          className="absolute left-4 top-1/2 -mt-2 h-4 w-4"
-                          ref={checkbox}
-                          checked={checked}
-                          onChange={toggleAll}
-                        />
-                      </th>
-                      <th
-                        scope="col"
-                        className="py-3.5 pr-3 text-left text-sm font-semibold text-gray-900"
+        {isLoading && <div>Loading...</div>}
+        {isError && <div>Something went wrong!</div>}
+        {!isLoading && !isError && (
+          <div className="mt-2 flow-root">
+            <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+              <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                <div className="relative">
+                  {selectedListings.length > 0 && (
+                    <div className="absolute left-14 top-0 flex h-12 items-center space-x-3 bg-white sm:left-12">
+                      <button
+                        type="button"
+                        className="inline-flex items-center rounded bg-white px-2 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                       >
-                        Address
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                      >
-                        Owner
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                      >
-                        Occupancy
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                      >
-                        Property Value
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                      >
-                        Status
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                      >
-                        Realtor
-                      </th>
-
-                      <th
-                        scope="col"
-                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                      >
-                        Brokerage
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                      >
-                        Realtor Phone
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200 bg-white">
-                    {data?.map((item) => (
-                      <tr
-                        key={item.zpid}
-                        className={
-                          selectedListings.includes(item?.zpid || '')
-                            ? 'bg-gray-50'
-                            : undefined
-                        }
-                      >
-                        <td className="relative px-7 sm:w-12 sm:px-6">
+                        Export
+                      </button>
+                    </div>
+                  )}
+                  <table className="min-w-full table-fixed divide-y divide-gray-300">
+                    <thead>
+                      <tr>
+                        <th
+                          scope="col"
+                          className="relative px-7 sm:w-12 sm:px-6"
+                        >
                           <input
                             type="checkbox"
                             className="absolute left-4 top-1/2 -mt-2 h-4 w-4"
-                            checked={selectedListings.includes(
-                              item?.zpid || ''
-                            )}
-                            onChange={(e) =>
-                              toggleIndividual(
-                                item?.zpid || '',
-                                e.target.checked
-                              )
-                            }
+                            ref={checkbox}
+                            checked={checked}
+                            onChange={toggleAll}
                           />
-                        </td>
-                        <td className="whitespace-nowrap py-4 pr-3 text-sm font-medium text-gray-900">
-                          {item?.street_address || ''}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {/* TODO - instead of country use item.owner */}
-                          {item.county}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {item.filtered_status === 'Full' ? (
-                            <BadgeGreen value={item.filtered_status} />
-                          ) : item.filtered_status === 'Empty' ? (
-                            <BadgeRed value={item.filtered_status} />
-                          ) : item.filtered_status === 'No Photos' ? (
-                            <BadgePink value={item.filtered_status} />
-                          ) : (
-                            item.filtered_status
-                          )}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          ${item.price}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {item.home_status === 'For Sale' ? (
-                            <BadgeYellow value={item.home_status} />
-                          ) : item.home_status === 'Pending' ? (
-                            <BadgeBlue value={item.home_status} />
-                          ) : item.home_status === 'Coming soon' ? (
-                            <BadgePurple value={item.home_status} />
-                          ) : (
-                            item.home_status
-                          )}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {item.realtor_name}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {item.realtor_company}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {item.realtor_phone}
-                        </td>
+                        </th>
+                        <th
+                          scope="col"
+                          className="py-3.5 pr-3 text-left text-sm font-semibold text-gray-900"
+                        >
+                          Address
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                        >
+                          Owner
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                        >
+                          Occupancy
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                        >
+                          Property Value
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                        >
+                          Status
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                        >
+                          Realtor
+                        </th>
+
+                        <th
+                          scope="col"
+                          className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                        >
+                          Brokerage
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                        >
+                          Realtor Phone
+                        </th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody className="divide-y divide-gray-200 bg-white">
+                      {data?.map((item) => (
+                        <tr
+                          key={item.zpid}
+                          className={
+                            selectedListings.includes(item?.zpid || '')
+                              ? 'bg-gray-50'
+                              : undefined
+                          }
+                        >
+                          <td className="relative px-7 sm:w-12 sm:px-6">
+                            <input
+                              type="checkbox"
+                              className="absolute left-4 top-1/2 -mt-2 h-4 w-4"
+                              checked={selectedListings.includes(
+                                item?.zpid || ''
+                              )}
+                              onChange={(e) =>
+                                toggleIndividual(
+                                  item?.zpid || '',
+                                  e.target.checked
+                                )
+                              }
+                            />
+                          </td>
+                          <td className="whitespace-nowrap py-4 pr-3 text-sm font-medium text-gray-900">
+                            {item?.streetAddress || ''}
+                          </td>
+                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                            {/* TODO - instead of country use item.owner */}
+                            {item.county}
+                          </td>
+                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                            {item.filteredStatus === 'Full' ? (
+                              <BadgeGreen value={item.filteredStatus} />
+                            ) : item.filteredStatus === 'Empty' ? (
+                              <BadgeRed value={item.filteredStatus} />
+                            ) : item.filteredStatus === 'No Photos' ? (
+                              <BadgePink value={item.filteredStatus} />
+                            ) : (
+                              item.filteredStatus
+                            )}
+                          </td>
+                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                            ${item.price}
+                          </td>
+                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                            {item.homeStatus === 'For Sale' ? (
+                              <BadgeYellow value={item.homeStatus} />
+                            ) : item.homeStatus === 'Pending' ? (
+                              <BadgeBlue value={item.homeStatus} />
+                            ) : item.homeStatus === 'Coming soon' ? (
+                              <BadgePurple value={item.homeStatus} />
+                            ) : (
+                              item.homeStatus
+                            )}
+                          </td>
+                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                            {item.realtorName}
+                          </td>
+                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                            {item.realtorCompany}
+                          </td>
+                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                            {item.realtorPhone}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </>
   );
 };
 
-export default Listings;
+export const Listings = () => {
+  return (
+    <ListingFilterProvider>
+      <ListingsView />
+    </ListingFilterProvider>
+  );
+};

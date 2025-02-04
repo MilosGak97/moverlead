@@ -10,12 +10,12 @@ import { routes } from '../../router/routes.ts';
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    first_name: '',
-    last_name: '',
-    company_name: '',
+    firstName: '',
+    lastName: '',
+    companyName: '',
     email: '',
     password: '',
-    repeat_password: '',
+    repeatPassword: '',
   });
 
   const [error, setError] = useState<string | null>(null);
@@ -71,30 +71,30 @@ const Register = () => {
         >
           <TextField
             label="First name"
-            name="first_name"
+            name="firstName"
             type="text"
             autoComplete="given-name"
             required
-            value={formData.first_name}
+            value={formData.firstName}
             onChange={handleInputChange}
           />
           <TextField
             label="Last name"
-            name="last_name"
+            name="lastName"
             type="text"
             autoComplete="family-name"
             required
-            value={formData.last_name}
+            value={formData.lastName}
             onChange={handleInputChange}
           />
           <TextField
             className="col-span-full"
             label="Company name"
-            name="company_name"
+            name="companyName"
             type="text"
             autoComplete="company-name"
             required
-            value={formData.company_name}
+            value={formData.companyName}
             onChange={handleInputChange}
           />
           <TextField
@@ -120,11 +120,11 @@ const Register = () => {
           <TextField
             className="col-span-full"
             label="Repeat Password"
-            name="repeat_password"
+            name="repeatPassword"
             type="password"
             autoComplete="new-password"
             required
-            value={formData.repeat_password}
+            value={formData.repeatPassword}
             onChange={handleInputChange}
           />
           <div className="col-span-full">

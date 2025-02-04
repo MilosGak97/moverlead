@@ -4,8 +4,10 @@
 /* eslint-disable */
 import type { FilteringActionDto } from '../models/FilteringActionDto';
 import type { FilteringResponseDto } from '../models/FilteringResponseDto';
+import type { GetDashboardResponseDto } from '../models/GetDashboardResponseDto';
 import type { MessageResponseDto } from '../models/MessageResponseDto';
 import type { Property } from '../models/Property';
+import type { StateResponseDto } from '../models/StateResponseDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 export class PropertiesApi {
@@ -24,8 +26,8 @@ export class PropertiesApi {
     dateFrom,
     dateTo,
   }: {
-    filteredStatus?: Array<string>,
-    propertyStatus?: Array<string>,
+    filteredStatus?: Array<'FURNISHED' | 'EMPTY' | 'NO_DATA' | 'NOT_FILTERED'>,
+    propertyStatus?: Array<'COMING_SOON' | 'FOR_SALE' | 'PENDING'>,
     state?: Array<string>,
     propertyValueFrom?: number,
     propertyValueTo?: number,
@@ -77,6 +79,28 @@ export class PropertiesApi {
       },
       body: requestBody,
       mediaType: 'application/json',
+    });
+  }
+  /**
+   * Fetch last month, this month and today count data
+   * @returns GetDashboardResponseDto
+   * @throws ApiError
+   */
+  public propertiesControllerGetDashboard(): CancelablePromise<GetDashboardResponseDto> {
+    return this.httpRequest.request({
+      method: 'GET',
+      url: '/api/properties/dashboard',
+    });
+  }
+  /**
+   * List all states
+   * @returns StateResponseDto
+   * @throws ApiError
+   */
+  public propertiesControllerListStates(): CancelablePromise<StateResponseDto> {
+    return this.httpRequest.request({
+      method: 'GET',
+      url: '/api/properties/state',
     });
   }
 }

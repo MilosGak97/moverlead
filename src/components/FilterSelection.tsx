@@ -4,37 +4,42 @@ import {
   DisclosurePanel,
 } from '@headlessui/react';
 import { FunnelIcon } from '@heroicons/react/20/solid';
-import ComboSelect from './ComboSelect';
-import OptionSelect from './OptionSelect.tsx';
+import { ComboSelect } from './ComboSelect.tsx';
+import { OptionSelect } from './OptionSelect.tsx';
+import { InputsSelect } from './InputsSelect.tsx';
+import { FilteredStatus } from '../enums/filteredStatus.ts';
+import { PropertyStatus } from '../enums/propertyStatus.ts';
+import { useListingFilterContext } from '../pages/protected/listing/context/ListingFilterContext.tsx';
+
 {
   /* FILTER LISTINGS */
 }
-const filters = {
-  price: {
-    title: 'Occupancy',
+
+const filtersListing = {
+  filterStatus: {
+    title: 'Filtered Status',
     options: [
-      { value: 'furnished', label: 'Furnished', checked: true },
-      { value: 'empty', label: 'Empty', checked: false },
-      { value: 'nodata', label: 'No Data', checked: false },
+      { value: FilteredStatus.FURNISHED, label: 'Furnished', checked: false },
+      { value: FilteredStatus.EMPTY, label: 'Empty', checked: false },
+      { value: FilteredStatus.NO_DATA, label: 'No Data', checked: false },
+      {
+        value: FilteredStatus.NOT_FILTERED,
+        label: 'Not Filtered',
+        checked: false,
+      },
     ],
   },
 
-  price2: {
+  propertyStatus: {
     title: 'Status',
     options: [
-      { value: 'comingsoon', label: 'Coming Soon', checked: false },
-      { value: 'forsale', label: 'For Sale', checked: true },
-      { value: 'pending', label: 'Pending', checked: false },
-    ],
-  },
-
-  price3: {
-    title: 'Property Value',
-    options: [
-      { value: '0', label: '$0 - $250,000', checked: true },
-      { value: '25', label: '$250,001 - $500,000', checked: true },
-      { value: '50', label: '$500,001 - $750,000', checked: true },
-      { value: '75', label: '$750,000+', checked: true },
+      {
+        value: PropertyStatus.COMING_SOON,
+        label: 'Coming Soon',
+        checked: false,
+      },
+      { value: PropertyStatus.FOR_SALE, label: 'For Sale', checked: false },
+      { value: PropertyStatus.PENDING, label: 'Pending', checked: false },
     ],
   },
 };
@@ -63,6 +68,24 @@ const filtersSubscription = {
 };
 
 const FilterListings = () => {
+  const { setFilteredStatus, setPropertyStatus } = useListingFilterContext();
+
+  const handleFilteredStatusChange = (selectedOption: FilteredStatus) => {
+    setFilteredStatus((prev) =>
+      prev.includes(selectedOption)
+        ? prev.filter((status) => status !== selectedOption)
+        : [...prev, selectedOption]
+    );
+  };
+
+  const handlePropertyStatusChange = (selectedOption: PropertyStatus) => {
+    setPropertyStatus((prev) =>
+      prev.includes(selectedOption)
+        ? prev.filter((status) => status !== selectedOption)
+        : [...prev, selectedOption]
+    );
+  };
+
   return (
     <div className="mt-8 bg-white">
       {/* Filters */}
@@ -96,15 +119,26 @@ const FilterListings = () => {
           </div>
         </div>
         <DisclosurePanel className="border-t border-gray-200 py-10">
-          <div className="mx-auto grid max-w-7xl grid-cols-2 gap-x-4 px-4 text-sm sm:px-6 md:gap-x-6 lg:px-8">
-            <div className="grid auto-rows-min grid-cols-1 gap-y-10 md:grid-cols-2 md:gap-x-6">
+          <div className="grid grid-cols-4">
+            <div className="grid grid-cols-4 col-span-3 gap-x-4 px-4 text-sm sm:px-6 md:gap-x-6 lg:px-8">
               <ComboSelect />
-              <OptionSelect filterGroup={filters.price} />
+              <div className="col-span-3">
+                <InputsSelect />
+              </div>
             </div>
-            <div className="grid auto-rows-min grid-cols-1 gap-y-10 md:grid-cols-2 md:gap-x-6">
-              <OptionSelect filterGroup={filters.price2} />
-
-              <OptionSelect filterGroup={filters.price3} />
+            <div className="grid grid-cols-2">
+              <OptionSelect
+                filterGroup={filtersListing.filterStatus}
+                onOptionSelected={(selectedOption) =>
+                  handleFilteredStatusChange(selectedOption)
+                }
+              />
+              <OptionSelect
+                filterGroup={filtersListing.propertyStatus}
+                onOptionSelected={(selectedOption) =>
+                  handlePropertyStatusChange(selectedOption)
+                }
+              />
             </div>
           </div>
         </DisclosurePanel>
@@ -150,10 +184,20 @@ const FilterSubscription = () => {
           <div className="mx-auto grid max-w-7xl grid-cols-2 gap-x-4 px-4 text-sm sm:px-6 md:gap-x-6 lg:px-8">
             <div className="grid auto-rows-min grid-cols-1 gap-y-10 md:grid-cols-2 md:gap-x-6">
               <ComboSelect />
-              <OptionSelect filterGroup={filtersSubscription.price} />
+              <OptionSelect
+                filterGroup={filtersSubscription.price}
+                onOptionSelected={(selectedOption) =>
+                  console.log(selectedOption)
+                }
+              />
             </div>
             <div className="grid auto-rows-min grid-cols-1 gap-y-10 md:grid-cols-2 md:gap-x-6">
-              <OptionSelect filterGroup={filtersSubscription.price2} />
+              <OptionSelect
+                filterGroup={filtersSubscription.price2}
+                onOptionSelected={(selectedOption) =>
+                  console.log(selectedOption)
+                }
+              />
             </div>
           </div>
         </DisclosurePanel>
