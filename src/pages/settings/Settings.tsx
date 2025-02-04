@@ -9,10 +9,16 @@ import {
   CompanyInformationFormData,
   companyInformationSchema,
 } from './schema/companyInformationSchema';
-import { useFormContext } from 'react-hook-form';
-import { PatchCompanyDto } from '../../generated-api';
+import { useForm, useFormContext } from 'react-hook-form';
+import { ChangePasswordDto, PatchCompanyDto } from '../../generated-api';
+import {
+  UpdatePasswordFormData,
+  updatePasswordSchema,
+} from './schema/updatePasswordSchema';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 const SettingsView = () => {
+  const [toast, setToast] = useState<string | null>(null);
   const queryClient = useQueryClient();
   const [tabs, setTabs] = useState([
     {
@@ -30,6 +36,18 @@ const SettingsView = () => {
     handleSubmit,
   } = useFormContext<CompanyInformationFormData>();
 
+  const {
+    register: registerUpdatePassword,
+    formState: {
+      isValid: isValidUpdatePassword,
+      isDirty: isDirtyUpdatePassword,
+    },
+    handleSubmit: handleSubmitUpdatePassword,
+  } = useForm<UpdatePasswordFormData>({
+    mode: 'onChange',
+    resolver: zodResolver(updatePasswordSchema),
+  });
+
   const handleTabClick = (name: string) => {
     setTabs((prevTabs) =>
       prevTabs.map((tab) => ({ ...tab, current: tab.name === name }))
@@ -45,12 +63,44 @@ const SettingsView = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QueryKeys.COMPANY] });
     },
+    onError: () => {
+      setToast('Something went wrong. Please try again.');
+      setTimeout(() => {
+        setToast(null);
+      }, 5000);
+    },
   });
+
+  const { mutate: mutateUpdatePassword, isPending: isPendingUpdatePassword } =
+    useMutation({
+      mutationFn: (data: ChangePasswordDto) => {
+        return api.settings.settingsControllerChangePassword({
+          requestBody: data,
+        });
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: [QueryKeys.COMPANY] });
+      },
+      onError: () => {
+        setToast('Something went wrong. Please try again.');
+        setTimeout(() => {
+          setToast(null);
+        }, 5000);
+      },
+    });
 
   const handleCompanyInformationFormSubmit = (
     data: CompanyInformationFormData
   ) => {
     mutate(data);
+  };
+
+  const handleUpdatePasswordFormSubmit = (data: UpdatePasswordFormData) => {
+    mutateUpdatePassword({
+      password: data.currentPassword,
+      newPassword: data.newPassword,
+      newPasswordRepeat: data.repeatPassword,
+    });
   };
 
   return (
@@ -276,10 +326,10 @@ const SettingsView = () => {
                   <div className="mt-2">
                     <input
                       id="current_password"
-                      name="current_password"
                       type="password"
                       autoComplete="password"
                       className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-[#4379F2] sm:text-sm/6"
+                      {...registerUpdatePassword('currentPassword')}
                     />
                   </div>
                 </div>
@@ -294,10 +344,10 @@ const SettingsView = () => {
                   <div className="mt-2">
                     <input
                       id="new_password"
-                      name="new_password"
                       type="password"
                       autoComplete="password"
                       className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-[#4379F2] sm:text-sm/6"
+                      {...registerUpdatePassword('newPassword')}
                     />
                   </div>
                 </div>
@@ -312,10 +362,10 @@ const SettingsView = () => {
                   <div className="mt-2">
                     <input
                       id="repeat_password"
-                      name="repeat_password"
                       type="password"
                       autoComplete="password"
                       className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-[#4379F2] sm:text-sm/6"
+                      {...registerUpdatePassword('repeatPassword')}
                     />
                   </div>
                 </div>
@@ -332,9 +382,13 @@ const SettingsView = () => {
             </button>
             <button
               type="submit"
-              className="rounded-md bg-[#4379F2] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4379F2]"
+              className="rounded-md bg-[#4379F2] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4379F2] disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100"
+              disabled={!isValidUpdatePassword || !isDirtyUpdatePassword}
+              onClick={handleSubmitUpdatePassword(
+                handleUpdatePasswordFormSubmit
+              )}
             >
-              Save
+              {isPendingUpdatePassword ? 'Loading...' : 'Save'}
             </button>
           </div>
         </form>
@@ -420,6 +474,11 @@ const SettingsView = () => {
           </div>
         </div>
       </div>
+      {toast && (
+        <div className="fixed bottom-4 right-4 bg-red-600 text-white text-sm font-medium px-4 py-2 rounded shadow-lg animate-slide-in">
+          {toast}
+        </div>
+      )}
     </>
   );
 };
