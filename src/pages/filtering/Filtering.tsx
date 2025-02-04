@@ -24,7 +24,7 @@ const Filtering = () => {
   const [toast, setToast] = useState<string | null>(null);
   const queryClient = useQueryClient();
 
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading, isError, refetch } = useQuery({
     queryKey: [QueryKeys.PROPERTIES_FILTERING],
     queryFn: () => api.properties.propertiesControllerFiltering(),
     select: (data) => ({
@@ -53,7 +53,11 @@ const Filtering = () => {
   });
 
   return (
-    <PageStateContainer isLoading={isLoading} isError={isError}>
+    <PageStateContainer
+      isLoading={isLoading}
+      isError={isError}
+      onErrorButtonClick={refetch}
+    >
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-4">
         {(data?.selectedProperty?.photos || []).map((picture, index) => (
           <div

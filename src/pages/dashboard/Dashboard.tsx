@@ -6,13 +6,17 @@ import { QueryKeys } from '../../enums/queryKeys';
 import { api } from '../../api/api';
 
 export const Dashboard = () => {
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading, isError, refetch } = useQuery({
     queryKey: [QueryKeys.PROPERTIES_ANALYTICS],
     queryFn: () => api.properties.propertiesControllerGetDashboard(),
   });
 
   return (
-    <PageStateContainer isLoading={isLoading} isError={isError}>
+    <PageStateContainer
+      isLoading={isLoading}
+      isError={isError}
+      onErrorButtonClick={refetch}
+    >
       <div className="px-8 py-4">
         <Stats
           lastMonthCount={data?.lastMonthCount || 0}

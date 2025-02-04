@@ -105,7 +105,7 @@ const FilterListings = () => {
                   aria-hidden="true"
                   className="mr-2 size-5 flex-none text-gray-400 group-hover:text-gray-500"
                 />
-                2 Filters
+                5 Filters
               </DisclosureButton>
             </div>
             <div className="pl-6">

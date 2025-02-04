@@ -484,12 +484,10 @@ const SettingsView = () => {
 };
 
 export const Settings = () => {
-  const { data, isFetching, isError } = useQuery({
+  const { data, isFetching, isError, refetch } = useQuery({
     queryKey: [QueryKeys.COMPANY],
     queryFn: () => api.settings.settingsControllerGetCompany(),
   });
-
-  console.log(isFetching);
 
   const parsedCompanyInfo: CompanyInformationFormData = {
     companyName: data?.companyName || '',
@@ -503,7 +501,11 @@ export const Settings = () => {
   };
 
   return (
-    <PageStateContainer isLoading={isFetching} isError={isError}>
+    <PageStateContainer
+      isLoading={isFetching}
+      isError={isError}
+      onErrorButtonClick={refetch}
+    >
       <ControlledForm
         schema={companyInformationSchema}
         defaultValues={parsedCompanyInfo}

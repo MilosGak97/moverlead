@@ -8,8 +8,8 @@ export const ProtectedLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <>
-      <div>
+    <div className="h-screen">
+      <div className="h-full">
         {/* MOBILE SIDEBAR MENU */}
         <MenuSidebar
           sidebarOpen={sidebarOpen}
@@ -24,16 +24,16 @@ export const ProtectedLayout = () => {
           <Sidebar />
         </div>
 
-        <div className="lg:pl-72">
+        <div className="lg:pl-72 h-full">
           {/* My note: Navigation Top Bar - start */}
           <NavBar setSidebarOpen={() => setSidebarOpen(true)} />
 
           {/* My note: CONTENT  - start */}
-          <main className="py-4">
+          <main className="py-4 h-[calc(100%-64px)]">
             <Outlet />
           </main>
         </div>
       </div>
-    </>
+    </div>
   );
 };

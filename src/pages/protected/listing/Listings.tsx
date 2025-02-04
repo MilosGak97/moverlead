@@ -16,6 +16,7 @@ import {
   ListingFilterProvider,
   useListingFilterContext,
 } from './context/ListingFilterContext.tsx';
+import { PuffLoader } from 'react-spinners';
 
 const ListingsView = () => {
   const checkbox = useRef<HTMLInputElement>(null);
@@ -34,6 +35,7 @@ const ListingsView = () => {
     data,
     isLoading: isLoadingListing,
     isError: isErrorListing,
+    refetch: refetchListing,
   } = useQuery({
     queryKey: [
       QueryKeys.LISTINGS,
@@ -118,8 +120,22 @@ const ListingsView = () => {
         </div>
 
         <FilterListings />
-        {isLoading && <div>Loading...</div>}
-        {isError && <div>Something went wrong!</div>}
+        {isLoadingListing && (
+          <div className="flex justify-center mt-4">
+            <PuffLoader color="#4379F2" />
+          </div>
+        )}
+        {isErrorListing && (
+          <div className="h-full w-full grid place-content-center gap-4  mt-4">
+            <p> Something went wrong!</p>
+            <button
+              className="rounded-md bg-[#4379F2] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4379F2] disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100"
+              onClick={() => refetchListing()}
+            >
+              Try again!
+            </button>
+          </div>
+        )}
         {!isLoading && !isError && (
           <div className="mt-2 flow-root">
             <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
