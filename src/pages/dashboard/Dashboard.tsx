@@ -11,8 +11,6 @@ export const Dashboard = () => {
     queryFn: () => api.properties.propertiesControllerGetDashboard(),
   });
 
-  console.log(data);
-
   return (
     <PageStateContainer isLoading={isLoading} isError={isError}>
       <div className="px-8 py-4">

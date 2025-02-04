@@ -4,7 +4,7 @@ import Billing from '../pages/protected/billing/Billing.tsx';
 import Subscription from '../pages/subscription/Subscription.tsx';
 import { Listings } from '../pages/protected/listing/Listings.tsx';
 import Web from '../routing/Web.tsx';
-import Settings from '../pages/settings/Settings.tsx';
+import { Settings } from '../pages/settings/Settings.tsx';
 import ErrorPage from '../components/ErrorPage.tsx';
 import { Dashboard } from '../pages/dashboard/Dashboard.tsx';
 import Login from '../routing/web/Login.tsx';

@@ -3,6 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export type FilteringActionDto = {
-  action?: string;
+  action: 'FURNISHED' | 'EMPTY' | 'NO_DATA' | 'NOT_FILTERED';
 };
 

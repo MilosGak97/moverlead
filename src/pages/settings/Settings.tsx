@@ -1,7 +1,19 @@
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { PageStateContainer } from '../../components/PageStateContainer';
 import Tabs from '../../components/Tabs';
 import { useState } from 'react';
+import { QueryKeys } from '../../enums/queryKeys';
+import { api } from '../../api/api';
+import { ControlledForm } from '../../components/ControlledForm';
+import {
+  CompanyInformationFormData,
+  companyInformationSchema,
+} from './schema/companyInformationSchema';
+import { useFormContext } from 'react-hook-form';
+import { PatchCompanyDto } from '../../generated-api';
 
-const Settings = () => {
+const SettingsView = () => {
+  const queryClient = useQueryClient();
   const [tabs, setTabs] = useState([
     {
       name: 'Company Information',
@@ -12,12 +24,33 @@ const Settings = () => {
     { name: 'Payment Methods', href: '#payment-methods', current: false },
   ]);
 
+  const {
+    register,
+    formState: { isDirty, isValid },
+    handleSubmit,
+  } = useFormContext<CompanyInformationFormData>();
+
   const handleTabClick = (name: string) => {
     setTabs((prevTabs) =>
       prevTabs.map((tab) => ({ ...tab, current: tab.name === name }))
     );
     const targetSection = document.querySelector(name.toLowerCase());
     targetSection?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data: PatchCompanyDto) => {
+      return api.settings.settingsControllerPatchCompany({ requestBody: data });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QueryKeys.COMPANY] });
+    },
+  });
+
+  const handleCompanyInformationFormSubmit = (
+    data: CompanyInformationFormData
+  ) => {
+    mutate(data);
   };
 
   return (
@@ -42,20 +75,14 @@ const Settings = () => {
 
               <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
                 <div className="sm:col-span-4">
-                  <label
-                    htmlFor="email"
-                    className="block text-sm/6 font-medium text-gray-900"
-                  >
+                  <label className="block text-sm/6 font-medium text-gray-900">
                     Company name
                   </label>
                   <div className="mt-2">
                     <input
-                      id="name"
-                      name="name"
-                      type="name"
-                      autoComplete="name"
                       className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-[#4379F2] sm:text-sm/6"
                       readOnly
+                      {...register('companyName')}
                     />
                   </div>
                 </div>
@@ -77,18 +104,36 @@ const Settings = () => {
                                 */}
                 <div className="col-span-full">
                   <label
-                    htmlFor="street-address"
+                    htmlFor="address-line-1"
                     className="block text-sm/6 font-medium text-gray-900"
                   >
-                    Street address
+                    Address Line 1
                   </label>
                   <div className="mt-2">
                     <input
-                      id="street-address"
-                      name="street-address"
+                      id="address-line-1"
                       type="text"
-                      autoComplete="street-address"
+                      autoComplete="address-line-1"
                       className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-[#4379F2] sm:text-sm/6"
+                      {...register('addressLine1')}
+                    />
+                  </div>
+                </div>
+
+                <div className="col-span-full">
+                  <label
+                    htmlFor="address-line-2"
+                    className="block text-sm/6 font-medium text-gray-900"
+                  >
+                    Address Line 2
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      id="address-line-2"
+                      type="text"
+                      autoComplete="address-line-2"
+                      className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-[#4379F2] sm:text-sm/6"
+                      {...register('addressLine2')}
                     />
                   </div>
                 </div>
@@ -103,10 +148,10 @@ const Settings = () => {
                   <div className="mt-2">
                     <input
                       id="city"
-                      name="city"
                       type="text"
                       autoComplete="address-level2"
                       className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-[#4379F2] sm:text-sm/6"
+                      {...register('city')}
                     />
                   </div>
                 </div>
@@ -121,10 +166,10 @@ const Settings = () => {
                   <div className="mt-2">
                     <input
                       id="region"
-                      name="region"
                       type="text"
                       autoComplete="address-level1"
                       className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-[#4379F2] sm:text-sm/6"
+                      {...register('state')}
                     />
                   </div>
                 </div>
@@ -139,10 +184,10 @@ const Settings = () => {
                   <div className="mt-2">
                     <input
                       id="postal-code"
-                      name="postal-code"
                       type="text"
                       autoComplete="postal-code"
                       className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-[#4379F2] sm:text-sm/6"
+                      {...register('zip')}
                     />
                   </div>
                 </div>
@@ -158,17 +203,17 @@ const Settings = () => {
                     <div className="flex items-center rounded-md bg-white pl-3 outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-[#4379F2]">
                       <input
                         id="username"
-                        name="username"
                         type="text"
                         placeholder=""
                         className="block min-w-0 grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6"
+                        {...register('website')}
                       />
                     </div>
                   </div>
                 </div>
                 <div className="sm:col-span-4">
                   <label
-                    htmlFor="username"
+                    htmlFor="phone_number"
                     className="block text-sm/6 font-medium text-gray-900"
                   >
                     Phone Number
@@ -177,10 +222,10 @@ const Settings = () => {
                     <div className="flex items-center rounded-md bg-white pl-3 outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-[#4379F2]">
                       <input
                         id="phone_number"
-                        name="phone_number"
                         type="text"
                         placeholder=""
                         className="block min-w-0 grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6"
+                        {...register('phoneNumber')}
                       />
                     </div>
                   </div>
@@ -198,9 +243,11 @@ const Settings = () => {
             </button>
             <button
               type="submit"
-              className="rounded-md bg-[#4379F2] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4379F2]"
+              className="rounded-md bg-[#4379F2] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4379F2] disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100"
+              disabled={!isValid || !isDirty}
+              onClick={handleSubmit(handleCompanyInformationFormSubmit)}
             >
-              Save
+              {isPending ? 'Loading...' : 'Save'}
             </button>
           </div>
         </form>
@@ -377,4 +424,33 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+export const Settings = () => {
+  const { data, isFetching, isError } = useQuery({
+    queryKey: [QueryKeys.COMPANY],
+    queryFn: () => api.settings.settingsControllerGetCompany(),
+  });
+
+  console.log(isFetching);
+
+  const parsedCompanyInfo: CompanyInformationFormData = {
+    companyName: data?.companyName || '',
+    addressLine1: data?.address || '',
+    addressLine2: data?.address2 || '',
+    city: data?.city || '',
+    state: data?.state || '',
+    zip: data?.zip || '',
+    website: data?.website || '',
+    phoneNumber: data?.phoneNumber || '',
+  };
+
+  return (
+    <PageStateContainer isLoading={isFetching} isError={isError}>
+      <ControlledForm
+        schema={companyInformationSchema}
+        defaultValues={parsedCompanyInfo}
+      >
+        <SettingsView />
+      </ControlledForm>
+    </PageStateContainer>
+  );
+};
