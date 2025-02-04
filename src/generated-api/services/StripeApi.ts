@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { PriceIdsDto } from '../models/PriceIdsDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 export class StripeApi {
@@ -55,16 +56,15 @@ export class StripeApi {
    * @throws ApiError
    */
   public stripeControllerCreateCheckoutSessionMultiple({
-    priceIds,
+    requestBody,
   }: {
-    priceIds: Array<string>,
+    requestBody: PriceIdsDto,
   }): CancelablePromise<any> {
     return this.httpRequest.request({
-      method: 'GET',
+      method: 'POST',
       url: '/api/stripe/checkout-session/multiple',
-      query: {
-        'priceIds': priceIds,
-      },
+      body: requestBody,
+      mediaType: 'application/json',
     });
   }
   /**
@@ -82,6 +82,16 @@ export class StripeApi {
       path: {
         'id': id,
       },
+    });
+  }
+  /**
+   * @returns any
+   * @throws ApiError
+   */
+  public stripeControllerHandleStripeWebhook(): CancelablePromise<any> {
+    return this.httpRequest.request({
+      method: 'POST',
+      url: '/api/stripe/webhook',
     });
   }
 }

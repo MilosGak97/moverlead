@@ -6,7 +6,7 @@ import { Listings } from '../pages/protected/listing/Listings.tsx';
 import Web from '../routing/Web.tsx';
 import Settings from '../pages/settings/Settings.tsx';
 import ErrorPage from '../components/ErrorPage.tsx';
-import Dashboard from '../pages/dashboard/Dashboard.tsx';
+import { Dashboard } from '../pages/dashboard/Dashboard.tsx';
 import Login from '../routing/web/Login.tsx';
 import Register from '../routing/web/Register.tsx';
 import VerifyEmail from '../pages/verify-email/VerifyEmail.tsx';
