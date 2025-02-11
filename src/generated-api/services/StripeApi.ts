@@ -11,50 +11,6 @@ export class StripeApi {
    * @returns any
    * @throws ApiError
    */
-  public stripeControllerGetAllProducts(): CancelablePromise<any> {
-    return this.httpRequest.request({
-      method: 'GET',
-      url: '/api/stripe/products',
-    });
-  }
-  /**
-   * @returns any
-   * @throws ApiError
-   */
-  public stripeControllerGetProduct({
-    id,
-  }: {
-    id: string,
-  }): CancelablePromise<any> {
-    return this.httpRequest.request({
-      method: 'GET',
-      url: '/api/stripe/products/{id}',
-      path: {
-        'id': id,
-      },
-    });
-  }
-  /**
-   * @returns any
-   * @throws ApiError
-   */
-  public stripeControllerGetAllPrices({
-    id,
-  }: {
-    id: string,
-  }): CancelablePromise<any> {
-    return this.httpRequest.request({
-      method: 'GET',
-      url: '/api/stripe/prices/{id}',
-      path: {
-        'id': id,
-      },
-    });
-  }
-  /**
-   * @returns any
-   * @throws ApiError
-   */
   public stripeControllerCreateCheckoutSessionMultiple({
     requestBody,
   }: {
@@ -65,23 +21,6 @@ export class StripeApi {
       url: '/api/stripe/checkout-session/multiple',
       body: requestBody,
       mediaType: 'application/json',
-    });
-  }
-  /**
-   * @returns any
-   * @throws ApiError
-   */
-  public stripeControllerCreateCheckoutSession({
-    id,
-  }: {
-    id: string,
-  }): CancelablePromise<any> {
-    return this.httpRequest.request({
-      method: 'GET',
-      url: '/api/stripe/checkout-session/single/{id}',
-      path: {
-        'id': id,
-      },
     });
   }
   /**

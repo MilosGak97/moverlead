@@ -9,34 +9,37 @@ import {
   Label,
 } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
-import { useState } from 'react';
-import {
-  StateOption,
-  useListingFilterContext,
-} from '../pages/protected/listing/context/ListingFilterContext';
-import { useStates } from '../hooks/useStates';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { useStates } from '../../../hooks/useStates';
+import { State } from '../Subscription';
 
-export const ComboSelect = () => {
+type SelectStateProps = {
+  selectedState: State | null;
+  setSelectedState: Dispatch<SetStateAction<State | null>>;
+};
+
+export const SelectState = ({
+  selectedState,
+  setSelectedState,
+}: SelectStateProps) => {
   const [inputValue, setInputValue] = useState('');
-  const { states, setStates } = useListingFilterContext();
 
-  const { states: statesOptions } = useStates();
+  const { states } = useStates();
 
   const filteredStates =
     inputValue === ''
-      ? statesOptions ?? []
-      : (statesOptions ?? []).filter((state) =>
+      ? states ?? []
+      : (states ?? []).filter((state) =>
           state.name.toLowerCase().includes(inputValue.toLowerCase())
         );
 
   return (
     <Combobox
-      multiple
       as="div"
-      value={states as StateOption[]}
-      onChange={(selectedStates) => {
+      value={selectedState}
+      onChange={(state) => {
+        setSelectedState(state);
         setInputValue('');
-        setStates(selectedStates);
       }}
     >
       <Label className="block text-sm font-medium text-gray-900">

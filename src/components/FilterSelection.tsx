@@ -153,7 +153,6 @@ const FilterListings = () => {
 const FilterSubscription = () => {
   return (
     <div className="mt-8 bg-white">
-      {/* Filters */}
       <Disclosure
         as="section"
         aria-labelledby="filter-heading"

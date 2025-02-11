@@ -11,6 +11,7 @@ export { OpenAPI } from './core/OpenAPI';
 export type { OpenAPIConfig } from './core/OpenAPI';
 
 export type { ChangePasswordDto } from './models/ChangePasswordDto';
+export type { County } from './models/County';
 export type { FilteringActionDto } from './models/FilteringActionDto';
 export type { FilteringResponseDto } from './models/FilteringResponseDto';
 export type { GetCompanyResponseDto } from './models/GetCompanyResponseDto';

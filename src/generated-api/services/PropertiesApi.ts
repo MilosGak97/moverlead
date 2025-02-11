@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { County } from '../models/County';
 import type { FilteringActionDto } from '../models/FilteringActionDto';
 import type { FilteringResponseDto } from '../models/FilteringResponseDto';
 import type { GetDashboardResponseDto } from '../models/GetDashboardResponseDto';
@@ -12,6 +13,17 @@ import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 export class PropertiesApi {
   constructor(public readonly httpRequest: BaseHttpRequest) {}
+  /**
+   * Fetch last month, this month and today count data
+   * @returns GetDashboardResponseDto
+   * @throws ApiError
+   */
+  public propertiesControllerGetDashboard(): CancelablePromise<GetDashboardResponseDto> {
+    return this.httpRequest.request({
+      method: 'GET',
+      url: '/api/properties/dashboard',
+    });
+  }
   /**
    * Show Listings
    * @returns Property
@@ -82,17 +94,6 @@ export class PropertiesApi {
     });
   }
   /**
-   * Fetch last month, this month and today count data
-   * @returns GetDashboardResponseDto
-   * @throws ApiError
-   */
-  public propertiesControllerGetDashboard(): CancelablePromise<GetDashboardResponseDto> {
-    return this.httpRequest.request({
-      method: 'GET',
-      url: '/api/properties/dashboard',
-    });
-  }
-  /**
    * List all states
    * @returns StateResponseDto
    * @throws ApiError
@@ -101,6 +102,42 @@ export class PropertiesApi {
     return this.httpRequest.request({
       method: 'GET',
       url: '/api/properties/state',
+    });
+  }
+  /**
+   * Manually run the scrapper per brightdata ID
+   * @returns any
+   * @throws ApiError
+   */
+  public propertiesControllerManualRunScrapper({
+    id,
+  }: {
+    id: string,
+  }): CancelablePromise<any> {
+    return this.httpRequest.request({
+      method: 'POST',
+      url: '/api/properties/scrapper/manual-run/{id}',
+      path: {
+        'id': id,
+      },
+    });
+  }
+  /**
+   * List products by state
+   * @returns County
+   * @throws ApiError
+   */
+  public propertiesControllerGetProducts({
+    state,
+  }: {
+    state: 'AL' | 'AK' | 'AZ' | 'AR' | 'CA' | 'CO' | 'CT' | 'DE' | 'FL' | 'GA' | 'HI' | 'ID' | 'IL' | 'IN' | 'IA' | 'KS' | 'KY' | 'LA' | 'ME' | 'MD' | 'MA' | 'MI' | 'MN' | 'MS' | 'MO' | 'MT' | 'NE' | 'NV' | 'NH' | 'NJ' | 'NM' | 'NY' | 'NC' | 'ND' | 'OH' | 'OK' | 'OR' | 'PA' | 'RI' | 'SC' | 'SD' | 'TN' | 'TX' | 'UT' | 'VT' | 'VA' | 'WA' | 'WV' | 'WI' | 'WY' | 'DC',
+  }): CancelablePromise<Array<County>> {
+    return this.httpRequest.request({
+      method: 'GET',
+      url: '/api/properties/products',
+      query: {
+        'state': state,
+      },
     });
   }
 }
