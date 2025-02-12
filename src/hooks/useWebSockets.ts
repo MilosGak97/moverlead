@@ -3,18 +3,35 @@ import { environmentVariables } from '../env/environmentVariables';
 import { useEffect } from 'react';
 
 export const useWebSockets = () => {
-  const { lastJsonMessage } = useWebSocket(environmentVariables.baseApiUrl, {
-    heartbeat: {
-      message: 'ping',
-      returnMessage: 'pong',
-      timeout: 120000,
-      interval: 60000,
-    },
-  });
+  const { lastJsonMessage: messageOne } = useWebSocket(
+    environmentVariables.webSocketApiUrl,
+    {
+      heartbeat: {
+        message: 'ping',
+        returnMessage: 'pong',
+        timeout: 120000,
+        interval: 60000,
+      },
+    }
+  );
+
+  const { lastJsonMessage: messageTwo } = useWebSocket(
+    environmentVariables.baseApiUrl,
+    {
+      heartbeat: {
+        message: 'ping',
+        returnMessage: 'pong',
+        timeout: 120000,
+        interval: 60000,
+      },
+    }
+  );
 
   useEffect(() => {
-    const event = lastJsonMessage;
+    const firstEvent = messageOne;
+    const secondEvent = messageTwo;
 
-    console.log(event);
+    console.log(firstEvent);
+    console.log(secondEvent);
   });
 };

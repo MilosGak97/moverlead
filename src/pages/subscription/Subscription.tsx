@@ -20,7 +20,14 @@ export const Subscription = () => {
   const [selectedCounties, setSelectedCounties] = useState<County[]>([]);
   const [cartCounties, setCartCounties] = useState<County[]>([]);
 
-  const { toastText, addToast } = useToast();
+  const {
+    toastText: maxSelectedCountiesErrorToast,
+    addToast: addMaxSelectedCountiesErrorToast,
+  } = useToast();
+  const {
+    toastText: stripePaymentFailedToastText,
+    addToast: addStripePaymentFailedToastText,
+  } = useToast();
   const { isLoadingStates, isErrorStates, refetchStates } = useStates();
 
   const {
@@ -47,30 +54,30 @@ export const Subscription = () => {
     onSuccess: (data) => {
       window.open(data.checkoutUrl);
     },
-    onError: addToast,
+    onError: addStripePaymentFailedToastText,
   });
 
-  function toggleSelectedCounty() {
+  const toggleSelectedCounty = () => {
     setChecked((prevState) => !prevState);
     if (selectedCounties.length === counties?.length) {
       setSelectedCounties([]);
     } else {
       setSelectedCounties(counties as County[]);
     }
-  }
+  };
 
-  function toggleIndividualCounty(county: County, isChecked: boolean) {
+  const toggleIndividualCounty = (county: County, isChecked: boolean) => {
     setSelectedCounties((prevSelected) =>
       isChecked
         ? [...prevSelected, county]
         : prevSelected.filter((c) => c.id !== county.id)
     );
-  }
+  };
 
   const isCountyInCart = (county: County) =>
     cartCounties.some((c) => c.id === county.id);
 
-  function addSelectedToCart() {
+  const addSelectedToCart = () => {
     setCartCounties((prevCart) => {
       const newCounties = selectedCounties.filter(
         (county) => !prevCart.some((c) => c.id === county.id)
@@ -79,11 +86,23 @@ export const Subscription = () => {
     });
     setSelectedCounties([]);
     setChecked(false);
-  }
+  };
 
-  function removeFromCart(countyId: string) {
+  const removeFromCart = (countyId: string) => {
     setCartCounties((prevCart) => prevCart.filter((c) => c.id !== countyId));
-  }
+  };
+
+  const handleCheckoutClick = () => {
+    if (cartCounties.length > 20) {
+      addMaxSelectedCountiesErrorToast(
+        'You cannot subscribe to more than 20 counties at once'
+      );
+
+      return;
+    }
+
+    mutate();
+  };
 
   const isLoading = isLoadingStates || isLoadingCounties;
   const isError = isErrorStates || isErrorCounties;
@@ -133,7 +152,7 @@ export const Subscription = () => {
                 type="button"
                 disabled={!cartCounties.length}
                 className="rounded-md bg-[#4379F2] px-3 py-1.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-600 disabled:border-gray-300 disabled:bg-gray-100"
-                onClick={() => mutate()}
+                onClick={handleCheckoutClick}
               >
                 {isPending ? 'Loading...' : 'Checkout'}
               </button>
@@ -285,7 +304,12 @@ export const Subscription = () => {
           </div>
         )}
       </div>
-      {toastText && <Toast text={toastText} />}
+      {stripePaymentFailedToastText && (
+        <Toast text={stripePaymentFailedToastText} type={'error'} />
+      )}
+      {maxSelectedCountiesErrorToast && (
+        <Toast text={maxSelectedCountiesErrorToast} type={'error'} />
+      )}
     </>
   );
 };
