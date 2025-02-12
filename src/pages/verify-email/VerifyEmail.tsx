@@ -3,14 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { api } from '../../api/api.ts';
 import { routes } from '../../router/routes.ts';
+import { useToast } from '../../hooks/useToast.ts';
+import { Toast } from '../../components/Toast.tsx';
 
 const VerifyEmail = () => {
   const [pin, setPin] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
-  const [toast, setToast] = useState<string | null>(null);
-  const [toastGood, setToastGood] = useState<string | null>(null);
+  const { toastText: successToastText, addToast: addSuccessToast } = useToast();
+  const { toastText: errorToastText, addToast: addErrorToast } = useToast();
 
   const navigate = useNavigate();
 
@@ -21,16 +23,13 @@ const VerifyEmail = () => {
       return api.auth.authControllerVerifyEmail({ requestBody: { pin } });
     },
     onSuccess: (response) => {
-      setToastGood(response.message);
+      addSuccessToast(response.message);
       setSuccess(response.message);
       navigate(routes.dashboard);
     },
     onError: () => {
       setError('Verification failed');
-      setToast('Invalid passcode. Please try again.');
-      setTimeout(() => {
-        setToast(null);
-      }, 5000);
+      addErrorToast();
     },
   });
 
@@ -82,18 +81,10 @@ const VerifyEmail = () => {
       </div>
 
       {/* Toast Notification */}
-      {toast && (
-        <div className="fixed bottom-4 right-4 bg-red-600 text-white text-sm font-medium px-4 py-2 rounded shadow-lg animate-slide-in">
-          {toast}
-        </div>
-      )}
+      {errorToastText && <Toast text={errorToastText} />}
 
       {/* Toast Notification */}
-      {toastGood && (
-        <div className="fixed bottom-4 right-4 bg-green-700 text-white text-sm font-medium px-4 py-2 rounded shadow-lg animate-slide-in">
-          {toastGood}
-        </div>
-      )}
+      {successToastText && <Toast text={successToastText} type={'success'} />}
     </div>
   );
 };

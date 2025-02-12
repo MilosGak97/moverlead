@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type PriceIdsDto = {
-  priceIds: Array<any[]>;
+export type CreateCheckoutSessionDto = {
+  priceIds: Array<string>;
 };
 

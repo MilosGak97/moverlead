@@ -10,5 +10,7 @@ export type County = {
   priceId?: string;
   amount?: number;
   subscriptions?: Array<string>;
+  createdAt: string;
+  updatedAt: string;
 };
 

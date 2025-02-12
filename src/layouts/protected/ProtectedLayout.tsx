@@ -3,9 +3,11 @@ import { Outlet } from 'react-router-dom';
 import MenuSidebar from '../../components/MenuSidebar';
 import NavBar from '../../components/NavBar';
 import Sidebar from '../../components/Sidebar';
+import { useWebSockets } from '../../hooks/useWebSockets';
 
 export const ProtectedLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  useWebSockets();
 
   return (
     <div className="h-screen">

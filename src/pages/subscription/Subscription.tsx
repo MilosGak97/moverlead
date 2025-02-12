@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useRef, useState } from 'react';
 import { QueryKeys } from '../../enums/queryKeys';
 import { api } from '../../api/api';
@@ -7,17 +7,20 @@ import { ErrorState } from '../../components/ErrorState';
 import { SelectState } from './components/SelectState';
 import { useStates } from '../../hooks/useStates';
 import { County, StateResponseDto } from '../../generated-api';
+import { useToast } from '../../hooks/useToast';
+import { Toast } from '../../components/Toast';
 
 type StateOptions = StateResponseDto['states'][number];
 export type State = { id: StateOptions; name: StateOptions };
 
-const Subscription = () => {
+export const Subscription = () => {
   const checkbox = useRef<HTMLInputElement>(null);
   const [checked, setChecked] = useState(false);
   const [selectedState, setSelectedState] = useState<State | null>(null);
   const [selectedCounties, setSelectedCounties] = useState<County[]>([]);
   const [cartCounties, setCartCounties] = useState<County[]>([]);
 
+  const { toastText, addToast } = useToast();
   const { isLoadingStates, isErrorStates, refetchStates } = useStates();
 
   const {
@@ -32,6 +35,19 @@ const Subscription = () => {
         state: selectedState!.name,
       }),
     enabled: !!selectedState,
+  });
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: () =>
+      api.stripe.stripeControllerCreateCheckoutSessionMultiple({
+        requestBody: {
+          priceIds: cartCounties.map((county) => county.priceId) as string[],
+        },
+      }),
+    onSuccess: (data) => {
+      window.open(data.checkoutUrl);
+    },
+    onError: addToast,
   });
 
   function toggleSelectedCounty() {
@@ -94,7 +110,7 @@ const Subscription = () => {
                     key={county.id}
                     className="flex items-center gap-2 rounded bg-white h-fit py-0.5 px-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300"
                   >
-                    {county.name}
+                    {`${county.name}, ${county.state}`}
                     <button
                       className="text-red-600 hover:text-red-700"
                       onClick={() => removeFromCart(county.id)}
@@ -115,14 +131,17 @@ const Subscription = () => {
             <div className="flex flex-shrink-0 h-fit gap-2">
               <button
                 type="button"
-                className="rounded-md bg-[#4379F2] px-3 py-1.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-600"
+                disabled={!cartCounties.length}
+                className="rounded-md bg-[#4379F2] px-3 py-1.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-600 disabled:border-gray-300 disabled:bg-gray-100"
+                onClick={() => mutate()}
               >
-                Checkout
+                {isPending ? 'Loading...' : 'Checkout'}
               </button>
               <button
                 disabled={!cartCounties.length}
                 type="button"
                 className="items-center rounded bg-white px-2 py-1 text-sm font-semibold text-red-950 shadow-sm ring-1 ring-inset ring-red-900 hover:bg-gray-50 disabled:opacity-30"
+                onClick={() => setCartCounties([])}
               >
                 Clear Cart
               </button>
@@ -266,8 +285,7 @@ const Subscription = () => {
           </div>
         )}
       </div>
+      {toastText && <Toast text={toastText} />}
     </>
   );
 };
-
-export default Subscription;

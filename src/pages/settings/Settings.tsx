@@ -16,9 +16,11 @@ import {
   updatePasswordSchema,
 } from './schema/updatePasswordSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useToast } from '../../hooks/useToast';
+import { Toast } from '../../components/Toast';
 
 const SettingsView = () => {
-  const [toast, setToast] = useState<string | null>(null);
+  const { toastText, addToast } = useToast();
   const queryClient = useQueryClient();
   const [tabs, setTabs] = useState([
     {
@@ -63,12 +65,7 @@ const SettingsView = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QueryKeys.COMPANY] });
     },
-    onError: () => {
-      setToast('Something went wrong. Please try again.');
-      setTimeout(() => {
-        setToast(null);
-      }, 5000);
-    },
+    onError: addToast,
   });
 
   const { mutate: mutateUpdatePassword, isPending: isPendingUpdatePassword } =
@@ -81,12 +78,7 @@ const SettingsView = () => {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: [QueryKeys.COMPANY] });
       },
-      onError: () => {
-        setToast('Something went wrong. Please try again.');
-        setTimeout(() => {
-          setToast(null);
-        }, 5000);
-      },
+      onError: addToast,
     });
 
   const handleCompanyInformationFormSubmit = (
@@ -474,11 +466,7 @@ const SettingsView = () => {
           </div>
         </div>
       </div>
-      {toast && (
-        <div className="fixed bottom-4 right-4 bg-red-600 text-white text-sm font-medium px-4 py-2 rounded shadow-lg animate-slide-in">
-          {toast}
-        </div>
-      )}
+      {toastText && <Toast text={toastText} />}
     </>
   );
 };

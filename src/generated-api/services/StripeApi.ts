@@ -2,20 +2,22 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { PriceIdsDto } from '../models/PriceIdsDto';
+import type { CreateCheckoutSessionDto } from '../models/CreateCheckoutSessionDto';
+import type { CreateCheckoutSessionResponseDto } from '../models/CreateCheckoutSessionResponseDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 export class StripeApi {
   constructor(public readonly httpRequest: BaseHttpRequest) {}
   /**
-   * @returns any
+   * Create stripe checkout
+   * @returns CreateCheckoutSessionResponseDto
    * @throws ApiError
    */
   public stripeControllerCreateCheckoutSessionMultiple({
     requestBody,
   }: {
-    requestBody: PriceIdsDto,
-  }): CancelablePromise<any> {
+    requestBody: CreateCheckoutSessionDto,
+  }): CancelablePromise<CreateCheckoutSessionResponseDto> {
     return this.httpRequest.request({
       method: 'POST',
       url: '/api/stripe/checkout-session/multiple',
@@ -24,6 +26,7 @@ export class StripeApi {
     });
   }
   /**
+   * Webhook for stripe
    * @returns any
    * @throws ApiError
    */

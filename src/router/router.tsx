@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Filtering from '../pages/filtering/Filtering.tsx';
 import Billing from '../pages/protected/billing/Billing.tsx';
-import Subscription from '../pages/subscription/Subscription.tsx';
+import { Subscription } from '../pages/subscription/Subscription.tsx';
 import { Listings } from '../pages/protected/listing/Listings.tsx';
 import Web from '../routing/Web.tsx';
 import { Settings } from '../pages/settings/Settings.tsx';

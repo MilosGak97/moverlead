@@ -7,13 +7,15 @@ import { FormEvent, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { api } from '../../api/api.ts';
 import { routes } from '../../router/routes.ts';
+import { useToast } from '../../hooks/useToast.ts';
+import { Toast } from '../../components/Toast.tsx';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  const [toast, setToast] = useState<string | null>(null);
+  const { toastText, addToast } = useToast();
 
   const navigate = useNavigate();
 
@@ -24,14 +26,13 @@ const Login = () => {
       navigate(routes.dashboard);
     },
     onError: () => {
-      setToast('Invalid email or password. Please try again.');
       setEmailError(true);
       setPasswordError(true);
 
+      addToast('Invalid email or password. Please try again.');
       setTimeout(() => {
         setEmailError(false);
         setPasswordError(false);
-        setToast(null);
       }, 5000);
     },
   });
@@ -95,11 +96,7 @@ const Login = () => {
       </form>
 
       {/* Toast Notification */}
-      {toast && (
-        <div className="fixed bottom-4 right-4 bg-red-600 text-white text-sm font-medium px-4 py-2 rounded shadow-lg animate-slide-in">
-          {toast}
-        </div>
-      )}
+      {toastText && <Toast text={toastText} />}
     </SlimLayout>
   );
 };

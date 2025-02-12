@@ -12,13 +12,14 @@ export type { OpenAPIConfig } from './core/OpenAPI';
 
 export type { ChangePasswordDto } from './models/ChangePasswordDto';
 export type { County } from './models/County';
+export type { CreateCheckoutSessionDto } from './models/CreateCheckoutSessionDto';
+export type { CreateCheckoutSessionResponseDto } from './models/CreateCheckoutSessionResponseDto';
 export type { FilteringActionDto } from './models/FilteringActionDto';
 export type { FilteringResponseDto } from './models/FilteringResponseDto';
 export type { GetCompanyResponseDto } from './models/GetCompanyResponseDto';
 export type { GetDashboardResponseDto } from './models/GetDashboardResponseDto';
 export type { MessageResponseDto } from './models/MessageResponseDto';
 export type { PatchCompanyDto } from './models/PatchCompanyDto';
-export type { PriceIdsDto } from './models/PriceIdsDto';
 export type { Property } from './models/Property';
 export type { RegisterDto } from './models/RegisterDto';
 export type { RegisterResponseDto } from './models/RegisterResponseDto';
