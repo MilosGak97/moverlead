@@ -6,6 +6,8 @@ import { FilteredStatus } from '../../enums/filteredStatus';
 import { useEffect } from 'react';
 import { Toast } from '../../components/Toast';
 import { useToast } from '../../hooks/useToast';
+import { useNavigate } from 'react-router-dom';
+import { routes } from '../../router/routes';
 
 const filterButtonOptions = [
   {
@@ -23,6 +25,7 @@ const filterButtonOptions = [
 ];
 
 const Filtering = () => {
+  const navigate = useNavigate();
   const { toastText, addToast } = useToast();
   const queryClient = useQueryClient();
 
@@ -77,6 +80,11 @@ const Filtering = () => {
       isLoading={isLoading}
       isError={isError}
       onErrorButtonClick={refetch}
+      isEmpty={false}
+      emptyTitle={'Ooops.. There is nothing more to filter.'}
+      emptyDescription={'Check again tomorrow or Subscribe to more counites'}
+      emptyButtonText={'Order'}
+      onEmptyClick={() => navigate(routes.order)}
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-4">
         {(data?.selectedProperty?.photos || []).map((picture, index) => (
@@ -93,7 +101,6 @@ const Filtering = () => {
         ))}
       </div>
 
-      {/* Fixed buttons at the bottom */}
       <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 flex gap-4">
         {filterButtonOptions.map(({ label, value }) => (
           <button
@@ -107,7 +114,6 @@ const Filtering = () => {
         ))}
       </div>
 
-      {/* Fixed button on the right side */}
       <div className="fixed md:bottom-4 md:top-auto top-20 right-8">
         <div className="px-6 py-3 bg-[#4379F2] text-white text-xl font-medium rounded-lg shadow-md">
           {isPending ? '' : data?.count}

@@ -74,7 +74,7 @@ export const Order = () => {
     );
   };
 
-  const isCountyInCart = (county: County) =>
+  const checkIsCountyInCart = (county: County) =>
     cartCounties.some((c) => c.id === county.id);
 
   const addSelectedToCart = () => {
@@ -237,23 +237,33 @@ export const Order = () => {
                             const isCountySelected = selectedCounties.some(
                               (c) => c.id === county.id
                             );
-                            const isCountyInCard = isCountyInCart(county);
+                            const isCountyInCart = checkIsCountyInCart(county);
 
                             return (
                               <tr
                                 key={county.id}
-                                className={
-                                  isCountySelected ? 'bg-gray-50' : undefined
+                                className={` ${
+                                  isCountySelected
+                                    ? 'bg-gray-100'
+                                    : 'hover:bg-gray-50'
+                                } ${
+                                  isCountyInCart
+                                    ? 'cursor-default pointer-events-none opacity-25'
+                                    : 'cursor-pointer'
+                                }`}
+                                onClick={() =>
+                                  toggleIndividualCounty(
+                                    county,
+                                    !isCountySelected
+                                  )
                                 }
                               >
                                 <td className="relative px-7 sm:w-12 sm:px-6 group">
                                   <input
                                     type="checkbox"
-                                    className={`absolute left-4 top-1/2 -mt-2 h-4 w-4  ${
-                                      isCountyInCard &&
-                                      'pointer-events-none opacity-25'
-                                    }`}
-                                    checked={isCountySelected || isCountyInCard}
+                                    className={`absolute left-4 top-1/2 -mt-2 h-4 w-4 cursor-pointer`}
+                                    checked={isCountySelected || isCountyInCart}
+                                    onClick={(e) => e.stopPropagation()} // Sprečava dvostruki klik
                                     onChange={(e) =>
                                       toggleIndividualCounty(
                                         county,
@@ -261,7 +271,7 @@ export const Order = () => {
                                       )
                                     }
                                   />
-                                  {isCountyInCard && (
+                                  {isCountyInCart && (
                                     <div className="hidden group-hover:block absolute whitespace-nowrap top-1/2 -translate-y-1/2 left-full bg-white border border-gray-200 p-1 px-2 rounded-md">
                                       <span className="text-sm">
                                         County is in the cart already

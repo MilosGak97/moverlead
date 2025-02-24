@@ -86,16 +86,10 @@ export const Subscriptions = () => {
                         currentPeriodStart as string
                       )} - ${formatDateToUs(currentPeriodEnd as string)}`}
                     </span>
-                    <div className="flex gap-10 items-center">
-                      <span>
-                        Status:{' '}
-                        <span className="capitalize font-medium">{status}</span>
-                      </span>
-                      <span>
-                        Total Price:{' '}
-                        <span className="font-medium">${totalPrice}</span>
-                      </span>
-                    </div>
+                    <span>
+                      Total Price:{' '}
+                      <span className="font-medium">${totalPrice}</span>
+                    </span>
                   </div>
                 }
               >
