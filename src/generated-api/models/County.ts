@@ -9,7 +9,11 @@ export type County = {
   productId?: string;
   priceId?: string;
   amount?: number;
-  subscriptions?: Array<string>;
+  properties?: Array<string>;
+  zipCodes?: Array<any[]>;
+  scrappingEndDate?: string;
+  dailyScrapperLink?: string;
+  initialScrapperLink?: string;
   createdAt: string;
   updatedAt: string;
 };

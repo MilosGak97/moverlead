@@ -234,7 +234,7 @@ const ListingsView = () => {
                           </td>
                           <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                             {/* TODO - instead of country use item.owner */}
-                            {item.county}
+                            {`${item.ownerFirstName} ${item.ownerLastName}`}
                           </td>
                           <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                             {item.filteredStatus === 'Full' ? (

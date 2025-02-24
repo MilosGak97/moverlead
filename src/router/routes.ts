@@ -8,7 +8,7 @@ export const routes = {
   dashboard: '/home/dashboard',
   listing: '/home/listings',
   filtering: '/home/filtering',
-  subscription: '/home/subscription',
-  billing: '/home/billing',
+  order: '/home/order',
+  subscriptions: '/home/subscriptions',
   settings: '/home/settings',
 };

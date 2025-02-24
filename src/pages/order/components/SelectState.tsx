@@ -11,7 +11,7 @@ import {
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useStates } from '../../../hooks/useStates';
-import { State } from '../Subscription';
+import { State } from '../Order';
 
 type SelectStateProps = {
   selectedState: State | null;

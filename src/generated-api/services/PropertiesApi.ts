@@ -6,6 +6,7 @@ import type { County } from '../models/County';
 import type { FilteringActionDto } from '../models/FilteringActionDto';
 import type { FilteringResponseDto } from '../models/FilteringResponseDto';
 import type { GetDashboardResponseDto } from '../models/GetDashboardResponseDto';
+import type { GetSubscriptionsResponseDto } from '../models/GetSubscriptionsResponseDto';
 import type { MessageResponseDto } from '../models/MessageResponseDto';
 import type { Property } from '../models/Property';
 import type { StateResponseDto } from '../models/StateResponseDto';
@@ -109,14 +110,14 @@ export class PropertiesApi {
    * @returns any
    * @throws ApiError
    */
-  public propertiesControllerManualRunScrapper({
+  public propertiesControllerFetchSnapshotData({
     id,
   }: {
     id: string,
   }): CancelablePromise<any> {
     return this.httpRequest.request({
       method: 'POST',
-      url: '/api/properties/scrapper/manual-run/{id}',
+      url: '/api/properties/scrapper/fetch-snapshot-data/{id}',
       path: {
         'id': id,
       },
@@ -138,6 +139,44 @@ export class PropertiesApi {
       query: {
         'state': state,
       },
+    });
+  }
+  /**
+   * Get all active subscriptions for user
+   * @returns GetSubscriptionsResponseDto
+   * @throws ApiError
+   */
+  public propertiesControllerGetSubscriptions({
+    stripeSubscriptionStatus,
+  }: {
+    stripeSubscriptionStatus: 'incomplete' | 'incomplete_expired' | 'trialing' | 'active' | 'past_due' | 'canceled' | 'unpaid' | 'paused',
+  }): CancelablePromise<Array<GetSubscriptionsResponseDto>> {
+    return this.httpRequest.request({
+      method: 'GET',
+      url: '/api/properties/subscriptions',
+      query: {
+        'stripeSubscriptionStatus': stripeSubscriptionStatus,
+      },
+    });
+  }
+  /**
+   * @returns any
+   * @throws ApiError
+   */
+  public propertiesControllerTriggerScraper(): CancelablePromise<any> {
+    return this.httpRequest.request({
+      method: 'POST',
+      url: '/api/properties/trigger-scrapper',
+    });
+  }
+  /**
+   * @returns any
+   * @throws ApiError
+   */
+  public propertiesControllerProcessCsvFile(): CancelablePromise<any> {
+    return this.httpRequest.request({
+      method: 'POST',
+      url: '/api/properties/process',
     });
   }
 }

@@ -6,47 +6,48 @@ import {
   ReceiptRefundIcon,
   UsersIcon,
 } from '@heroicons/react/24/outline';
-import { routes } from '../router/routes';
+import { routes } from '../../../router/routes';
+import { useNavigate } from 'react-router-dom';
 
 const actions = [
   {
     title: 'Get Listings',
-    href: routes.listing,
+    path: routes.listing,
     icon: ClockIcon,
     iconForeground: 'text-teal-700',
     iconBackground: 'bg-teal-50',
   },
   {
     title: 'Filter new properties',
-    href: routes.filtering,
+    path: routes.filtering,
     icon: CheckBadgeIcon,
     iconForeground: 'text-purple-700',
     iconBackground: 'bg-purple-50',
   },
   {
     title: 'Subscribe to new areas',
-    href: routes.subscription,
+    path: routes.order,
     icon: UsersIcon,
     iconForeground: 'text-sky-700',
     iconBackground: 'bg-sky-50',
   },
   {
     title: 'See past orders',
-    href: routes.billing,
+    path: routes.subscriptions,
     icon: BanknotesIcon,
     iconForeground: 'text-yellow-700',
     iconBackground: 'bg-yellow-50',
   },
   {
     title: 'Change company informations',
-    href: routes.settings,
+    path: routes.settings,
     icon: ReceiptRefundIcon,
     iconForeground: 'text-rose-700',
     iconBackground: 'bg-rose-50',
   },
   {
     title: 'Reset Password',
-    href: `${routes.settings}?password=true`,
+    path: `${routes.settings}?password=true`,
     icon: AcademicCapIcon,
     iconForeground: 'text-indigo-700',
     iconBackground: 'bg-indigo-50',
@@ -57,7 +58,9 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function Example() {
+export const DashboardGridList = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="divide-y mt-8 divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0">
       {actions.map((action, actionIdx) => (
@@ -88,7 +91,10 @@ export default function Example() {
           </div>
           <div className="mt-8">
             <h3 className="text-base font-semibold text-gray-900">
-              <a href={action.href} className="focus:outline-none">
+              <a
+                className="focus:outline-none"
+                onClick={() => navigate(action.path)}
+              >
                 {/* Extend touch target to entire panel */}
                 <span aria-hidden="true" className="absolute inset-0" />
                 {action.title}
@@ -111,4 +117,4 @@ export default function Example() {
       ))}
     </div>
   );
-}
+};

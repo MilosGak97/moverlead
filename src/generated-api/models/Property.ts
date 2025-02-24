@@ -2,11 +2,16 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { County } from './County';
 export type Property = {
   id: string;
+  county?: County;
+  users?: Array<string>;
+  filteredStatus?: string;
+  filteredStatusDate?: string;
+  initialScrape: boolean;
   ownerFirstName?: string;
   ownerLastName?: string;
-  county?: string;
   zpid?: string;
   streetAddress?: string;
   zipcode?: string;
@@ -18,14 +23,28 @@ export type Property = {
   homeType?: string;
   homeStatus?: string;
   homeStatusDate?: string;
-  photoCount?: number;
-  photos?: Array<string>;
+  isOffMarket?: boolean;
   parcelId?: string;
   realtorName?: string;
   realtorPhone?: string;
   realtorCompany?: string;
-  users?: Array<string>;
-  filteredStatus?: string;
-  filteredStatusDate?: string;
+  longitude?: number;
+  latitude?: number;
+  hasBadGeocode?: boolean;
+  isUndisclosedAddress?: boolean;
+  isNonOwnerOccupied?: boolean;
+  livingAreaValue?: number;
+  livingAreaUnitsShort?: string;
+  daysOnZillow?: number;
+  brokerageName?: string;
+  propertyTypeDimension?: string;
+  hdpTypeDimension?: string;
+  listingTypeDimension?: string;
+  url?: string;
+  countyZillow?: string;
+  photoCount?: number;
+  photos?: Array<string>;
+  createdAt?: string;
+  updatedAt?: string;
 };
 

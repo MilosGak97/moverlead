@@ -18,12 +18,14 @@ export type { FilteringActionDto } from './models/FilteringActionDto';
 export type { FilteringResponseDto } from './models/FilteringResponseDto';
 export type { GetCompanyResponseDto } from './models/GetCompanyResponseDto';
 export type { GetDashboardResponseDto } from './models/GetDashboardResponseDto';
+export type { GetSubscriptionsResponseDto } from './models/GetSubscriptionsResponseDto';
 export type { MessageResponseDto } from './models/MessageResponseDto';
 export type { PatchCompanyDto } from './models/PatchCompanyDto';
 export type { Property } from './models/Property';
 export type { RegisterDto } from './models/RegisterDto';
 export type { RegisterResponseDto } from './models/RegisterResponseDto';
 export type { StateResponseDto } from './models/StateResponseDto';
+export type { SubscriptionItemsDto } from './models/SubscriptionItemsDto';
 export type { ValidateUserDto } from './models/ValidateUserDto';
 export type { VerifyEmailDto } from './models/VerifyEmailDto';
 

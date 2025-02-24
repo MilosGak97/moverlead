@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Filtering from '../pages/filtering/Filtering.tsx';
-import Billing from '../pages/protected/billing/Billing.tsx';
-import { Subscription } from '../pages/subscription/Subscription.tsx';
+import { Subscriptions } from '../pages/protected/subscriptions/Subscriptions.tsx';
+import { Order } from '../pages/order/Order.tsx';
 import { Listings } from '../pages/protected/listing/Listings.tsx';
 import Web from '../routing/Web.tsx';
 import { Settings } from '../pages/settings/Settings.tsx';
@@ -43,8 +43,8 @@ const router = createBrowserRouter([
       { path: 'dashboard', element: <Dashboard /> },
       { path: 'filtering', element: <Filtering /> },
       { path: 'listings', element: <Listings /> },
-      { path: 'billing', element: <Billing /> },
-      { path: 'subscription', element: <Subscription /> },
+      { path: 'subscriptions', element: <Subscriptions /> },
+      { path: 'order', element: <Order /> },
       { path: 'settings', element: <Settings /> },
       { path: 'verify-email', element: <VerifyEmail /> },
     ],

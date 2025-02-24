@@ -21,14 +21,14 @@ const navigation = [
   { name: 'Listings', href: routes.listing, icon: HomeIcon, current: false },
   { name: 'Filtering', href: routes.filtering, icon: EyeIcon, current: false },
   {
-    name: 'Subscription',
-    href: routes.subscription,
+    name: 'Order',
+    href: routes.order,
     icon: ShoppingCartIcon,
     current: false,
   },
   {
-    name: 'Billing',
-    href: routes.billing,
+    name: 'Subscriptions',
+    href: routes.subscriptions,
     icon: CreditCardIcon,
     current: false,
   },

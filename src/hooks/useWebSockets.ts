@@ -1,37 +1,27 @@
-import useWebSocket from 'react-use-websocket';
+import { useEffect, useState } from 'react';
+import { io, Socket } from 'socket.io-client';
 import { environmentVariables } from '../env/environmentVariables';
-import { useEffect } from 'react';
 
 export const useWebSockets = () => {
-  const { lastJsonMessage: messageOne } = useWebSocket(
-    environmentVariables.webSocketApiUrl,
-    {
-      heartbeat: {
-        message: 'ping',
-        returnMessage: 'pong',
-        timeout: 120000,
-        interval: 60000,
-      },
-    }
-  );
-
-  const { lastJsonMessage: messageTwo } = useWebSocket(
-    environmentVariables.baseApiUrl,
-    {
-      heartbeat: {
-        message: 'ping',
-        returnMessage: 'pong',
-        timeout: 120000,
-        interval: 60000,
-      },
-    }
-  );
+  const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
-    const firstEvent = messageOne;
-    const secondEvent = messageTwo;
+    const newSocket = io(environmentVariables.webSocketApiUrl, {
+      transports: ['websocket'],
+    });
 
-    console.log(firstEvent);
-    console.log(secondEvent);
-  });
+    setSocket(newSocket);
+
+    newSocket.on('connect', () => console.log('Connected!'));
+    newSocket.on('message', (data: unknown) => console.log('Received: ', data));
+
+    return () => {
+      newSocket.disconnect();
+    };
+  }, []);
+
+  return {
+    sendMessageOne: (event: string, data?: unknown) =>
+      socket?.emit(event, data),
+  };
 };

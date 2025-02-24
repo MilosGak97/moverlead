@@ -13,7 +13,7 @@ import { Toast } from '../../components/Toast';
 type StateOptions = StateResponseDto['states'][number];
 export type State = { id: StateOptions; name: StateOptions };
 
-export const Subscription = () => {
+export const Order = () => {
   const checkbox = useRef<HTMLInputElement>(null);
   const [checked, setChecked] = useState(false);
   const [selectedState, setSelectedState] = useState<State | null>(null);
@@ -112,9 +112,7 @@ export const Subscription = () => {
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:grid sm:grid-cols-2 gap-4">
           <div className="sm:flex-auto">
-            <h1 className="text-base font-semibold text-gray-900">
-              Subscription
-            </h1>
+            <h1 className="text-base font-semibold text-gray-900">Order</h1>
             <p className="mt-2 text-sm text-gray-700">
               A list of all counties that are on the market for property
               listings subscription.
