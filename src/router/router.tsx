@@ -14,6 +14,7 @@ import { PublicRoute } from '../pages/public/components/public-route/PublicRoute
 import { ProtectedLayout } from '../layouts/protected/ProtectedLayout.tsx';
 import { ProtectedRoute } from '../pages/protected/components/protected-route/ProtectedRoute.tsx';
 import { routes } from './routes.ts';
+import { SuccessfullSubscription } from '../pages/successfull-subscription/SuccessfullSubscription.tsx';
 
 const router = createBrowserRouter([
   {
@@ -32,7 +33,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: '/home',
+    path: '/portal',
     element: (
       <ProtectedRoute>
         <ProtectedLayout />
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
       { path: 'order', element: <Order /> },
       { path: 'settings', element: <Settings /> },
       { path: 'verify-email', element: <VerifyEmail /> },
+      {
+        path: 'successfull-subscription',
+        element: <SuccessfullSubscription />,
+      },
     ],
   },
 ]);
