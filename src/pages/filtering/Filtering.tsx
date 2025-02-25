@@ -38,6 +38,8 @@ const Filtering = () => {
     }),
   });
 
+  const isPropertyFilteringEmpty = !data?.selectedProperty;
+
   const { mutate, isPending } = useMutation({
     mutationFn: (selectedAction: FilteredStatus) =>
       api.properties.propertiesControllerFilteringAction({
@@ -80,10 +82,10 @@ const Filtering = () => {
       isLoading={isLoading}
       isError={isError}
       onErrorButtonClick={refetch}
-      isEmpty={false}
+      isEmpty={isPropertyFilteringEmpty}
       emptyTitle={'Ooops.. There is nothing more to filter.'}
       emptyDescription={'Check again tomorrow or Subscribe to more counites'}
-      emptyButtonText={'Order'}
+      emptyButtonText={'Order now'}
       onEmptyClick={() => navigate(routes.order)}
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-4">
@@ -101,18 +103,20 @@ const Filtering = () => {
         ))}
       </div>
 
-      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 flex gap-4">
-        {filterButtonOptions.map(({ label, value }) => (
-          <button
-            key={value}
-            onClick={() => mutate(value)}
-            disabled={isPending}
-            className="px-6 py-3 bg-[#4379F2] text-white text-xl font-medium rounded-lg shadow-md hover:bg-[#365bb0] transition-colors duration-300 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100"
-          >
-            {label}
-          </button>
-        ))}
-      </div>
+      {!isPropertyFilteringEmpty && (
+        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 flex gap-4">
+          {filterButtonOptions.map(({ label, value }) => (
+            <button
+              key={value}
+              onClick={() => mutate(value)}
+              disabled={isPending}
+              className="px-6 py-3 bg-[#4379F2] text-white text-xl font-medium rounded-lg shadow-md hover:bg-[#365bb0] transition-colors duration-300 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100"
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      )}
 
       <div className="fixed md:bottom-4 md:top-auto top-20 right-8">
         <div className="px-6 py-3 bg-[#4379F2] text-white text-xl font-medium rounded-lg shadow-md">
