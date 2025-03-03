@@ -41,6 +41,7 @@ export const SelectState = ({
         setSelectedState(state);
         setInputValue('');
       }}
+      immediate
     >
       <Label className="block text-sm font-medium text-gray-900">
         Select State

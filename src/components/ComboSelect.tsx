@@ -43,6 +43,7 @@ export const ComboSelect = () => {
         setInputValue('');
         setStates(selectedStates);
       }}
+      immediate
     >
       <Label className="block text-sm font-medium text-gray-900">
         Select State

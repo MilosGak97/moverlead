@@ -34,6 +34,7 @@ export const SelectStatus = ({
         setSelectedStatus(status as SubscriptionStatusState);
         setInputValue('');
       }}
+      immediate
     >
       <Label className="block text-sm font-medium text-gray-900">
         Select Status
