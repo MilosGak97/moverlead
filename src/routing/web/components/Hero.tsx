@@ -1,13 +1,18 @@
 import { Container } from './Container.tsx';
 import { Button } from './Button.tsx';
 
-import logoLaravel from '../images/logos/laravel.svg';
-import logoMirage from '../images/logos/mirage.svg';
-import logoStatamic from '../images/logos/statamic.svg';
-import logoStaticKit from '../images/logos/statickit.svg';
-import logoTransistor from '../images/logos/transistor.svg';
-import logoTuple from '../images/logos/tuple.svg';
+import amExpress from '../images/logos/am_express_logo.png';
+import ecoBins from '../images/logos/eco_bins_logo.png';
+import vanExpress from '../images/logos/van_express_logo.png';
+import viteMoving from '../images/logos/vite_moving_logo.png';
 import { routes } from '../../../router/routes.ts';
+
+const trustedByCompanies = [
+  { name: 'Transistor', logo: vanExpress },
+  { name: 'Tuple', logo: viteMoving },
+  { name: 'StaticKit', logo: ecoBins },
+  { name: 'Mirage', logo: amExpress },
+];
 
 export function Hero() {
   return (
@@ -52,31 +57,11 @@ export function Hero() {
         </p>
         <ul
           role="list"
-          className="mt-8 flex items-center justify-center gap-x-8 sm:flex-col sm:gap-x-0 sm:gap-y-10 xl:flex-row xl:gap-x-12 xl:gap-y-0"
+          className="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 justify-center gap-x-8 sm:flex-col sm:gap-x-0 sm:gap-y-10 xl:flex-row xl:gap-x-12 xl:gap-y-0"
         >
-          {[
-            [
-              { name: 'Transistor', logo: logoTransistor },
-              { name: 'Tuple', logo: logoTuple },
-              { name: 'StaticKit', logo: logoStaticKit },
-            ],
-            [
-              { name: 'Mirage', logo: logoMirage },
-              { name: 'Laravel', logo: logoLaravel },
-              { name: 'Statamic', logo: logoStatamic },
-            ],
-          ].map((group, groupIndex) => (
-            <li key={groupIndex}>
-              <ul
-                role="list"
-                className="flex flex-col items-center gap-y-8 sm:flex-row sm:gap-x-12 sm:gap-y-0"
-              >
-                {group.map((company) => (
-                  <li key={company.name} className="flex">
-                    <img src={company.logo} alt={company.name} />
-                  </li>
-                ))}
-              </ul>
+          {trustedByCompanies.map((company) => (
+            <li key={company.name} className="flex justify-center h-20 ">
+              <img src={company.logo} alt={company.name} />
             </li>
           ))}
         </ul>

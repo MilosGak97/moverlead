@@ -1,32 +1,32 @@
-'use client'
+'use client';
 
-import { useId } from 'react'
-import React from "react";
-import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
-import clsx from 'clsx'
+import { useId } from 'react';
+import React from 'react';
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
+import clsx from 'clsx';
 
-import { Container } from './Container'
-import screenshotContacts from '../images/screenshots/contacts.png'
-import screenshotInventory from '../images/screenshots/inventory.png'
-import screenshotProfitLoss from '../images/screenshots/profit-loss.png'
+import { Container } from './Container';
+import screenshotContacts from '../images/screenshots/contacts.png';
+import screenshotInventory from '../images/screenshots/inventory.png';
+import screenshotProfitLoss from '../images/screenshots/profit-loss.png';
 
 interface Feature {
-  name: React.ReactNode
-  summary: string
-  description: string
-  image: string
-  icon: React.ComponentType
+  name: React.ReactNode;
+  summary: string;
+  description: string;
+  image: string;
+  icon: React.ComponentType;
 }
 
 const features: Array<Feature> = [
   {
-    name: 'Reporting',
-    summary: 'Stay on top of things with always up-to-date reporting features.',
+    name: 'Listings',
+    summary: 'High-Intent Moving Leads',
     description:
-      'We talked about reporting in the section above but we needed three items here, so mentioning it one more time for posterity.',
+      'Our platform filters listings to highlight homes that are actively preparing for a move, so you can connect with homeowners at the right time.',
     image: screenshotProfitLoss,
     icon: function ReportingIcon() {
-      const id = useId()
+      const id = useId();
       return (
         <>
           <defs>
@@ -50,15 +50,14 @@ const features: Array<Feature> = [
             strokeLinejoin="round"
           />
         </>
-      )
+      );
     },
   },
   {
-    name: 'Inventory',
-    summary:
-      'Never lose track of what’s in stock with accurate inventory tracking.',
+    name: 'Filtering',
+    summary: 'Data-Driven Decision Making',
     description:
-      'We don’t offer this as part of our software but that statement is inarguably true. Accurate inventory tracking would help you for sure.',
+      'Leverage AI-powered insights to analyze property photos and evaluate lead quality. Our technology examines listing images to help you prioritize the most valuable moving opportunities with confidence.',
     image: screenshotInventory,
     icon: function InventoryIcon() {
       return (
@@ -78,15 +77,14 @@ const features: Array<Feature> = [
             fill="#fff"
           />
         </>
-      )
+      );
     },
   },
   {
-    name: 'Contacts',
-    summary:
-      'Organize all of your contacts, service providers, and invoices in one place.',
+    name: 'Campaigns',
+    summary: 'Effortless Direct Mail Campaigns',
     description:
-      'This also isn’t actually a feature, it’s just some friendly advice. We definitely recommend that you do this, you’ll feel really organized and professional.',
+      'Generate label-ready documents for USPS, UPS, and other mailing services in just a few clicks. Streamline your outreach by easily preparing and sending targeted mailers to high-intent moving leads.',
     image: screenshotContacts,
     icon: function ContactsIcon() {
       return (
@@ -101,10 +99,10 @@ const features: Array<Feature> = [
             fill="#fff"
           />
         </>
-      )
+      );
     },
   },
-]
+];
 
 function Feature({
   feature,
@@ -112,8 +110,8 @@ function Feature({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<'div'> & {
-  feature: Feature
-  isActive: boolean
+  feature: Feature;
+  isActive: boolean;
 }) {
   return (
     <div
@@ -123,7 +121,7 @@ function Feature({
       <div
         className={clsx(
           'w-9 rounded-lg',
-          isActive ? 'bg-[#4379F2]' : 'bg-slate-500',
+          isActive ? 'bg-[#4379F2]' : 'bg-slate-500'
         )}
       >
         <svg aria-hidden="true" className="h-9 w-9" fill="none">
@@ -133,7 +131,7 @@ function Feature({
       <h3
         className={clsx(
           'mt-6 text-sm font-medium',
-          isActive ? 'text-[#4379F2]' : 'text-slate-600',
+          isActive ? 'text-[#4379F2]' : 'text-slate-600'
         )}
       >
         {feature.name}
@@ -143,7 +141,7 @@ function Feature({
       </p>
       <p className="mt-4 text-sm text-slate-600">{feature.description}</p>
     </div>
-  )
+  );
 }
 
 function FeaturesMobile() {
@@ -166,7 +164,7 @@ function FeaturesMobile() {
         </div>
       ))}
     </div>
-  )
+  );
 }
 
 function FeaturesDesktop() {
@@ -200,7 +198,7 @@ function FeaturesDesktop() {
                   key={feature.summary}
                   className={clsx(
                     'px-5 transition duration-500 ease-in-out ui-not-focus-visible:outline-none',
-                    featureIndex !== selectedIndex && 'opacity-60',
+                    featureIndex !== selectedIndex && 'opacity-60'
                   )}
                   style={{ transform: `translateX(-${selectedIndex * 100}%)` }}
                   aria-hidden={featureIndex !== selectedIndex}
@@ -221,7 +219,7 @@ function FeaturesDesktop() {
         </>
       )}
     </TabGroup>
-  )
+  );
 }
 
 export function SecondaryFeatures() {
@@ -234,16 +232,18 @@ export function SecondaryFeatures() {
       <Container>
         <div className="mx-auto max-w-2xl md:text-center">
           <h2 className="font-display text-3xl tracking-tight text-slate-900 sm:text-4xl">
-            Simplify everyday business tasks.
+            Benefits of using Mover Lead
           </h2>
           <p className="mt-4 text-lg tracking-tight text-slate-700">
-            Because you’d probably be a little confused if we suggested you
-            complicate your everyday business tasks instead.
+            Stay ahead of the competition by identifying homeowners who are
+            preparing to move. Our advanced filtering technology pinpoints
+            furnished, move-ready homes—helping moving and storage companies
+            focus on the most profitable opportunities.
           </p>
         </div>
         <FeaturesMobile />
         <FeaturesDesktop />
       </Container>
     </section>
-  )
+  );
 }
