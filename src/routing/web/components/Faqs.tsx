@@ -1,59 +1,60 @@
-import { Container } from './Container'
-import backgroundImage from '../images/background-faqs.jpg'
+import { Container } from './Container';
+import backgroundImage from '../images/background-faqs.jpg';
 
 const faqs = [
   [
     {
-      question: 'Does TaxPal handle VAT?',
+      question: 'What is Mover Lead?',
       answer:
-        'Well no, but if you move your company offshore you can probably ignore it.',
+        'Mover Lead is a platform designed for moving and storage companies to identify high-intent moving leads. We use advanced filtering technology to analyze property listings and highlight furnished, move-ready homes.',
     },
     {
-      question: 'Can I pay for my subscription via purchase order?',
-      answer: 'Absolutely, we are happy to take your money in all forms.',
+      question: 'How does your filtering feature work?',
+      answer:
+        'Our system analyzes Zillow photos and property details to determine if a home is furnished or empty. This helps moving companies target leads that are more likely preparing for a move.',
     },
     {
-      question: 'How do I apply for a job at TaxPal?',
+      question: 'What kind of property listings are available?',
       answer:
-        'We only hire our customers, so subscribe for a minimum of 6 months and then let’s talk.',
+        'We provide access to real estate listings that are new on the market. Our filtering tool helps identify properties that are move-ready, allowing you to focus on homeowners who are more likely to need moving services.',
     },
   ],
   [
     {
-      question: 'What was that testimonial about tax fraud all about?',
+      question: 'How does Mover Lead help with outreach?',
       answer:
-        'TaxPal is just a software application, ultimately your books are your responsibility.',
+        'Mover Lead offers multiple ways to connect with potential customers, including access to realtor information and tools for sending direct mail campaigns. You can generate label-ready documents for USPS, UPS, and other mailing services in just a few clicks.',
     },
     {
-      question:
-        'TaxPal sounds horrible but why do I still feel compelled to purchase?',
+      question: 'Can I choose specific counties to target?',
       answer:
-        'This is the power of excellent visual design. You just can’t resist it, no matter how poorly it actually functions.',
+        'Yes! Our Smart Billing system allows you to pay only for the counties you need, ensuring you focus your efforts on the most relevant markets.',
     },
     {
-      question:
-        'I found other companies called TaxPal, are you sure you can use this name?',
+      question: 'How often is the data updated?',
       answer:
-        'Honestly not sure at all. We haven’t actually incorporated or anything, we just thought it sounded cool and made this website.',
+        'Our property listings and filtering data are updated daily to ensure you have access to the most recent and relevant information.',
     },
   ],
   [
     {
-      question: 'How do you generate reports?',
+      question: 'Do you provide contact details for homeowners?',
       answer:
-        'You just tell us what data you need a report for, and we get our kids to create beautiful charts for you using only the finest crayons.',
+        'While we focus on identifying high-intent moving leads, we do not provide direct homeowner contact information. However, you can leverage our platform to connect with realtors and optimize your outreach strategy.',
     },
     {
-      question: 'Can we expect more inventory features?',
-      answer: 'In life it’s really better to never expect anything at all.',
+      question: 'How do I get started?',
+      answer:
+        'You can Create an Account on our platform or Schedule a Meeting with our team to learn more about how Mover Lead can help your business.',
     },
     {
-      question: 'I lost my password, how do I get into my account?',
+      question:
+        'What makes Mover Lead different from other lead generation platforms?',
       answer:
-        'Send us an email and we will send you a copy of our latest password spreadsheet so you can find your information.',
+        'Unlike generic lead generation tools, Mover Lead specifically targets furnished, move-ready properties. Our AI-powered filtering technology ensures that you only spend time and resources on high-quality leads.',
     },
   ],
-]
+];
 
 export function Faqs() {
   return (
@@ -103,5 +104,5 @@ export function Faqs() {
         </ul>
       </Container>
     </section>
-  )
+  );
 }
