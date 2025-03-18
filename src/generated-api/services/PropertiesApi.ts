@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { County } from '../models/County';
+import type { FetchSnapshotDto } from '../models/FetchSnapshotDto';
 import type { FilteringActionDto } from '../models/FilteringActionDto';
 import type { FilteringResponseDto } from '../models/FilteringResponseDto';
 import type { GetDashboardResponseDto } from '../models/GetDashboardResponseDto';
@@ -99,7 +100,7 @@ export class PropertiesApi {
    * @returns StateResponseDto
    * @throws ApiError
    */
-  public propertiesControllerListStates(): CancelablePromise<StateResponseDto> {
+  public propertiesControllerListStates(): CancelablePromise<Array<StateResponseDto>> {
     return this.httpRequest.request({
       method: 'GET',
       url: '/api/properties/state',
@@ -111,16 +112,15 @@ export class PropertiesApi {
    * @throws ApiError
    */
   public propertiesControllerFetchSnapshotData({
-    id,
+    requestBody,
   }: {
-    id: string,
+    requestBody: FetchSnapshotDto,
   }): CancelablePromise<any> {
     return this.httpRequest.request({
       method: 'POST',
-      url: '/api/properties/scrapper/fetch-snapshot-data/{id}',
-      path: {
-        'id': id,
-      },
+      url: '/api/properties/no-ui/fetch-snapshot-data',
+      body: requestBody,
+      mediaType: 'application/json',
     });
   }
   /**
@@ -163,20 +163,30 @@ export class PropertiesApi {
    * @returns any
    * @throws ApiError
    */
-  public propertiesControllerTriggerScraper(): CancelablePromise<any> {
+  public propertiesControllerProcessCsvFile(): CancelablePromise<any> {
     return this.httpRequest.request({
       method: 'POST',
-      url: '/api/properties/trigger-scrapper',
+      url: '/api/properties/process',
     });
   }
   /**
    * @returns any
    * @throws ApiError
    */
-  public propertiesControllerProcessCsvFile(): CancelablePromise<any> {
+  public propertiesControllerWebhook({
+    webhookSecret,
+    daysOnZillow,
+  }: {
+    webhookSecret: string,
+    daysOnZillow: string,
+  }): CancelablePromise<any> {
     return this.httpRequest.request({
       method: 'POST',
-      url: '/api/properties/process',
+      url: '/api/properties/webhook',
+      query: {
+        'webhookSecret': webhookSecret,
+        'daysOnZillow': daysOnZillow,
+      },
     });
   }
 }

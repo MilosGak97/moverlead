@@ -11,7 +11,6 @@ export const useStates = () => {
   } = useQuery({
     queryKey: [QueryKeys.STATES],
     queryFn: () => api.properties.propertiesControllerListStates(),
-    select: (data) => data.states.map((state) => ({ id: state, name: state })),
   });
 
   return { states, isLoadingStates, isErrorStates, refetchStates };

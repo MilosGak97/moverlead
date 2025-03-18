@@ -14,6 +14,7 @@ export type { ChangePasswordDto } from './models/ChangePasswordDto';
 export type { County } from './models/County';
 export type { CreateCheckoutSessionDto } from './models/CreateCheckoutSessionDto';
 export type { CreateCheckoutSessionResponseDto } from './models/CreateCheckoutSessionResponseDto';
+export type { FetchSnapshotDto } from './models/FetchSnapshotDto';
 export type { FilteringActionDto } from './models/FilteringActionDto';
 export type { FilteringResponseDto } from './models/FilteringResponseDto';
 export type { GetCompanyResponseDto } from './models/GetCompanyResponseDto';
@@ -31,5 +32,6 @@ export type { VerifyEmailDto } from './models/VerifyEmailDto';
 
 export { AuthApi } from './services/AuthApi';
 export { PropertiesApi } from './services/PropertiesApi';
+export { ScrapperApi } from './services/ScrapperApi';
 export { SettingsApi } from './services/SettingsApi';
 export { StripeApi } from './services/StripeApi';

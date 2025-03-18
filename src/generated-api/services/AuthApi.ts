@@ -77,7 +77,7 @@ export class AuthApi {
   }): CancelablePromise<any> {
     return this.httpRequest.request({
       method: 'POST',
-      url: '/api/auth/verify-email',
+      url: '/api/auth/verify-aws',
       body: requestBody,
       mediaType: 'application/json',
     });

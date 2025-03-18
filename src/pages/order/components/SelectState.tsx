@@ -11,11 +11,11 @@ import {
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useStates } from '../../../hooks/useStates';
-import { State } from '../Order';
+import { StateResponseDto } from '../../../generated-api';
 
 type SelectStateProps = {
-  selectedState: State | null;
-  setSelectedState: Dispatch<SetStateAction<State | null>>;
+  selectedState: StateResponseDto | null;
+  setSelectedState: Dispatch<SetStateAction<StateResponseDto | null>>;
 };
 
 export const SelectState = ({
@@ -65,7 +65,7 @@ export const SelectState = ({
           <ComboboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
             {filteredStates.map((state) => (
               <ComboboxOption
-                key={state.id}
+                key={state.name}
                 value={state}
                 className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-blue-600 data-[focus]:text-white"
               >

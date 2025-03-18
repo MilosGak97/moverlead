@@ -10,13 +10,12 @@ import { County, StateResponseDto } from '../../generated-api';
 import { useToast } from '../../hooks/useToast';
 import { Toast } from '../../components/Toast';
 
-type StateOptions = StateResponseDto['states'][number];
-export type State = { id: StateOptions; name: StateOptions };
-
 export const Order = () => {
   const checkbox = useRef<HTMLInputElement>(null);
   const [checked, setChecked] = useState(false);
-  const [selectedState, setSelectedState] = useState<State | null>(null);
+  const [selectedState, setSelectedState] = useState<StateResponseDto | null>(
+    null
+  );
   const [selectedCounties, setSelectedCounties] = useState<County[]>([]);
   const [cartCounties, setCartCounties] = useState<County[]>([]);
 
@@ -39,7 +38,7 @@ export const Order = () => {
     queryKey: [QueryKeys.PRODUCTS, selectedState?.name],
     queryFn: () =>
       api.properties.propertiesControllerGetProducts({
-        state: selectedState!.name,
+        state: selectedState!.abbreviation as County['state'],
       }),
     enabled: !!selectedState,
   });

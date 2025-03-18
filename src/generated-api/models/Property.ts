@@ -6,7 +6,11 @@ import type { County } from './County';
 export type Property = {
   id: string;
   county?: County;
-  users?: Array<string>;
+  homeStatus?: string;
+  homeStatusDate?: string;
+  comingSoonDate?: string;
+  forSaleDate?: string;
+  pendingDate?: string;
   filteredStatus?: string;
   filteredStatusDate?: string;
   initialScrape: boolean;
@@ -21,8 +25,6 @@ export type Property = {
   bathrooms?: number;
   price?: number;
   homeType?: string;
-  homeStatus?: string;
-  homeStatusDate?: string;
   isOffMarket?: boolean;
   parcelId?: string;
   realtorName?: string;

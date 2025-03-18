@@ -2,8 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type StateResponseDto = {
-  abbreviation: string;
-  name: string;
+export type FetchSnapshotDto = {
+  id: string;
+  daysOnZillow: '1 day' | '36 months';
 };
 
