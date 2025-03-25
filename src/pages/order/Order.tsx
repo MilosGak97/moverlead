@@ -10,6 +10,8 @@ import { County, StateResponseDto } from '../../generated-api';
 import { useToast } from '../../hooks/useToast';
 import { Toast } from '../../components/Toast';
 
+const MAX_NUMBER_OF_COUNTIES = 20;
+
 export const Order = () => {
   const checkbox = useRef<HTMLInputElement>(null);
   const [checked, setChecked] = useState(false);
@@ -18,6 +20,9 @@ export const Order = () => {
   );
   const [selectedCounties, setSelectedCounties] = useState<County[]>([]);
   const [cartCounties, setCartCounties] = useState<County[]>([]);
+
+  const isMaxNumberOfCountiesReached =
+    selectedCounties.length + cartCounties.length >= MAX_NUMBER_OF_COUNTIES;
 
   const {
     toastText: maxSelectedCountiesErrorToast,
@@ -56,21 +61,40 @@ export const Order = () => {
     onError: addStripePaymentFailedToastText,
   });
 
-  const toggleSelectedCounty = () => {
-    setChecked((prevState) => !prevState);
-    if (selectedCounties.length === counties?.length) {
-      setSelectedCounties([]);
-    } else {
-      setSelectedCounties(counties as County[]);
-    }
+  const toggleSelectedAllCounties = () => {
+    if (!counties) return;
+
+    setChecked((prevChecked) => {
+      if (prevChecked) {
+        setSelectedCounties([]);
+        return false;
+      }
+
+      const remainingSlots = MAX_NUMBER_OF_COUNTIES - cartCounties.length;
+
+      const newSelection = counties.slice(0, remainingSlots);
+      setSelectedCounties(newSelection);
+
+      if (counties.length > remainingSlots) {
+        addMaxSelectedCountiesErrorToast(
+          'You cannot subscribe to more than 20 counties at once. Only the available slots have been filled.'
+        );
+      }
+
+      return true;
+    });
   };
 
   const toggleIndividualCounty = (county: County, isChecked: boolean) => {
+    if (isChecked && isMaxNumberOfCountiesReached) return;
+
     setSelectedCounties((prevSelected) =>
       isChecked
         ? [...prevSelected, county]
         : prevSelected.filter((c) => c.id !== county.id)
     );
+
+    if (!isChecked && checked) setChecked(false);
   };
 
   const checkIsCountyInCart = (county: County) =>
@@ -89,18 +113,6 @@ export const Order = () => {
 
   const removeFromCart = (countyId: string) => {
     setCartCounties((prevCart) => prevCart.filter((c) => c.id !== countyId));
-  };
-
-  const handleCheckoutClick = () => {
-    if (cartCounties.length > 20) {
-      addMaxSelectedCountiesErrorToast(
-        'You cannot subscribe to more than 20 counties at once'
-      );
-
-      return;
-    }
-
-    mutate();
   };
 
   const isLoading = isLoadingStates || isLoadingCounties;
@@ -147,9 +159,9 @@ export const Order = () => {
             <div className="flex flex-shrink-0 h-fit gap-2">
               <button
                 type="button"
-                disabled={!cartCounties.length}
+                disabled={!cartCounties.length || isPending}
                 className="rounded-md bg-[#4379F2] px-3 py-1.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-600 disabled:border-gray-300 disabled:bg-gray-100"
-                onClick={handleCheckoutClick}
+                onClick={() => mutate()}
               >
                 {isPending ? 'Loading...' : 'Checkout'}
               </button>
@@ -193,6 +205,20 @@ export const Order = () => {
                         >
                           Add to Cart
                         </button>
+                        <span
+                          className={`text-sm ${
+                            isMaxNumberOfCountiesReached
+                              ? 'text-red-400'
+                              : 'text-gray-400'
+                          }`}
+                        >
+                          ({selectedCounties.length} selected
+                          {cartCounties.length > 0 &&
+                            ` / ${cartCounties.length} in cart`}
+                          {isMaxNumberOfCountiesReached &&
+                            ' - Max limit reached'}
+                          )
+                        </span>
                       </div>
                     )}
                     {counties && counties?.length > 0 ? (
@@ -205,10 +231,10 @@ export const Order = () => {
                             >
                               <input
                                 type="checkbox"
-                                className="absolute left-4 top-1/2 -mt-2 h-4 w-4"
+                                className="absolute left-4 top-1/2 -mt-2 h-4 w-4 cursor-pointer"
                                 ref={checkbox}
                                 checked={checked}
-                                onChange={toggleSelectedCounty}
+                                onChange={toggleSelectedAllCounties}
                               />
                             </th>
                             <th
@@ -241,14 +267,18 @@ export const Order = () => {
                             return (
                               <tr
                                 key={county.id}
-                                className={` ${
+                                className={`relative group ${
                                   isCountySelected
                                     ? 'bg-gray-100'
                                     : 'hover:bg-gray-50'
                                 } ${
                                   isCountyInCart
                                     ? 'cursor-default pointer-events-none opacity-25'
-                                    : 'cursor-pointer'
+                                    : `${
+                                        (!isMaxNumberOfCountiesReached ||
+                                          isCountySelected) &&
+                                        'cursor-pointer'
+                                      }`
                                 }`}
                                 onClick={() =>
                                   toggleIndividualCounty(
@@ -257,12 +287,29 @@ export const Order = () => {
                                   )
                                 }
                               >
-                                <td className="relative px-7 sm:w-12 sm:px-6 group">
+                                <td className=" px-7 sm:w-12 sm:px-6 group">
+                                  {/* TOOLTIP - mora unutar td-a zbog table, u suprotnom pobrka tabelu */}
+                                  <div
+                                    className={`absolute top-0 -translate-y-full bg-gray-500 left-1/2 -translate-x-1/2 p-1 px-2 rounded-xl text-sm text-white opacity-0 invisible group-hover:opacity-100 ${
+                                      isMaxNumberOfCountiesReached &&
+                                      !isCountySelected &&
+                                      'group-hover:visible transition-opacity'
+                                    }`}
+                                  >
+                                    Maximum limit reached. You can select up to
+                                    20 counties.
+                                    <div className="w-2 h-2 bg-gray-500 absolute left-1/2 -translate-x-1/2 rotate-45"></div>
+                                  </div>
+
                                   <input
                                     type="checkbox"
-                                    className={`absolute left-4 top-1/2 -mt-2 h-4 w-4 cursor-pointer`}
+                                    className={`absolute left-4 top-1/2 -mt-2 h-4 w-4 cursor-pointer disabled:cursor-default`}
                                     checked={isCountySelected || isCountyInCart}
                                     onClick={(e) => e.stopPropagation()} // Sprečava dvostruki klik
+                                    disabled={
+                                      isMaxNumberOfCountiesReached &&
+                                      !isCountySelected
+                                    }
                                     onChange={(e) =>
                                       toggleIndividualCounty(
                                         county,
