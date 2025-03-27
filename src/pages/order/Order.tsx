@@ -9,6 +9,7 @@ import { useStates } from '../../hooks/useStates';
 import { County, StateResponseDto } from '../../generated-api';
 import { useToast } from '../../hooks/useToast';
 import { Toast } from '../../components/Toast';
+import { XMarkIcon } from '@heroicons/react/20/solid';
 
 const MAX_NUMBER_OF_COUNTIES = 20;
 
@@ -27,6 +28,7 @@ export const Order = () => {
   const {
     toastText: maxSelectedCountiesErrorToast,
     addToast: addMaxSelectedCountiesErrorToast,
+    clearToast: clearMaxSelectedCountiesErrorToast,
   } = useToast();
   const {
     toastText: stripePaymentFailedToastText,
@@ -77,7 +79,8 @@ export const Order = () => {
 
       if (counties.length > remainingSlots) {
         addMaxSelectedCountiesErrorToast(
-          'You cannot subscribe to more than 20 counties at once. Only the available slots have been filled.'
+          'You can only subscribe to a maximum of 20 counties at a time. Once you`ve completed this checkout, you`ll be able to select more counties in the next transaction',
+          null
         );
       }
 
@@ -161,7 +164,7 @@ export const Order = () => {
                 type="button"
                 disabled={!cartCounties.length || isPending}
                 className="rounded-md bg-[#4379F2] px-3 py-1.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-600 disabled:border-gray-300 disabled:bg-gray-100"
-                onClick={() => mutate()}
+                onClick={mutate as () => void}
               >
                 {isPending ? 'Loading...' : 'Checkout'}
               </button>
@@ -200,10 +203,10 @@ export const Order = () => {
                       <div className="absolute left-14 top-0 flex h-12 items-center space-x-3 bg-white sm:left-12">
                         <button
                           type="button"
-                          className="inline-flex items-center rounded bg-white px-2 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                          className="inline-flex shrink-0 items-center rounded bg-[#23c197] px-2 py-1 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-[#00a99a]"
                           onClick={addSelectedToCart}
                         >
-                          Add to Cart
+                          + Add to Cart
                         </button>
                         <span
                           className={`text-sm ${
@@ -212,12 +215,11 @@ export const Order = () => {
                               : 'text-gray-400'
                           }`}
                         >
-                          ({selectedCounties.length} selected
+                          {selectedCounties.length} selected
                           {cartCounties.length > 0 &&
                             ` / ${cartCounties.length} in cart`}
                           {isMaxNumberOfCountiesReached &&
-                            ' - Max limit reached'}
-                          )
+                            ' - max 20 per checkout (you can subscribe to more after this)'}
                         </span>
                       </div>
                     )}
@@ -231,10 +233,11 @@ export const Order = () => {
                             >
                               <input
                                 type="checkbox"
-                                className="absolute left-4 top-1/2 -mt-2 h-4 w-4 cursor-pointer"
+                                className="absolute left-4 top-1/2 -mt-2 h-4 w-4 cursor-pointer disabled:cursor-default"
                                 ref={checkbox}
                                 checked={checked}
                                 onChange={toggleSelectedAllCounties}
+                                disabled={isMaxNumberOfCountiesReached}
                               />
                             </th>
                             <th
@@ -362,7 +365,19 @@ export const Order = () => {
         <Toast text={stripePaymentFailedToastText} type={'error'} />
       )}
       {maxSelectedCountiesErrorToast && (
-        <Toast text={maxSelectedCountiesErrorToast} type={'error'} />
+        <Toast
+          text={maxSelectedCountiesErrorToast}
+          type={'error'}
+          position={'topCenter'}
+          renderAdditionalComponent={
+            <div
+              className="w-5 h-5 ml-2 cursor-pointer hover:scale-110 flex-shrink-0"
+              onClick={clearMaxSelectedCountiesErrorToast}
+            >
+              <XMarkIcon />
+            </div>
+          }
+        />
       )}
     </>
   );

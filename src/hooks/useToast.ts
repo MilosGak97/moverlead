@@ -3,12 +3,18 @@ import { useState } from 'react';
 export const useToast = () => {
   const [toastText, setToastText] = useState<string | null>(null);
 
-  const addToast = (text = 'Something went wrong. Please try again.') => {
+  const clearToast = () => setToastText(null);
+
+  const addToast = (
+    text = 'Something went wrong. Please try again.',
+    duration: number | null = 5000
+  ) => {
     setToastText(text);
-    setTimeout(() => {
-      setToastText(null);
-    }, 5000);
+
+    if (duration) {
+      setTimeout(clearToast, duration);
+    }
   };
 
-  return { toastText, addToast };
+  return { toastText, addToast, clearToast };
 };

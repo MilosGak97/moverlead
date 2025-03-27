@@ -65,7 +65,7 @@ const SettingsView = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QueryKeys.COMPANY] });
     },
-    onError: addToast,
+    onError: () => addToast(),
   });
 
   const { mutate: mutateUpdatePassword, isPending: isPendingUpdatePassword } =
@@ -78,7 +78,7 @@ const SettingsView = () => {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: [QueryKeys.COMPANY] });
       },
-      onError: addToast,
+      onError: () => addToast(),
     });
 
   const handleCompanyInformationFormSubmit = (

@@ -51,7 +51,7 @@ const Filtering = () => {
         queryKey: [QueryKeys.PROPERTIES_FILTERING],
       });
     },
-    onError: addToast,
+    onError: () => addToast(),
   });
 
   useEffect(() => {

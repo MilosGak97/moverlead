@@ -9,7 +9,7 @@ import {
   Label,
 } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { useStates } from '../../../hooks/useStates';
 import { StateResponseDto } from '../../../generated-api';
 
@@ -23,6 +23,7 @@ export const SelectState = ({
   setSelectedState,
 }: SelectStateProps) => {
   const [inputValue, setInputValue] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const { states } = useStates();
 
@@ -40,6 +41,7 @@ export const SelectState = ({
       onChange={(state) => {
         setSelectedState(state);
         setInputValue('');
+        setTimeout(() => inputRef.current?.blur(), 0);
       }}
       immediate
     >
@@ -48,6 +50,7 @@ export const SelectState = ({
       </Label>
       <div className="relative mt-2">
         <ComboboxInput
+          ref={inputRef}
           className="block w-full rounded-md bg-white py-1.5 pl-3 pr-12 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-900 focus:outline focus:outline-2 focus:outline-blue-600 sm:text-sm overflow-hidden overflow-ellipsis"
           onChange={(event) => setInputValue(event.target.value)}
           onBlur={() => setInputValue('')}
