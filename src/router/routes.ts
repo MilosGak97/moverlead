@@ -4,6 +4,11 @@ export const routes = {
     login: '/auth/login',
     register: '/auth/register',
     verifyEmail: '/auth/verify-email',
+    forgotPassword: '/auth/forgot-password',
+  },
+  verify: {
+    root: '/verify',
+    setPassword: '/verify/set-password',
   },
   dashboard: '/portal/dashboard',
   listing: '/portal/listings',

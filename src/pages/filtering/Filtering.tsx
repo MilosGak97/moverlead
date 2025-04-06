@@ -31,10 +31,10 @@ const Filtering = () => {
 
   const { data, isLoading, isError, refetch } = useQuery({
     queryKey: [QueryKeys.PROPERTIES_FILTERING],
-    queryFn: () => api.properties.propertiesControllerFiltering(),
+    queryFn: () => api.properties.propertiesControllerFiltering({}),
     select: (data) => ({
-      selectedProperty: data.properties[0],
-      count: data.count,
+      selectedProperty: data.result[0],
+      count: data.totalRecords,
     }),
   });
 

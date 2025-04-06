@@ -2,7 +2,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type FilteringActionDto = {
-  action: 'FURNISHED' | 'EMPTY' | 'NO_DATA';
+export type FailedScrapperResponseDto = {
+  s3Key: string;
+  zillowUrl: string;
+  countyId: string;
 };
 

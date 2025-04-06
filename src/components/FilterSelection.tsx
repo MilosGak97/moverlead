@@ -22,11 +22,6 @@ const filtersListing = {
       { value: FilteredStatus.FURNISHED, label: 'Furnished', checked: false },
       { value: FilteredStatus.EMPTY, label: 'Empty', checked: false },
       { value: FilteredStatus.NO_DATA, label: 'No Data', checked: false },
-      {
-        value: FilteredStatus.NOT_FILTERED,
-        label: 'Not Filtered',
-        checked: false,
-      },
     ],
   },
 
@@ -67,7 +62,7 @@ const filtersSubscription = {
   },
 };
 
-const FilterListings = () => {
+const FilterListings = ({ totalCount }: { totalCount: number }) => {
   const { setFilteredStatus, setPropertyStatus } = useListingFilterContext();
 
   const handleFilteredStatusChange = (selectedOption: FilteredStatus) => {
@@ -97,7 +92,7 @@ const FilterListings = () => {
         <h2 id="filter-heading" className="sr-only">
           Filters
         </h2>
-        <div className="relative col-start-1 row-start-1 py-4">
+        <div className="relative py-4 flex items-center">
           <div className="mx-auto flex w-full space-x-6 divide-x divide-gray-200 px-4 text-sm sm:px-6 lg:px-8">
             <div>
               <DisclosureButton className="group flex items-center font-medium text-gray-700">
@@ -114,6 +109,14 @@ const FilterListings = () => {
                 className="text-gray-500 hover:cursor-pointer"
               >
                 Clear all
+              </button>
+            </div>
+            <div className="pl-6">
+              <button
+                type="button"
+                className="text-gray-500 hover:cursor-pointer"
+              >
+                Total ({totalCount})
               </button>
             </div>
           </div>

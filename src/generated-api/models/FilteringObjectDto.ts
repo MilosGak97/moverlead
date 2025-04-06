@@ -2,8 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type FetchSnapshotDto = {
+export type FilteringObjectDto = {
   id: string;
-  daysOnZillow: '1 day' | '36 months';
+  photos: Array<string>;
 };
 

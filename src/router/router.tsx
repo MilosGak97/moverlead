@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
 import Filtering from '../pages/filtering/Filtering.tsx';
 import { Subscriptions } from '../pages/protected/subscriptions/Subscriptions.tsx';
 import { Order } from '../pages/order/Order.tsx';
@@ -15,6 +15,9 @@ import { ProtectedLayout } from '../layouts/protected/ProtectedLayout.tsx';
 import { ProtectedRoute } from '../pages/protected/components/protected-route/ProtectedRoute.tsx';
 import { routes } from './routes.ts';
 import { SuccessfullSubscription } from '../pages/successfull-subscription/SuccessfullSubscription.tsx';
+import { ForgotPassword } from '../routing/web/forgot-password/ForgotPassword.tsx';
+import { SetPassword } from '../pages/verify/set-password/SetPassword.tsx';
+import { SlimLayout } from '../routing/web/components/SlimLayout.tsx';
 
 const router = createBrowserRouter([
   {
@@ -30,6 +33,22 @@ const router = createBrowserRouter([
       { index: true, element: <Login /> },
       { path: routes.auth.login, element: <Login /> },
       { path: routes.auth.register, element: <Register /> },
+      { path: routes.auth.forgotPassword, element: <ForgotPassword /> },
+    ],
+  },
+  {
+    path: routes.verify.root,
+    element: (
+      <SlimLayout>
+        <Outlet />
+      </SlimLayout>
+    ),
+    children: [
+      { index: true, element: <Navigate to={routes.verify.setPassword} /> },
+      {
+        path: 'set-password',
+        element: <SetPassword />,
+      },
     ],
   },
   {

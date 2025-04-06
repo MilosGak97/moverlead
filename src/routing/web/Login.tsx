@@ -64,7 +64,7 @@ const Login = () => {
       </p>
       <form
         onSubmit={handleFormSubmit}
-        className="mt-10 grid grid-cols-1 gap-y-8"
+        className="mt-10 mb-6 grid grid-cols-1 gap-y-8"
       >
         <TextField
           label="Email address"
@@ -85,6 +85,14 @@ const Login = () => {
           autoComplete="current-password"
           required
           className={passwordError ? 'border-red-500' : ''}
+          renderRightSideLabel={
+            <Link
+              to={routes.auth.forgotPassword}
+              className="text-sm font-medium text-blue-600 hover:underline"
+            >
+              Forgot password?
+            </Link>
+          }
         />
         <div>
           <Button type="submit" variant="solid" color="blue" className="w-full">
@@ -94,8 +102,6 @@ const Login = () => {
           </Button>
         </div>
       </form>
-
-      {/* Toast Notification */}
       {toastText && <Toast text={toastText} />}
     </SlimLayout>
   );

@@ -36,4 +36,21 @@ export class StripeApi {
       url: '/api/stripe/webhook',
     });
   }
+  /**
+   * @returns any
+   * @throws ApiError
+   */
+  public stripeControllerGetUserSubscriptions({
+    stripeCustomerId,
+  }: {
+    stripeCustomerId: string,
+  }): CancelablePromise<any> {
+    return this.httpRequest.request({
+      method: 'POST',
+      url: '/api/stripe/user-subscriptions/{stripeCustomerId}',
+      path: {
+        'stripeCustomerId': stripeCustomerId,
+      },
+    });
+  }
 }

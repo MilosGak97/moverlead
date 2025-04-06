@@ -2,9 +2,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { FilteringObjectDto } from './FilteringObjectDto';
-export type FilteringResponseDto = {
-  result: Array<FilteringObjectDto>;
+import type { GetListingObjectDto } from './GetListingObjectDto';
+export type GetListingsResponseDto = {
+  result: Array<GetListingObjectDto>;
   totalRecords: number;
   currentPage: number;
   totalPages: number;

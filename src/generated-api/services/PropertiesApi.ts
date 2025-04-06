@@ -3,13 +3,13 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { County } from '../models/County';
-import type { FetchSnapshotDto } from '../models/FetchSnapshotDto';
 import type { FilteringActionDto } from '../models/FilteringActionDto';
 import type { FilteringResponseDto } from '../models/FilteringResponseDto';
 import type { GetDashboardResponseDto } from '../models/GetDashboardResponseDto';
+import type { GetListingsResponseDto } from '../models/GetListingsResponseDto';
 import type { GetSubscriptionsResponseDto } from '../models/GetSubscriptionsResponseDto';
+import type { ListingsExportDto } from '../models/ListingsExportDto';
 import type { MessageResponseDto } from '../models/MessageResponseDto';
-import type { Property } from '../models/Property';
 import type { StateResponseDto } from '../models/StateResponseDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
@@ -28,10 +28,10 @@ export class PropertiesApi {
   }
   /**
    * Show Listings
-   * @returns Property
+   * @returns GetListingsResponseDto
    * @throws ApiError
    */
-  public propertiesControllerListings({
+  public propertiesControllerGetListings({
     filteredStatus,
     propertyStatus,
     state,
@@ -39,15 +39,19 @@ export class PropertiesApi {
     propertyValueTo,
     dateFrom,
     dateTo,
+    limit,
+    offset,
   }: {
-    filteredStatus?: Array<'FURNISHED' | 'EMPTY' | 'NO_DATA' | 'NOT_FILTERED'>,
+    filteredStatus?: Array<'FURNISHED' | 'EMPTY' | 'NO_DATA'>,
     propertyStatus?: Array<'COMING_SOON' | 'FOR_SALE' | 'PENDING'>,
     state?: Array<string>,
     propertyValueFrom?: number,
     propertyValueTo?: number,
     dateFrom?: string,
     dateTo?: string,
-  }): CancelablePromise<Array<Property>> {
+    limit?: number,
+    offset?: number,
+  }): CancelablePromise<GetListingsResponseDto> {
     return this.httpRequest.request({
       method: 'GET',
       url: '/api/properties/listings',
@@ -59,7 +63,60 @@ export class PropertiesApi {
         'propertyValueTo': propertyValueTo,
         'dateFrom': dateFrom,
         'dateTo': dateTo,
+        'limit': limit,
+        'offset': offset,
       },
+    });
+  }
+  /**
+   * Trigger export action for selected listings with usps needed fields
+   * @returns any
+   * @throws ApiError
+   */
+  public propertiesControllerListingsExportDetailed({
+    requestBody,
+  }: {
+    requestBody: ListingsExportDto,
+  }): CancelablePromise<any> {
+    return this.httpRequest.request({
+      method: 'POST',
+      url: '/api/properties/listings/export/detailed',
+      body: requestBody,
+      mediaType: 'application/json',
+    });
+  }
+  /**
+   * Trigger export action for selected listings with usps needed fields
+   * @returns any
+   * @throws ApiError
+   */
+  public propertiesControllerListingsExportUsps({
+    requestBody,
+  }: {
+    requestBody: ListingsExportDto,
+  }): CancelablePromise<any> {
+    return this.httpRequest.request({
+      method: 'POST',
+      url: '/api/properties/listings/export/usps',
+      body: requestBody,
+      mediaType: 'application/json',
+    });
+  }
+  /**
+   * Trigger export action for selected listings with usps needed fields
+   * @returns any
+   * @throws ApiError
+   */
+  public propertiesControllerCheckPrecisely({
+    requestBody,
+  }: {
+    requestBody: ListingsExportDto,
+  }): CancelablePromise<any> {
+    return this.httpRequest.request({
+      method: 'POST',
+      url: '/api/properties/listings/precisely',
+      body: requestBody,
+      mediaType: 'application/json',
     });
   }
   /**
@@ -67,10 +124,20 @@ export class PropertiesApi {
    * @returns FilteringResponseDto
    * @throws ApiError
    */
-  public propertiesControllerFiltering(): CancelablePromise<FilteringResponseDto> {
+  public propertiesControllerFiltering({
+    limit,
+    offset,
+  }: {
+    limit?: number,
+    offset?: number,
+  }): CancelablePromise<FilteringResponseDto> {
     return this.httpRequest.request({
       method: 'GET',
       url: '/api/properties/filtering',
+      query: {
+        'limit': limit,
+        'offset': offset,
+      },
     });
   }
   /**
@@ -104,23 +171,6 @@ export class PropertiesApi {
     return this.httpRequest.request({
       method: 'GET',
       url: '/api/properties/state',
-    });
-  }
-  /**
-   * Manually run the scrapper per brightdata ID
-   * @returns any
-   * @throws ApiError
-   */
-  public propertiesControllerFetchSnapshotData({
-    requestBody,
-  }: {
-    requestBody: FetchSnapshotDto,
-  }): CancelablePromise<any> {
-    return this.httpRequest.request({
-      method: 'POST',
-      url: '/api/properties/no-ui/fetch-snapshot-data',
-      body: requestBody,
-      mediaType: 'application/json',
     });
   }
   /**
@@ -163,16 +213,6 @@ export class PropertiesApi {
    * @returns any
    * @throws ApiError
    */
-  public propertiesControllerProcessCsvFile(): CancelablePromise<any> {
-    return this.httpRequest.request({
-      method: 'POST',
-      url: '/api/properties/process',
-    });
-  }
-  /**
-   * @returns any
-   * @throws ApiError
-   */
   public propertiesControllerWebhook({
     webhookSecret,
     daysOnZillow,
@@ -187,6 +227,16 @@ export class PropertiesApi {
         'webhookSecret': webhookSecret,
         'daysOnZillow': daysOnZillow,
       },
+    });
+  }
+  /**
+   * @returns any
+   * @throws ApiError
+   */
+  public propertiesControllerBrightdataEnrichment(): CancelablePromise<any> {
+    return this.httpRequest.request({
+      method: 'POST',
+      url: '/api/properties/brightdata-enrichment-trigger',
     });
   }
 }
