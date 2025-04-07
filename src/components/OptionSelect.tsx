@@ -1,7 +1,6 @@
 type FilterOption<T> = {
   value: T;
   label: string;
-  checked: boolean;
 };
 
 type FilterGroup<T> = {
@@ -11,12 +10,14 @@ type FilterGroup<T> = {
 
 type Props<T> = {
   filterGroup: FilterGroup<T>;
+  selectedValues: T[];
   onOptionSelected: (selectedOption: T) => void;
 };
 
 export const OptionSelect = <T,>({
   filterGroup,
   onOptionSelected,
+  selectedValues,
 }: Props<T>) => {
   return (
     <fieldset>
@@ -33,9 +34,9 @@ export const OptionSelect = <T,>({
               <div className="flex h-5 shrink-0 items-center">
                 <div className="group grid size-4 grid-cols-1">
                   <input
-                    defaultValue={option.value as string}
-                    defaultChecked={option.checked}
-                    onChange={(e) => onOptionSelected(e.target.value as T)}
+                    value={option.value as string}
+                    checked={selectedValues.includes(option.value)}
+                    onChange={() => onOptionSelected(option.value)}
                     id={uniqueId}
                     name={`${filterGroup.title}-color[]`}
                     type="checkbox"

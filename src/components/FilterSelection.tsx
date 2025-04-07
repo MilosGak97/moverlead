@@ -19,9 +19,9 @@ const filtersListing = {
   filterStatus: {
     title: 'Filtered Status',
     options: [
-      { value: FilteredStatus.FURNISHED, label: 'Furnished', checked: false },
-      { value: FilteredStatus.EMPTY, label: 'Empty', checked: false },
-      { value: FilteredStatus.NO_DATA, label: 'No Data', checked: false },
+      { value: FilteredStatus.FURNISHED, label: 'Furnished' },
+      { value: FilteredStatus.EMPTY, label: 'Empty' },
+      { value: FilteredStatus.NO_DATA, label: 'No Data' },
     ],
   },
 
@@ -31,10 +31,9 @@ const filtersListing = {
       {
         value: PropertyStatus.COMING_SOON,
         label: 'Coming Soon',
-        checked: false,
       },
-      { value: PropertyStatus.FOR_SALE, label: 'For Sale', checked: false },
-      { value: PropertyStatus.PENDING, label: 'Pending', checked: false },
+      { value: PropertyStatus.FOR_SALE, label: 'For Sale' },
+      { value: PropertyStatus.PENDING, label: 'Pending' },
     ],
   },
 };
@@ -47,23 +46,36 @@ const filtersSubscription = {
   price: {
     title: 'Status',
     options: [
-      { value: 'available', label: 'Available', checked: true },
-      { value: 'subscribed', label: 'Subscribed', checked: false },
+      { value: 'available', label: 'Available' },
+      { value: 'subscribed', label: 'Subscribed' },
     ],
   },
 
   price2: {
     title: 'Tier',
     options: [
-      { value: 'tier1', label: 'Tier 1', checked: false },
-      { value: 'tier2', label: 'Tier 2', checked: true },
-      { value: 'tier3', label: 'Tier 3', checked: false },
+      { value: 'tier1', label: 'Tier 1' },
+      { value: 'tier2', label: 'Tier 2' },
+      { value: 'tier3', label: 'Tier 3' },
     ],
   },
 };
 
-const FilterListings = ({ totalCount }: { totalCount: number }) => {
-  const { setFilteredStatus, setPropertyStatus } = useListingFilterContext();
+const FilterListings = ({
+  totalCount,
+  selectedItemsCount,
+}: {
+  totalCount: number;
+  selectedItemsCount: number;
+}) => {
+  const {
+    setFilteredStatus,
+    setPropertyStatus,
+    clearAll,
+    filteredStatus,
+    propertyStatus,
+    hasActiveFilters,
+  } = useListingFilterContext();
 
   const handleFilteredStatusChange = (selectedOption: FilteredStatus) => {
     setFilteredStatus((prev) =>
@@ -106,19 +118,23 @@ const FilterListings = ({ totalCount }: { totalCount: number }) => {
             <div className="pl-6">
               <button
                 type="button"
-                className="text-gray-500 hover:cursor-pointer"
+                className="text-gray-500 hover:cursor-pointer disabled:text-gray-300 disabled:cursor-default"
+                onClick={clearAll}
+                disabled={!hasActiveFilters}
               >
                 Clear all
               </button>
             </div>
             <div className="pl-6">
-              <button
-                type="button"
-                className="text-gray-500 hover:cursor-pointer"
-              >
-                Total ({totalCount})
-              </button>
+              <span className="text-gray-500">Total ({totalCount})</span>
             </div>
+            {!!selectedItemsCount && (
+              <div className="pl-6">
+                <span className="text-gray-500">
+                  Selected ({selectedItemsCount})
+                </span>
+              </div>
+            )}
           </div>
         </div>
         <DisclosurePanel
@@ -135,15 +151,13 @@ const FilterListings = ({ totalCount }: { totalCount: number }) => {
             <div className="grid grid-cols-2">
               <OptionSelect
                 filterGroup={filtersListing.filterStatus}
-                onOptionSelected={(selectedOption) =>
-                  handleFilteredStatusChange(selectedOption)
-                }
+                selectedValues={filteredStatus}
+                onOptionSelected={handleFilteredStatusChange}
               />
               <OptionSelect
                 filterGroup={filtersListing.propertyStatus}
-                onOptionSelected={(selectedOption) =>
-                  handlePropertyStatusChange(selectedOption)
-                }
+                selectedValues={propertyStatus}
+                onOptionSelected={handlePropertyStatusChange}
               />
             </div>
           </div>
@@ -191,6 +205,7 @@ const FilterSubscription = () => {
               <ComboSelect />
               <OptionSelect
                 filterGroup={filtersSubscription.price}
+                selectedValues={[]}
                 onOptionSelected={(selectedOption) =>
                   console.log(selectedOption)
                 }
@@ -199,6 +214,7 @@ const FilterSubscription = () => {
             <div className="grid auto-rows-min grid-cols-1 gap-y-10 md:grid-cols-2 md:gap-x-6">
               <OptionSelect
                 filterGroup={filtersSubscription.price2}
+                selectedValues={[]}
                 onOptionSelected={(selectedOption) =>
                   console.log(selectedOption)
                 }

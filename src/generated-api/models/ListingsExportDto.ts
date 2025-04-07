@@ -3,6 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export type ListingsExportDto = {
-  ids: Array<any[]>;
+  ids: Array<string>;
 };
 

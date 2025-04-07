@@ -4,14 +4,20 @@ interface Props {
   href: string;
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; // Type for an icon component
   current?: boolean;
+  onSidebarItemClick?: () => void;
 }
 
-const SidebarItem = ({ name, href, icon: Icon }: Props) => {
+const SidebarItem = ({ name, href, icon: Icon, onSidebarItemClick }: Props) => {
   return (
     <>
       <li key={name} className="mt-auto">
         <NavLink
           to={href}
+          onClick={() => {
+            if (onSidebarItemClick) {
+              onSidebarItemClick();
+            }
+          }}
           className={({ isActive }) => {
             return isActive
               ? 'bg-blue-600 text-white group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold'

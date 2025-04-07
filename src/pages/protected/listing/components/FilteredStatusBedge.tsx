@@ -1,7 +1,7 @@
 import {
   BadgeBlue,
-  BadgePurple,
-  BadgeYellow,
+  BadgeGreen,
+  BadgeGray,
 } from '../../../../components/Badges';
 import { FilteredStatus } from '../../../../enums/filteredStatus';
 
@@ -12,11 +12,11 @@ export const FilteredStatusBedge = ({
 }) => {
   switch (status) {
     case FilteredStatus.FURNISHED:
-      return <BadgeYellow value="Furnished" />;
+      return <BadgeGreen value="Furnished" />;
     case FilteredStatus.EMPTY:
       return <BadgeBlue value="Empty" />;
     case FilteredStatus.NO_DATA:
-      return <BadgePurple value="No data" />;
+      return <BadgeGray value="No data" />;
     default:
       return status;
   }

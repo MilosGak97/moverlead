@@ -107,14 +107,14 @@ export class PropertiesApi {
    * @returns any
    * @throws ApiError
    */
-  public propertiesControllerCheckPrecisely({
+  public propertiesControllerGetHomeowners({
     requestBody,
   }: {
     requestBody: ListingsExportDto,
   }): CancelablePromise<any> {
     return this.httpRequest.request({
       method: 'POST',
-      url: '/api/properties/listings/precisely',
+      url: '/api/properties/listings/get-homeowners',
       body: requestBody,
       mediaType: 'application/json',
     });

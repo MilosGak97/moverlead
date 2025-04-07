@@ -11,6 +11,10 @@ import logo from '../assets/images/logo.png';
 import { NavLink } from 'react-router-dom';
 import { routes } from '../router/routes.ts';
 
+type SidebarProps = {
+  onSidebarItemClick?: () => void;
+};
+
 const navigation = [
   {
     name: 'Dashboard',
@@ -34,13 +38,13 @@ const navigation = [
   },
 ];
 
-const Sidebar = () => {
+const Sidebar = ({ onSidebarItemClick }: SidebarProps) => {
   return (
     <>
       <div className="flex grow flex-col gap-y-4 overflow-y-auto bg-[#4379F2] px-6 pb-4">
         {/* Logo */}
         <div className="flex h-16 shrink-0 items-center ">
-          <NavLink to="dashboard">
+          <NavLink to="dashboard" onClick={onSidebarItemClick}>
             <img alt="Your Company" src={logo} className="h-10 w-auto" />
           </NavLink>
         </div>
@@ -58,6 +62,7 @@ const Sidebar = () => {
                     href={item.href}
                     icon={item.icon}
                     current={item.current}
+                    onSidebarItemClick={onSidebarItemClick}
                   />
                 ))}
 
@@ -70,6 +75,7 @@ const Sidebar = () => {
               name="Settings"
               href={routes.settings}
               icon={Cog6ToothIcon}
+              onSidebarItemClick={onSidebarItemClick}
             />
           </ul>
         </nav>

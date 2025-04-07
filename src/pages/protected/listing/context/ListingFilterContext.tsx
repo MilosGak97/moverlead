@@ -4,6 +4,7 @@ import {
   ReactNode,
   SetStateAction,
   useContext,
+  useMemo,
   useState,
 } from 'react';
 import { FilteredStatus } from '../../../../enums/filteredStatus';
@@ -11,7 +12,7 @@ import { PropertyStatus } from '../../../../enums/propertyStatus';
 
 type DateRange = { from: string; to: string };
 type ValueRange = { from: number | null; to: number | null };
-export type StateOption = { id: string; name: string };
+export type StateOption = { abbreviation: string; name: string };
 
 type ListingFilterContextType = {
   states: StateOption[] | null;
@@ -25,6 +26,8 @@ type ListingFilterContextType = {
   setFilteredStatus: Dispatch<SetStateAction<FilteredStatus[]>>;
   propertyStatus: PropertyStatus[];
   setPropertyStatus: Dispatch<SetStateAction<PropertyStatus[]>>;
+  clearAll: () => void;
+  hasActiveFilters: boolean;
 };
 
 type ListingFilterProviderProps = { children: ReactNode };
@@ -56,7 +59,30 @@ export const ListingFilterProvider = ({
   const [filteredStatus, setFilteredStatus] = useState<FilteredStatus[]>([]);
   const [propertyStatus, setPropertyStatus] = useState<PropertyStatus[]>([]);
 
-  const selectedStatesList = states.map((state) => state.id);
+  const selectedStatesList = useMemo(
+    () => states.map((state) => state.abbreviation),
+    [states]
+  );
+
+  const hasActiveFilters = useMemo(() => {
+    return (
+      states.length > 0 ||
+      date.from !== '' ||
+      date.to !== '' ||
+      propertyValue.from !== null ||
+      propertyValue.to !== null ||
+      filteredStatus.length > 0 ||
+      propertyStatus.length > 0
+    );
+  }, [states, date, propertyValue, filteredStatus, propertyStatus]);
+
+  const clearAll = () => {
+    setStates([]);
+    setDate({ from: '', to: '' });
+    setPropertyValue({ from: null, to: null });
+    setFilteredStatus([]);
+    setPropertyStatus([]);
+  };
 
   return (
     <ListingFilterContext.Provider
@@ -72,6 +98,8 @@ export const ListingFilterProvider = ({
         setFilteredStatus,
         propertyStatus,
         setPropertyStatus,
+        clearAll,
+        hasActiveFilters,
       }}
     >
       {children}

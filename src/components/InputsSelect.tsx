@@ -37,6 +37,14 @@ export const InputsSelect = () => {
     setDate(debouncedDate);
   }, [debouncedDate, setDate]);
 
+  useEffect(() => {
+    setLocalPropertyValue(propertyValue);
+  }, [propertyValue]);
+
+  useEffect(() => {
+    setLocalDate(date);
+  }, [date]);
+
   return (
     <fieldset className="flex flex-col gap-4">
       <div>

@@ -12,6 +12,9 @@ import { LoadingState } from '../../../components/LoadingState.tsx';
 import { ErrorState } from '../../../components/ErrorState.tsx';
 import { PropertyStatusBedge } from './components/PropertyStatusBedge.tsx';
 import { FilteredStatusBedge } from './components/FilteredStatusBedge.tsx';
+import { formatEnumText } from '../../../helpers/formatEnumText.ts';
+import { formatDateToUSDate } from '../../../helpers/formatDate.ts';
+import { ExportOptions } from './components/ExportOptions.tsx';
 
 const ListingsView = () => {
   const checkbox = useRef<HTMLInputElement>(null);
@@ -25,6 +28,8 @@ const ListingsView = () => {
     filteredStatus,
     propertyStatus,
   } = useListingFilterContext();
+
+  const selectedListingCount = selectedListings.length;
 
   const {
     data,
@@ -64,15 +69,15 @@ const ListingsView = () => {
   useLayoutEffect(() => {
     if (checkbox.current) {
       const isIndeterminate =
-        selectedListings.length > 0 && selectedListings.length < dataLength;
-      setChecked(selectedListings.length === dataLength);
+        selectedListingCount > 0 && selectedListingCount < dataLength;
+      setChecked(selectedListingCount === dataLength);
       setIndeterminate(isIndeterminate);
       checkbox.current.indeterminate = isIndeterminate; // Set indeterminate directly on the DOM element
     }
-  }, [selectedListings]);
+  }, [selectedListings, selectedListingCount]);
 
   function toggleAll() {
-    if (selectedListings.length === dataLength) {
+    if (selectedListingCount === dataLength) {
       setSelectedListings([]); // Unselect all
     } else {
       setSelectedListings((data?.result || [])?.map((p) => p?.id || '')); // Select all
@@ -107,14 +112,18 @@ const ListingsView = () => {
           <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
             <button
               type="button"
-              className="block rounded-md bg-[#4379F2] px-3 py-1.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-600"
+              className="block rounded-md bg-[#4379F2] px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-600"
             >
               Add More Leads
             </button>
           </div>
         </div>
 
-        <FilterListings totalCount={data?.result.length || 0} />
+        <FilterListings
+          totalCount={data?.result.length || 0}
+          selectedItemsCount={selectedListingCount}
+        />
+        <ExportOptions selectedListings={selectedListings} />
         {isLoadingListing && <LoadingState />}
         {isErrorListing && <ErrorState onRefetchClick={refetchListing} />}
         {!isLoading && !isError && (
@@ -138,16 +147,6 @@ const ListingsView = () => {
                             checked={checked}
                             onChange={toggleAll}
                           />
-                          {selectedListings.length > 0 && (
-                            <div className="absolute left-14 top-0 flex h-12 items-center space-x-3 bg-white sm:left-12">
-                              <button
-                                type="button"
-                                className="inline-flex items-center rounded bg-white px-2 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                              >
-                                Export
-                              </button>
-                            </div>
-                          )}
                         </th>
                         <th
                           scope="col"
@@ -177,7 +176,7 @@ const ListingsView = () => {
                           scope="col"
                           className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                         >
-                          Badrooms
+                          Bedrooms
                         </th>
                         <th
                           scope="col"
@@ -195,7 +194,13 @@ const ListingsView = () => {
                           scope="col"
                           className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                         >
-                          Status
+                          Listing Type
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                        >
+                          Listing Date
                         </th>
                         <th
                           scope="col"
@@ -290,14 +295,17 @@ const ListingsView = () => {
                             </th>
                             <th
                               scope="col"
-                              className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 lowercase"
+                              className="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                             >
-                              {item.homeType.replace('_', ' ')}
+                              {formatEnumText(item.homeType)}
                             </th>
                             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                               <PropertyStatusBedge
                                 status={item.propertyStatus}
                               />
+                            </td>
+                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                              {formatDateToUSDate(item.propertyStatusDate)}
                             </td>
                             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                               {item.realtorName}
