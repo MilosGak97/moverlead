@@ -4,7 +4,7 @@ import {
   DisclosurePanel,
 } from '@headlessui/react';
 import { FunnelIcon } from '@heroicons/react/20/solid';
-import { ComboSelect } from './ComboSelect.tsx';
+import { ComboSelect } from '../pages/protected/listing/components/ComboSelect.tsx';
 import { OptionSelect } from './OptionSelect.tsx';
 import { InputsSelect } from './InputsSelect.tsx';
 import { FilteredStatus } from '../enums/filteredStatus.ts';
@@ -142,8 +142,10 @@ const FilterListings = ({
           unmount={false}
         >
           <div className="grid grid-cols-4">
-            <div className="grid grid-cols-4 col-span-3 gap-x-4 px-4 text-sm sm:px-6 md:gap-x-6 lg:px-8">
-              <ComboSelect />
+            <div className="grid grid-cols-5 col-span-3 gap-x-4 px-4 text-sm sm:px-6 md:gap-x-6 lg:px-8">
+              <div className="col-span-2">
+                <ComboSelect />
+              </div>
               <div className="col-span-3">
                 <InputsSelect />
               </div>

@@ -10,11 +10,12 @@ import {
 } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import { useMemo, useState } from 'react';
+
 import {
   StateOption,
   useListingFilterContext,
-} from '../pages/protected/listing/context/ListingFilterContext';
-import { useStates } from '../hooks/useStates';
+} from '../context/ListingFilterContext';
+import { useStates } from '../../../../hooks/useStates';
 
 export const ComboSelect = () => {
   const [inputValue, setInputValue] = useState('');
@@ -34,6 +35,14 @@ export const ComboSelect = () => {
     [states]
   );
 
+  const removeSingleState = (stateName: string) => {
+    setStates((prevState) =>
+      prevState.filter((state) => state.name !== stateName)
+    );
+  };
+
+  console.log(states);
+
   return (
     <Combobox
       multiple
@@ -45,7 +54,7 @@ export const ComboSelect = () => {
       }}
       immediate
     >
-      <Label className="block text-sm font-medium text-gray-900">
+      <Label className="block text-sm font-medium leading-6 text-gray-900">
         Select State
       </Label>
       <div className="relative mt-2">
@@ -83,6 +92,25 @@ export const ComboSelect = () => {
           </ComboboxOptions>
         )}
       </div>
+
+      {!!states?.length && (
+        <div className="flex gap-2 flex-wrap px-2 py-1 w-full border rounded-lg max-h-20 overflow-y-auto overflow-x-hidden mt-3">
+          {states.map((state) => (
+            <div
+              key={state.name}
+              className="flex items-center gap-2 rounded bg-white h-fit py-0.5 px-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300"
+            >
+              {state.name}
+              <button
+                className="text-red-600 hover:text-red-700"
+                onClick={() => removeSingleState(state.name)}
+              >
+                x
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
     </Combobox>
   );
 };
