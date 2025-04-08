@@ -2,14 +2,13 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { useRef, useState } from 'react';
 import { QueryKeys } from '../../enums/queryKeys';
 import { api } from '../../api/api';
-import { LoadingState } from '../../components/LoadingState';
-import { ErrorState } from '../../components/ErrorState';
 import { SelectState } from './components/SelectState';
 import { useStates } from '../../hooks/useStates';
 import { County, StateResponseDto } from '../../generated-api';
 import { useToast } from '../../hooks/useToast';
 import { Toast } from '../../components/Toast';
 import { XMarkIcon } from '@heroicons/react/20/solid';
+import { StateContainer } from '../../components/StateContainer';
 
 const MAX_NUMBER_OF_COUNTIES = 20;
 
@@ -123,77 +122,72 @@ export const Order = () => {
 
   return (
     <>
-      <div className="px-4 sm:px-6 lg:px-8">
-        <div className="sm:grid sm:grid-cols-2 gap-4">
-          <div className="sm:flex-auto">
-            <h1 className="text-base font-semibold text-gray-900">Order</h1>
-            <p className="mt-2 text-sm text-gray-700">
-              A list of all counties that are on the market for property
-              listings subscription.
-            </p>
-          </div>
+      <div className="w-full">
+        <div className="m-4">
+          <div className="sm:grid sm:grid-cols-2 gap-4">
+            <div className="sm:flex-auto">
+              <h1 className="text-base font-semibold text-gray-900">Order</h1>
+              <p className="mt-2 text-sm text-gray-700">
+                A list of all counties that are on the market for property
+                listings subscription.
+              </p>
+            </div>
 
-          <div className="flex gap-4 mt-4 sm:mt-0 sm:flex-none h-full">
-            <div className="flex gap-2 flex-wrap px-2 py-1 w-full border rounded-lg max-h-20 overflow-y-auto">
-              {cartCounties.length > 0 ? (
-                cartCounties.map((county) => (
-                  <div
-                    key={county.id}
-                    className="flex items-center gap-2 rounded bg-white h-fit py-0.5 px-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300"
-                  >
-                    {`${county.name}, ${county.state}`}
-                    <button
-                      className="text-red-600 hover:text-red-700"
-                      onClick={() => removeFromCart(county.id)}
+            <div className="flex gap-4 mt-4 sm:mt-0 sm:flex-none h-full">
+              <div className="flex gap-2 flex-wrap px-2 py-1 w-full border rounded-lg max-h-20 overflow-y-auto">
+                {cartCounties.length > 0 ? (
+                  cartCounties.map((county) => (
+                    <div
+                      key={county.id}
+                      className="flex items-center gap-2 rounded bg-white h-fit py-0.5 px-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300"
                     >
-                      x
-                    </button>
-                  </div>
-                ))
-              ) : (
-                <span
-                  className="italic text-sm
-"
+                      {`${county.name}, ${county.state}`}
+                      <button
+                        className="text-red-600 hover:text-red-700"
+                        onClick={() => removeFromCart(county.id)}
+                      >
+                        x
+                      </button>
+                    </div>
+                  ))
+                ) : (
+                  <span className="italic text-sm">No county in the cart</span>
+                )}
+              </div>
+              <div className="flex flex-shrink-0 h-fit gap-2">
+                <button
+                  type="button"
+                  disabled={!cartCounties.length || isPending}
+                  className="rounded-md bg-[#4379F2] px-3 py-1.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-600 disabled:border-gray-300 disabled:bg-gray-100"
+                  onClick={mutate as () => void}
                 >
-                  No county in the cart
-                </span>
-              )}
-            </div>
-            <div className="flex flex-shrink-0 h-fit gap-2">
-              <button
-                type="button"
-                disabled={!cartCounties.length || isPending}
-                className="rounded-md bg-[#4379F2] px-3 py-1.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-600 disabled:border-gray-300 disabled:bg-gray-100"
-                onClick={mutate as () => void}
-              >
-                {isPending ? 'Loading...' : 'Checkout'}
-              </button>
-              <button
-                disabled={!cartCounties.length}
-                type="button"
-                className="items-center rounded bg-white px-2 py-1 text-sm font-semibold text-red-950 shadow-sm ring-1 ring-inset ring-red-900 hover:bg-gray-50 disabled:opacity-30"
-                onClick={() => setCartCounties([])}
-              >
-                Clear Cart
-              </button>
+                  {isPending ? 'Loading...' : 'Checkout'}
+                </button>
+                <button
+                  disabled={!cartCounties.length}
+                  type="button"
+                  className="items-center rounded bg-white px-2 py-1 text-sm font-semibold text-red-950 shadow-sm ring-1 ring-inset ring-red-900 hover:bg-gray-50 disabled:opacity-30"
+                  onClick={() => setCartCounties([])}
+                >
+                  Clear Cart
+                </button>
+              </div>
             </div>
           </div>
+          <div className="mt-8 mb-4 max-w-80">
+            <SelectState
+              selectedState={selectedState}
+              setSelectedState={setSelectedState}
+            />
+          </div>
         </div>
-        <div className="mt-8 mb-4 max-w-80">
-          <SelectState
-            selectedState={selectedState}
-            setSelectedState={setSelectedState}
-          />
-        </div>
-        {isLoading && <LoadingState />}
-        {isError && (
-          <ErrorState
-            onRefetchClick={() =>
-              Promise.all([refetchStates(), refetchCounties()])
-            }
-          />
-        )}
-        {!isLoading && !isError && (
+        <StateContainer
+          isLoading={isLoading}
+          isError={isError}
+          onErrorButtonClick={() =>
+            Promise.all([refetchStates(), refetchCounties()])
+          }
+        >
           <div className="mt-2 flow-root">
             <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
               <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
@@ -359,7 +353,7 @@ export const Order = () => {
               </div>
             </div>
           </div>
-        )}
+        </StateContainer>
       </div>
       {stripePaymentFailedToastText && (
         <Toast text={stripePaymentFailedToastText} type={'error'} />

@@ -10,7 +10,7 @@ export const ProtectedLayout = () => {
   useWebSockets();
 
   return (
-    <div className="h-screen overflow-hidden">
+    <div className="h-screen">
       <div className="h-full">
         {/* MOBILE SIDEBAR MENU */}
         <MenuSidebar
@@ -31,8 +31,10 @@ export const ProtectedLayout = () => {
           <NavBar setSidebarOpen={() => setSidebarOpen(true)} />
 
           {/* My note: CONTENT  - start */}
-          <main className="py-4 overflow-auto">
-            <Outlet />
+          <main className="overflow-y-auto overflow-x-hidden relative">
+            <div className="flex justify-center">
+              <Outlet />
+            </div>
           </main>
         </div>
       </div>

@@ -8,10 +8,10 @@ import {
   ListingFilterProvider,
   useListingFilterContext,
 } from './context/ListingFilterContext.tsx';
-import { LoadingState } from '../../../components/LoadingState.tsx';
-import { ErrorState } from '../../../components/ErrorState.tsx';
 import { ExportOptions } from './components/ExportOptions.tsx';
 import { ListingTable } from './components/ListingTable.tsx';
+import { usePagination } from '../../../hooks/usePagination.ts';
+import { ItemsTable } from '../../../components/ItemsTable.tsx';
 
 const ListingsView = () => {
   const checkbox = useRef<HTMLInputElement>(null);
@@ -29,11 +29,16 @@ const ListingsView = () => {
   const selectedListingCount = selectedListings.length;
 
   const {
-    data,
+    items,
+    totalItems,
+    currentPage,
     isLoading: isLoadingListing,
     isError: isErrorListing,
-    refetch: refetchListing,
-  } = useQuery({
+    refetch,
+    setItemsPerPage,
+    itemsPerPage,
+    setPage,
+  } = usePagination({
     queryKey: [
       QueryKeys.LISTINGS,
       selectedStatesList,
@@ -42,7 +47,7 @@ const ListingsView = () => {
       filteredStatus,
       propertyStatus,
     ],
-    queryFn: () =>
+    queryFn: (limit, offset) =>
       api.properties.propertiesControllerGetListings({
         state: selectedStatesList,
         dateTo: date.to || undefined,
@@ -51,8 +56,8 @@ const ListingsView = () => {
         propertyValueFrom: propertyValue.from || undefined,
         propertyStatus,
         filteredStatus,
-        limit: 10000,
-        offset: 0,
+        limit,
+        offset,
       }),
   });
 
@@ -61,30 +66,34 @@ const ListingsView = () => {
     queryFn: () => api.properties.propertiesControllerListStates(),
   });
 
-  const dataLength = data?.result.length || 0;
-
   useLayoutEffect(() => {
     if (checkbox.current) {
       const isIndeterminate =
-        selectedListingCount > 0 && selectedListingCount < dataLength;
-      setChecked(selectedListingCount === dataLength);
+        selectedListingCount > 0 && selectedListingCount < totalItems;
+      setChecked(selectedListingCount === totalItems);
       setIndeterminate(isIndeterminate);
       checkbox.current.indeterminate = isIndeterminate; // Set indeterminate directly on the DOM element
     }
   }, [selectedListings, selectedListingCount]);
 
   function toggleAll() {
-    if (selectedListingCount === dataLength) {
-      setSelectedListings([]); // Unselect all
+    const currentPageItemIds = items?.map((p) => p?.id || '') || [];
+
+    const areAllSelected = currentPageItemIds.every((id) =>
+      selectedListings.includes(id)
+    );
+
+    if (areAllSelected) {
+      setSelectedListings((prevSelected) =>
+        prevSelected.filter((id) => !currentPageItemIds.includes(id))
+      );
     } else {
-      setSelectedListings((data?.result || [])?.map((p) => p?.id || '')); // Select all
+      setSelectedListings((prevSelected) => [
+        ...prevSelected,
+        ...currentPageItemIds.filter((id) => !prevSelected.includes(id)),
+      ]);
     }
   }
-  useEffect(() => {
-    if (checkbox.current) {
-      checkbox.current.indeterminate = indeterminate;
-    }
-  }, [indeterminate]);
 
   function toggleIndividual(id: string, isChecked: boolean) {
     setSelectedListings((prevSelected) =>
@@ -95,9 +104,15 @@ const ListingsView = () => {
   const isLoading = isLoadingListing || isLoadingStates;
   const isError = isErrorListing || isErrorStates;
 
+  useEffect(() => {
+    if (checkbox.current) {
+      checkbox.current.indeterminate = indeterminate;
+    }
+  }, [indeterminate]);
+
   return (
-    <>
-      <div className="px-4 sm:px-6 lg:px-8">
+    <div className="w-full h-full grid">
+      <div className="m-4 mb-2">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
             <h1 className="text-base font-semibold text-gray-900">Listings</h1>
@@ -117,32 +132,33 @@ const ListingsView = () => {
         </div>
 
         <FilterListings
-          totalCount={data?.result.length || 0}
+          totalCount={totalItems}
           selectedItemsCount={selectedListingCount}
         />
         <ExportOptions selectedListings={selectedListings} />
-        {isLoadingListing && <LoadingState />}
-        {isErrorListing && <ErrorState onRefetchClick={refetchListing} />}
-        {!isLoading && !isError && (
-          <div className="mt-2 flow-root">
-            <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-              <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                <div className="relative">
-                  <ListingTable
-                    checkbox={checkbox}
-                    checked={checked}
-                    toggleAll={toggleAll}
-                    toggleIndividual={toggleIndividual}
-                    selectedListings={selectedListings}
-                    items={data?.result || []}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
-    </>
+      <ItemsTable
+        isLoading={isLoading}
+        isError={isError}
+        onErrorButtonClick={refetch}
+        paginationData={{
+          currentPage,
+          onPageClick: setPage,
+          totalNumberOfItems: totalItems,
+          itemsPerPage,
+          onItemsPerPageChange: setItemsPerPage,
+        }}
+      >
+        <ListingTable
+          checkbox={checkbox}
+          checked={checked}
+          toggleAll={toggleAll}
+          toggleIndividual={toggleIndividual}
+          selectedListings={selectedListings}
+          items={items}
+        />
+      </ItemsTable>
+    </div>
   );
 };
 

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { QueryKeys } from '../../../enums/queryKeys';
 import { api } from '../../../api/api';
-import { PageStateContainer } from '../../../components/PageStateContainer';
+import { StateContainer } from '../../../components/StateContainer';
 import { useNavigate } from 'react-router-dom';
 import { routes } from '../../../router/routes';
 import { SelectStatus } from './components/SelectStatus';
@@ -31,24 +31,26 @@ export const Subscriptions = () => {
   });
 
   return (
-    <div className="px-4 sm:px-6 lg:px-8">
-      <div className="sm:grid sm:grid-cols-2 gap-4">
-        <div className="sm:flex-auto">
-          <h1 className="text-base font-semibold text-gray-900">
-            Subscriptions
-          </h1>
-          <p className="mt-2 text-sm text-gray-700">
-            A list of all states and counties you are subscribed to.
-          </p>
+    <div className="w-full">
+      <div className="m-4">
+        <div className="sm:grid sm:grid-cols-2 gap-4">
+          <div className="sm:flex-auto">
+            <h1 className="text-base font-semibold text-gray-900">
+              Subscriptions
+            </h1>
+            <p className="mt-2 text-sm text-gray-700">
+              A list of all states and counties you are subscribed to.
+            </p>
+          </div>
+        </div>
+        <div className="mt-8 mb-4 max-w-80">
+          <SelectStatus
+            selectedStatus={selectedStatus}
+            setSelectedStatus={setSelectedStatus}
+          />
         </div>
       </div>
-      <div className="mt-8 mb-4 max-w-80">
-        <SelectStatus
-          selectedStatus={selectedStatus}
-          setSelectedStatus={setSelectedStatus}
-        />
-      </div>
-      <PageStateContainer
+      <StateContainer
         isLoading={isLoading}
         isError={isError}
         onErrorButtonClick={refetch}
@@ -108,7 +110,7 @@ export const Subscriptions = () => {
             )
           )}
         </div>
-      </PageStateContainer>
+      </StateContainer>
     </div>
   );
 };

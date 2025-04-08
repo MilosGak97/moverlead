@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { api } from '../../api/api';
 import { QueryKeys } from '../../enums/queryKeys';
-import { PageStateContainer } from '../../components/PageStateContainer';
+import { StateContainer } from '../../components/StateContainer';
 import { FilteredStatus } from '../../enums/filteredStatus';
 import { useEffect } from 'react';
 import { Toast } from '../../components/Toast';
@@ -78,7 +78,7 @@ const Filtering = () => {
   }, [mutate]);
 
   return (
-    <PageStateContainer
+    <StateContainer
       isLoading={isLoading}
       isError={isError}
       onErrorButtonClick={refetch}
@@ -87,6 +87,7 @@ const Filtering = () => {
       emptyDescription={'Check again tomorrow or Subscribe to more counites'}
       emptyButtonText={'Order now'}
       onEmptyClick={() => navigate(routes.order)}
+      isCentered
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-4">
         {(data?.selectedProperty?.photos || []).map((picture, index) => (
@@ -124,7 +125,7 @@ const Filtering = () => {
         </div>
       </div>
       {toastText && <Toast text={toastText} />}
-    </PageStateContainer>
+    </StateContainer>
   );
 };
 

@@ -1,16 +1,18 @@
 import { ReactNode, useRef } from 'react';
 import { useGetPaginationButtonsData } from './hooks/useGetPaginationButtonsData';
 import { LoadingState } from '../LoadingState';
-import { ErrorState } from '../ErrorState';
+import { PaginationButton } from './components/PaginationButton';
+import { Dropdown } from '../Dropdown';
+import { itemsPerPageOptions } from './data/itemsPerPageOptions';
 
-type PaginationProps = {
+export type PaginationProps = {
   currentPage: number;
   onPageClick: (page: number) => void;
   totalNumberOfItems: number;
   itemsPerPage?: number;
+  onItemsPerPageChange?: (itemsPerPage: number) => void;
   isLoading: boolean;
   isError: boolean;
-  onRefetchClick: () => void;
 };
 
 const PaginationContentWrapper = ({
@@ -32,9 +34,9 @@ export const Pagination = ({
   onPageClick,
   totalNumberOfItems,
   itemsPerPage = 10,
+  onItemsPerPageChange,
   isLoading,
   isError,
-  onRefetchClick,
 }: PaginationProps) => {
   const totalNumberOfItemsRef = useRef(totalNumberOfItems);
   totalNumberOfItemsRef.current =
@@ -57,7 +59,7 @@ export const Pagination = ({
   if (isError) {
     return (
       <PaginationContentWrapper>
-        <ErrorState onRefetchClick={onRefetchClick} />
+        <span className="text-red-500">Something went wrong. Try again!</span>
       </PaginationContentWrapper>
     );
   }
@@ -66,40 +68,45 @@ export const Pagination = ({
 
   return (
     <PaginationContentWrapper>
+      <div className="flex items-center mr-4">
+        <Dropdown
+          label={itemsPerPage.toString()}
+          items={itemsPerPageOptions}
+          onDropdownItemClick={(item) =>
+            onItemsPerPageChange?.(Number(item.value))
+          }
+        />
+      </div>
       <div className="flex items-center gap-1">
-        <button
-          disabled={currentPage === 1}
-          type="button"
-          className="items-center rounded bg-white px-2 py-1 text-sm font-semibold text-red-950 shadow-sm ring-1 ring-inset ring-red-900 hover:bg-gray-50 disabled:opacity-30"
+        <PaginationButton
+          isDisabled={currentPage === 1}
           onClick={() => onPageClick(currentPage - 1)}
         >
-          U+0003C
-        </button>
+          &lt;
+        </PaginationButton>
 
         {paginationRange?.map((pageIndicator, index) => {
           return typeof pageIndicator === 'string' ? (
             <span key={`${paginationRange} ${index}`}>{pageIndicator}</span>
           ) : (
-            <button
-              disabled={currentPage === 1}
-              type="button"
-              className="items-center rounded bg-white px-2 py-1 text-sm font-semibold text-red-950 shadow-sm ring-1 ring-inset ring-red-900 hover:bg-gray-50 disabled:opacity-30"
+            <PaginationButton
+              key={`${pageIndicator} ${index}`}
+              isDisabled={currentPage === pageIndicator}
               onClick={() => onPageClick(pageIndicator)}
             >
               {pageIndicator}
-            </button>
+            </PaginationButton>
           );
         })}
-        <button
-          disabled={
+
+        <PaginationButton
+          isDisabled={
             !paginationRange?.at(-1) || currentPage === paginationRange?.at(-1)
           }
-          type="button"
-          className="items-center rounded bg-white px-2 py-1 text-sm font-semibold text-red-950 shadow-sm ring-1 ring-inset ring-red-900 hover:bg-gray-50 disabled:opacity-30"
           onClick={() => onPageClick(currentPage + 1)}
         >
-          U+0003E
-        </button>
+          &gt;
+        </PaginationButton>
       </div>
     </PaginationContentWrapper>
   );

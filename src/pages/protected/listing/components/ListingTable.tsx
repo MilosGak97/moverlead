@@ -23,7 +23,7 @@ export const ListingTable = ({
   selectedListings,
 }: ListingTableProps) => {
   return (
-    <table className="min-w-full h-80 table-fixed divide-y divide-gray-300">
+    <table className="table-fixed divide-y divide-gray-300">
       <thead>
         <tr className=" text-nowrap">
           <th className="w-8"></th>

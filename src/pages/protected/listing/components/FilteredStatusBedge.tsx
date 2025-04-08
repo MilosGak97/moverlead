@@ -8,9 +8,9 @@ export const FilteredStatusBedge = ({
 }) => {
   switch (status) {
     case FilteredStatus.FURNISHED:
-      return <BadgeRed value="Furnished" />;
+      return <BadgeBlue value="Furnished" />;
     case FilteredStatus.EMPTY:
-      return <BadgeBlue value="Empty" />;
+      return <BadgeRed value="Empty" />;
     case FilteredStatus.NO_DATA:
       return <BadgeGray value="No data" />;
     default:

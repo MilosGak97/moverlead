@@ -6,6 +6,7 @@ import { downloadFile } from '../../../../helpers/downloadFile';
 import { useState } from 'react';
 import { Modal } from '../../../../components/Modal';
 import { ArrowDownTrayIcon } from '@heroicons/react/20/solid';
+import { format } from 'date-fns';
 
 type ExportOptionsProps = {
   selectedListings: string[];
@@ -15,6 +16,8 @@ enum ExportOption {
   EXPORT_DETAILED = 'EXPORT_DETAILED',
   EXPORT_USPS = 'EXPORT_USPS',
 }
+
+const currentDate = format(new Date(), 'MM-dd-yyyy');
 
 export const ExportOptions = ({ selectedListings }: ExportOptionsProps) => {
   const [downloadExportOption, setDownloadExportOption] =
@@ -42,7 +45,9 @@ export const ExportOptions = ({ selectedListings }: ExportOptionsProps) => {
         api.properties.propertiesControllerListingsExportDetailed({
           requestBody: { ids: selectedListings },
         }),
-      ...handleDownloadMutationProps('detailed-listings'),
+      ...handleDownloadMutationProps(
+        `moverlead_detailed_listings_${currentDate}.csv`
+      ),
     });
 
   const { mutate: exportUsps, isPending: isPendingExportUsps } = useMutation({
@@ -50,7 +55,9 @@ export const ExportOptions = ({ selectedListings }: ExportOptionsProps) => {
       api.properties.propertiesControllerListingsExportUsps({
         requestBody: { ids: selectedListings },
       }),
-    ...handleDownloadMutationProps('usps-listings'),
+    ...handleDownloadMutationProps(
+      `moverlead_usps_listings_${currentDate}5.csv`
+    ),
   });
 
   const { mutate: getOwnersInfo, isPending: isPendingGetOwnersInfo } =

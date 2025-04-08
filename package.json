@@ -32,6 +32,7 @@
     "react-spinners": "^0.15.0",
     "react-verification-input": "^4.2.2",
     "socket.io-client": "^4.8.1",
+    "tailwind-merge": "^3.2.0",
     "tailwindcss": "^3.4.17",
     "vite": "^6.0.5",
     "zod": "^3.24.1"

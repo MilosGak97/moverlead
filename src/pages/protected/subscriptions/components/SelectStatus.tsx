@@ -7,7 +7,7 @@ import {
   ComboboxOption,
 } from '@headlessui/react';
 import { ChevronUpDownIcon, CheckIcon } from '@heroicons/react/20/solid';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { SubscriptionStatusState } from '../Subscriptions';
 import { subscriptionStatusOptions } from '../data/subscriptionStatusOptions';
 
@@ -21,6 +21,7 @@ export const SelectStatus = ({
   setSelectedStatus,
 }: SelectStatusProps) => {
   const [inputValue, setInputValue] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const filteredOptions = subscriptionStatusOptions.filter(({ name }) =>
     name.toLowerCase().includes(inputValue.toLowerCase())
@@ -33,6 +34,7 @@ export const SelectStatus = ({
       onChange={(status) => {
         setSelectedStatus(status as SubscriptionStatusState);
         setInputValue('');
+        setTimeout(() => inputRef.current?.blur(), 0);
       }}
       immediate
     >
@@ -41,6 +43,7 @@ export const SelectStatus = ({
       </Label>
       <div className="relative mt-2">
         <ComboboxInput
+          ref={inputRef}
           className="block w-full rounded-md bg-white py-1.5 pl-3 pr-12 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-900 focus:outline focus:outline-2 focus:outline-blue-600 sm:text-sm overflow-hidden overflow-ellipsis"
           onChange={(event) => {
             console.log(event.target.value);

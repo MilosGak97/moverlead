@@ -1,7 +1,8 @@
 import { ReactNode } from 'react';
+import { twMerge } from 'tailwind-merge';
 import { PuffLoader } from 'react-spinners';
 
-type PageStateContainerWithEmptyProps = {
+type StateContainerWithEmptyProps = {
   isEmpty: boolean;
   emptyTitle: string;
   emptyDescription?: string;
@@ -9,7 +10,7 @@ type PageStateContainerWithEmptyProps = {
   emptyButtonText?: string;
 };
 
-type PageStateContainerWithoutEmptyProps = {
+type StateContainerWithoutEmptyProps = {
   isEmpty?: never;
   emptyTitle?: never;
   emptyDescription?: never;
@@ -17,18 +18,21 @@ type PageStateContainerWithoutEmptyProps = {
   emptyButtonText?: never;
 };
 
-type PageStateContainerEmptyProps =
-  | PageStateContainerWithEmptyProps
-  | PageStateContainerWithoutEmptyProps;
+type StateContainerEmptyProps =
+  | StateContainerWithEmptyProps
+  | StateContainerWithoutEmptyProps;
 
-type PageStateContainerProps = {
+export type StateContainerProps = {
   isLoading: boolean;
   isError: boolean;
   onErrorButtonClick?: () => void;
   children: ReactNode;
-} & PageStateContainerEmptyProps;
+  isCentered?: boolean;
+  includeMargin?: boolean;
+  wrapperClassName?: string;
+} & StateContainerEmptyProps;
 
-export const PageStateContainer = ({
+export const StateContainer = ({
   isLoading,
   isError,
   onErrorButtonClick,
@@ -38,17 +42,26 @@ export const PageStateContainer = ({
   emptyDescription,
   onEmptyClick,
   emptyButtonText,
-}: PageStateContainerProps) => {
+  isCentered = false,
+  includeMargin = true,
+  wrapperClassName,
+}: StateContainerProps) => {
+  const positionClass = isCentered ? 'absolute' : '';
+
   if (isLoading)
     return (
-      <div className="h-full w-full grid place-content-center">
+      <div
+        className={`h-full w-full grid place-content-center ${positionClass}`}
+      >
         <PuffLoader color="#4379F2" />
       </div>
     );
 
   if (isError)
     return (
-      <div className="h-full w-full grid place-content-center gap-4">
+      <div
+        className={`h-full w-full grid place-content-center gap-4 ${positionClass}`}
+      >
         <p>Something went wrong!</p>
         {onErrorButtonClick && (
           <button
@@ -63,7 +76,9 @@ export const PageStateContainer = ({
 
   if (isEmpty)
     return (
-      <div className="h-full w-full grid place-content-center gap-4 text-center">
+      <div
+        className={`h-full w-full grid place-content-center gap-4 text-center ${positionClass}`}
+      >
         <p>{emptyTitle}</p>
         {emptyDescription && <p>{emptyDescription}</p>}
         {onEmptyClick && (
@@ -77,5 +92,11 @@ export const PageStateContainer = ({
       </div>
     );
 
-  return <>{children}</>;
+  return (
+    <div
+      className={twMerge(`w-full ${includeMargin && 'm-4'}`, wrapperClassName)}
+    >
+      {children}
+    </div>
+  );
 };

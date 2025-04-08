@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { PageStateContainer } from '../../components/PageStateContainer';
+import { StateContainer } from '../../components/StateContainer';
 import Tabs from '../../components/Tabs';
 import { useState } from 'react';
 import { QueryKeys } from '../../enums/queryKeys';
@@ -489,7 +489,7 @@ export const Settings = () => {
   };
 
   return (
-    <PageStateContainer
+    <StateContainer
       isLoading={isFetching}
       isError={isError}
       onErrorButtonClick={refetch}
@@ -500,6 +500,6 @@ export const Settings = () => {
       >
         <SettingsView />
       </ControlledForm>
-    </PageStateContainer>
+    </StateContainer>
   );
 };
