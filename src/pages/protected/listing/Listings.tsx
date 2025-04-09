@@ -12,6 +12,7 @@ import { ExportOptions } from './components/ExportOptions.tsx';
 import { ListingTable } from './components/ListingTable.tsx';
 import { usePagination } from '../../../hooks/usePagination.ts';
 import { ItemsTable } from '../../../components/ItemsTable.tsx';
+import { Button } from '../../../components/Button.tsx';
 
 const ListingsView = () => {
   const checkbox = useRef<HTMLInputElement>(null);
@@ -111,8 +112,8 @@ const ListingsView = () => {
   }, [indeterminate]);
 
   return (
-    <div className="w-full h-full grid">
-      <div className="m-4 mb-2">
+    <div className="w-full h-full grid grid-rows-[auto_1fr]">
+      <div className="m-4 mb-0">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
             <h1 className="text-base font-semibold text-gray-900">Listings</h1>
@@ -122,12 +123,9 @@ const ListingsView = () => {
           </div>
 
           <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-            <button
-              type="button"
-              className="block rounded-md bg-[#4379F2] px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-600"
-            >
+            <Button onClick={() => console.log('Add more leads')}>
               Add More Leads
-            </button>
+            </Button>
           </div>
         </div>
 

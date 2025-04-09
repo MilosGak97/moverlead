@@ -1,68 +1,67 @@
-'use client'
+'use client';
 
-import { useEffect, useState } from 'react'
-import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
-import clsx from 'clsx'
+import { useEffect, useState } from 'react';
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
+import clsx from 'clsx';
 
-import { Container } from './Container'
-import backgroundImage from '../images/background-features.jpg'
-import screenshotExpenses from '../images/screenshots/expenses.png'
-import screenshotPayroll from '../images/screenshots/payroll.png'
-import screenshotReporting from '../images/screenshots/reporting.png'
-import screenshotVatReturns from '../images/screenshots/vat-returns.png'
+import { Container } from './Container';
+import backgroundImage from '../images/background-features.jpg';
+import screenshotExpenses from '../images/screenshots/expenses.png';
+import screenshotPayroll from '../images/screenshots/payroll.png';
+import screenshotReporting from '../images/screenshots/reporting.png';
+import screenshotVatReturns from '../images/screenshots/vat-returns.png';
 
 const features = [
   {
     title: 'Filtering Feature',
     description:
-      "Our filtering tool lets you easily sort through property listings, identifying homes that are furnished or empty.",
+      'Our filtering tool lets you easily sort through property listings, identifying homes that are furnished or empty.',
     image: screenshotPayroll,
   },
   {
     title: 'Property Listings Management',
     description:
-    "All property listings in one place for seamless management. Filter, organize, and target the right leads effortlessly",
+      'All property listings in one place for seamless management. Filter, organize, and target the right leads effortlessly',
     image: screenshotExpenses,
   },
   {
     title: 'Realtors Information',
     description:
-      "Gain access to realtor information including details to help you connect and enhance your outreach strategy.",
+      'Gain access to realtor information including details to help you connect and enhance your outreach strategy.',
     image: screenshotVatReturns,
   },
   {
     title: 'Smart Billing',
-    description:
-        'Pay only for the counties that you need and use.',
+    description: 'Pay only for the counties that you need and use.',
     image: screenshotReporting,
   },
-]
+];
 
 export function PrimaryFeatures() {
-  const [tabOrientation, setTabOrientation] = useState<'horizontal' | 'vertical'>(
-    'horizontal',
-  )
+  const [tabOrientation, setTabOrientation] = useState<
+    'horizontal' | 'vertical'
+  >('horizontal');
 
   useEffect(() => {
-    const lgMediaQuery = window.matchMedia('(min-width: 1024px)')
+    const lgMediaQuery = window.matchMedia('(min-width: 1024px)');
 
     function onMediaQueryChange({ matches }: { matches: boolean }) {
-      setTabOrientation(matches ? 'vertical' : 'horizontal')
+      setTabOrientation(matches ? 'vertical' : 'horizontal');
     }
 
-    onMediaQueryChange(lgMediaQuery)
-    lgMediaQuery.addEventListener('change', onMediaQueryChange)
+    onMediaQueryChange(lgMediaQuery);
+    lgMediaQuery.addEventListener('change', onMediaQueryChange);
 
     return () => {
-      lgMediaQuery.removeEventListener('change', onMediaQueryChange)
-    }
-  }, [])
+      lgMediaQuery.removeEventListener('change', onMediaQueryChange);
+    };
+  }, []);
 
   return (
     <section
       id="features"
       aria-label="Features for running your books"
-      className="relative overflow-hidden bg-[#4379F2] pb-28 pt-20 sm:py-32"
+      className="relative overflow-hidden bg-primary pb-28 pt-20 sm:py-32"
     >
       <img
         className="absolute left-1/2 top-1/2 max-w-none translate-x-[-44%] translate-y-[-42%]"
@@ -77,7 +76,8 @@ export function PrimaryFeatures() {
             Focus your outreach on homes that matter
           </h2>
           <p className="mt-6 text-lg tracking-tight text-blue-100">
-            With our advanced technology, easily analyze Zillow photos to determine if a home is furnished or empty.
+            With our advanced technology, easily analyze Zillow photos to
+            determine if a home is furnished or empty.
           </p>
         </div>
         <TabGroup
@@ -95,7 +95,7 @@ export function PrimaryFeatures() {
                         'group relative rounded-full px-4 py-1 lg:rounded-l-xl lg:rounded-r-none lg:p-6',
                         selectedIndex === featureIndex
                           ? 'bg-white lg:bg-white/10 lg:ring-1 lg:ring-inset lg:ring-white/10'
-                          : 'hover:bg-white/10 lg:hover:bg-white/5',
+                          : 'hover:bg-white/10 lg:hover:bg-white/5'
                       )}
                     >
                       <h3>
@@ -103,8 +103,8 @@ export function PrimaryFeatures() {
                           className={clsx(
                             'font-display text-lg ui-not-focus-visible:outline-none',
                             selectedIndex === featureIndex
-                              ? 'text-[#4379F2] lg:text-white'
-                              : 'text-blue-100 hover:text-white lg:text-white',
+                              ? 'text-primary lg:text-white'
+                              : 'text-blue-100 hover:text-white lg:text-white'
                           )}
                         >
                           <span className="absolute inset-0 rounded-full lg:rounded-l-xl lg:rounded-r-none" />
@@ -116,7 +116,7 @@ export function PrimaryFeatures() {
                           'mt-2 hidden text-sm lg:block',
                           selectedIndex === featureIndex
                             ? 'text-white'
-                            : 'text-blue-100 group-hover:text-white',
+                            : 'text-blue-100 group-hover:text-white'
                         )}
                       >
                         {feature.description}
@@ -150,5 +150,5 @@ export function PrimaryFeatures() {
         </TabGroup>
       </Container>
     </section>
-  )
+  );
 }

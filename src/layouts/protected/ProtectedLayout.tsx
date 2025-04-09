@@ -32,7 +32,7 @@ export const ProtectedLayout = () => {
 
           {/* My note: CONTENT  - start */}
           <main className="overflow-y-auto overflow-x-hidden relative">
-            <div className="flex justify-center">
+            <div className="flex justify-center h-full">
               <Outlet />
             </div>
           </main>

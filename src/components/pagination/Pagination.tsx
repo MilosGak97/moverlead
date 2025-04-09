@@ -1,9 +1,13 @@
 import { ReactNode, useRef } from 'react';
 import { useGetPaginationButtonsData } from './hooks/useGetPaginationButtonsData';
-import { LoadingState } from '../LoadingState';
 import { PaginationButton } from './components/PaginationButton';
 import { Dropdown } from '../Dropdown';
-import { itemsPerPageOptions } from './data/itemsPerPageOptions';
+import {
+  itemsPerPageOptions,
+  MIN_ITEMS_PER_PAGE,
+} from './data/itemsPerPageOptions';
+import { PulseLoader } from 'react-spinners';
+import { Button } from '../Button';
 
 export type PaginationProps = {
   currentPage: number;
@@ -13,6 +17,7 @@ export type PaginationProps = {
   onItemsPerPageChange?: (itemsPerPage: number) => void;
   isLoading: boolean;
   isError: boolean;
+  wrapperClassName?: string;
 };
 
 const PaginationContentWrapper = ({
@@ -37,6 +42,7 @@ export const Pagination = ({
   onItemsPerPageChange,
   isLoading,
   isError,
+  wrapperClassName,
 }: PaginationProps) => {
   const totalNumberOfItemsRef = useRef(totalNumberOfItems);
   totalNumberOfItemsRef.current =
@@ -50,8 +56,8 @@ export const Pagination = ({
 
   if (isLoading) {
     return (
-      <PaginationContentWrapper className={'h-10'}>
-        <LoadingState />
+      <PaginationContentWrapper>
+        <PulseLoader color={'#4379F2'} size={'0.75rem'} />
       </PaginationContentWrapper>
     );
   }
@@ -67,7 +73,7 @@ export const Pagination = ({
   if (!totalNumberOfItems) return;
 
   return (
-    <PaginationContentWrapper>
+    <PaginationContentWrapper className={wrapperClassName}>
       <div className="flex items-center mr-4">
         <Dropdown
           label={itemsPerPage.toString()}
@@ -75,6 +81,7 @@ export const Pagination = ({
           onDropdownItemClick={(item) =>
             onItemsPerPageChange?.(Number(item.value))
           }
+          isDisabled={MIN_ITEMS_PER_PAGE >= totalNumberOfItems}
         />
       </div>
       <div className="flex items-center gap-1">
@@ -89,13 +96,14 @@ export const Pagination = ({
           return typeof pageIndicator === 'string' ? (
             <span key={`${paginationRange} ${index}`}>{pageIndicator}</span>
           ) : (
-            <PaginationButton
+            <Button
               key={`${pageIndicator} ${index}`}
-              isDisabled={currentPage === pageIndicator}
+              disabled={currentPage === pageIndicator}
               onClick={() => onPageClick(pageIndicator)}
+              color={'noneDark'}
             >
               {pageIndicator}
-            </PaginationButton>
+            </Button>
           );
         })}
 

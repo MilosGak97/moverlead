@@ -13,24 +13,19 @@ export const ItemsTable = ({
   ...stateContainerProps
 }: ItemsTableProps) => {
   return (
-    <StateContainer
-      isLoading={isLoading}
-      isError={isError}
-      isCentered={false}
-      {...stateContainerProps}
-    >
-      <div className="h-full grid grid-rows-[auto_1fr] gap-4">
-        <div className={'p-px pr-1 overflow-auto'}>
-          <div className="w-full">{children}</div>
+    <div className="h-full flex flex-col justify-between p-4 gap-4">
+      <StateContainer
+        isLoading={isLoading}
+        isError={isError}
+        isCentered={false}
+        includePadding={false}
+        {...stateContainerProps}
+      >
+        <div className="h-full grid">
+          <div className={'p-px pr-1 overflow-auto'}>{children}</div>
         </div>
-        <div className="mt-auto">
-          <Pagination
-            {...paginationData}
-            isLoading={isLoading}
-            isError={isError}
-          />
-        </div>
-      </div>
-    </StateContainer>
+      </StateContainer>
+      <Pagination {...paginationData} isLoading={isLoading} isError={isError} />
+    </div>
   );
 };

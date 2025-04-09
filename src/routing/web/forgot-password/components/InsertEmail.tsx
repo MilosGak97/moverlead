@@ -8,7 +8,7 @@ import { useToast } from '../../../../hooks/useToast';
 import { useMutation } from '@tanstack/react-query';
 import { api } from '../../../../api/api';
 import { BaseSyntheticEvent } from 'react';
-import { Button } from '../../components/Button';
+import { Button } from '../../../../components/Button';
 import { Toast } from '../../../../components/Toast';
 
 type InsertEmailProps = {
@@ -65,17 +65,16 @@ export const InsertEmailView = ({ onMutationSuccess }: InsertEmailProps) => {
             id="forgot-password-email"
             type="text"
             autoComplete="forgot-password-email"
-            className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-[#4379F2] sm:text-sm/6"
+            className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-primary sm:text-sm/6"
             placeholder="Enter your email address"
             {...register('email')}
           />
         </div>
         <Button
           type="submit"
-          variant="solid"
-          color="blue"
           className="w-full"
           disabled={!isDirty || !isValid}
+          rounded={'full'}
         >
           {isPending ? 'Loading...' : 'Send code'}
         </Button>

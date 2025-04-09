@@ -27,7 +27,7 @@ export const Modal = ({
     <Dialog onClose={onClose} {...dialogProps}>
       <div className="flex flex-col gap-4 text-center max-w-lg w-full">
         {icon && (
-          <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto bg-[#4379F2] rounded-full text-white p-4">
+          <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto bg-primary rounded-full text-white p-4">
             {icon}
           </div>
         )}
@@ -43,7 +43,7 @@ export const Modal = ({
             Cancel
           </button>
           <button
-            className="rounded-md bg-[#4379F2] p-4 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4379F2] disabled:text-gray-300 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 grid place-items-center"
+            className="rounded-md bg-primary p-4 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:text-gray-300 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 grid place-items-center"
             onClick={onConfirmButtonClick}
             disabled={isConfirmButtonDisabled}
           >

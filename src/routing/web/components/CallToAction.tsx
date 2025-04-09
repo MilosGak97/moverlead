@@ -1,13 +1,16 @@
-import { Button } from './Button';
+import { Button } from '../../../components/Button';
 import { Container } from './Container';
 import backgroundImage from '../images/background-call-to-action.jpg';
 import { routes } from '../../../router/routes';
+import { useNavigate } from 'react-router-dom';
 
-export function CallToAction() {
+export const CallToAction = () => {
+  const navigate = useNavigate();
+
   return (
     <section
       id="get-started-today"
-      className="relative overflow-hidden bg-[#4379F2] py-32"
+      className="relative overflow-hidden bg-primary py-32"
     >
       <img
         className="absolute left-1/2 top-1/2 max-w-none -translate-x-1/2 -translate-y-1/2"
@@ -26,11 +29,16 @@ export function CallToAction() {
             leads instantly. Spend less time searching and more time booking
             high-value moves.
           </p>
-          <Button href={routes.auth.register} color="white" className="mt-10">
+          <Button
+            onClick={() => navigate(routes.auth.register)}
+            className="mt-10 mx-auto"
+            color={'white'}
+            rounded={'full'}
+          >
             Create a Free Account
           </Button>
         </div>
       </Container>
     </section>
   );
-}
+};

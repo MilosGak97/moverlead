@@ -16,7 +16,7 @@ export const ExpandableCard = ({
   return (
     <div className="rounded-lg border overflow-hidden">
       <div
-        className="bg-[#4379F2] hover:bg-[#365bb0] px-4 py-2 text-white cursor-pointer"
+        className="bg-primary hover:bg-primaryHover px-4 py-2 text-white cursor-pointer"
         onClick={() => setIsExpanded((prevState) => !prevState)}
       >
         {title || renderHeaderComponent}

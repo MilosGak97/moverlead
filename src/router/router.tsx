@@ -1,5 +1,5 @@
 import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
-import Filtering from '../pages/filtering/Filtering.tsx';
+import { Filtering } from '../pages/filtering/Filtering.tsx';
 import { Subscriptions } from '../pages/protected/subscriptions/Subscriptions.tsx';
 import { Order } from '../pages/order/Order.tsx';
 import { Listings } from '../pages/protected/listing/Listings.tsx';

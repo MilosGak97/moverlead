@@ -8,9 +8,9 @@ import {
 } from '@headlessui/react';
 import clsx from 'clsx';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-import { Button } from './Button';
+import { Button } from '../../../components/Button.tsx';
 import { Container } from './Container';
 import { Logo } from './Logo.tsx';
 import { NavLink } from './NavLink';
@@ -88,7 +88,9 @@ function MobileNavigation() {
   );
 }
 
-export function Header() {
+export const Header = () => {
+  const navigate = useNavigate();
+
   return (
     <header className="py-10">
       <Container>
@@ -108,10 +110,12 @@ export function Header() {
             <div className="hidden md:block">
               <NavLink href={routes.auth.login}>Sign in</NavLink>
             </div>
-            <Button href={routes.auth.register} color="blue">
-              <span>
-                Get started <span className="hidden lg:inline">today</span>
-              </span>
+            <Button
+              onClick={() => navigate(routes.auth.register)}
+              size={'small'}
+              rounded={'full'}
+            >
+              Get started <span className="hidden lg:inline">today</span>
             </Button>
             <div className="-mr-1 md:hidden">
               <MobileNavigation />
@@ -121,4 +125,4 @@ export function Header() {
       </Container>
     </header>
   );
-}
+};

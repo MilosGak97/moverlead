@@ -1,7 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 import { ControlledForm } from '../../../components/ControlledForm';
 import { SetPasswordFormData, setPasswordSchema } from './setPasswordSchema';
-import { Button } from '../../../routing/web/components/Button';
+import { Button } from '../../../components/Button';
 import { useToast } from '../../../hooks/useToast';
 import { api } from '../../../api/api';
 import { useNavigate } from 'react-router-dom';
@@ -57,7 +57,7 @@ export const SetPasswordView = () => {
               id="set-password--password"
               type="text"
               autoComplete="set-password--password"
-              className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-[#4379F2] sm:text-sm/6"
+              className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-primary sm:text-sm/6"
               placeholder="New password"
               {...register('password')}
             />
@@ -80,7 +80,7 @@ export const SetPasswordView = () => {
               id="set-password--confirm-password"
               type="text"
               autoComplete="set-password--confirm-password"
-              className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-[#4379F2] sm:text-sm/6"
+              className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-primary sm:text-sm/6"
               placeholder="Confirm password"
               {...register('confirmPassword')}
             />
@@ -94,11 +94,10 @@ export const SetPasswordView = () => {
           </div>
         </div>
         <Button
-          type="submit"
-          variant="solid"
-          color="blue"
           className="w-full"
           disabled={!isDirty || !isValid}
+          rounded={'full'}
+          type={'submit'}
         >
           {isPending ? 'Loading...' : 'Confirm'}
         </Button>

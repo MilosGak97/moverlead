@@ -1,6 +1,5 @@
 import { QueryKey, useQuery } from '@tanstack/react-query';
-import { useReducer, useState, useCallback } from 'react';
-import { useDebounce } from './useDebounce';
+import { useReducer } from 'react';
 
 export enum PaginationActionTypes {
   SET_CURRENT_PAGE = 'SET_CURRENT_PAGE',
@@ -26,7 +25,7 @@ type UsePaginationProps<T> = {
 
 type PaginationStateData = {
   currentPage: number;
-  itemsPerPageQuery: number;
+  itemsPerPage: number;
 };
 
 type PaginationStateAction =
@@ -41,7 +40,7 @@ const paginationReducer = (
     case PaginationActionTypes.SET_CURRENT_PAGE:
       return { ...state, currentPage: action.payload };
     case PaginationActionTypes.SET_ITEMS_PER_PAGE:
-      return { currentPage: 0, itemsPerPageQuery: action.payload };
+      return { currentPage: 0, itemsPerPage: action.payload };
     default:
       return state;
   }
@@ -54,25 +53,25 @@ export const usePagination = <T>({
   initialPage = 1,
   initialItemsPerPage = 25,
 }: UsePaginationProps<T>) => {
-  const [itemsPerPageInputValue, setItemsPerPageInputValue] =
-    useState(initialItemsPerPage);
   const [state, dispatch] = useReducer(paginationReducer, {
-    //initialPage - 1 because the API is 0 based (limit 0)
     currentPage: initialPage - 1,
-    itemsPerPageQuery: initialItemsPerPage,
+    itemsPerPage: initialItemsPerPage,
   });
 
-  const { currentPage, itemsPerPageQuery: limit } = state;
+  const { currentPage, itemsPerPage: limit } = state;
   const offset = currentPage * limit;
 
-  const { data, isLoading, isFetching, isError, refetch } = useQuery({
+  const { data, isLoading, isError, refetch } = useQuery({
     queryKey: [...queryKey, limit, offset],
     queryFn: () => queryFn(limit, offset),
     enabled,
   });
 
-  const handleSetItemsPerPageInputValue = (itemsPerPage: number) => {
-    setItemsPerPageInputValue(itemsPerPage);
+  const handleSetItemsPerPageValue = (itemsPerPage: number) => {
+    dispatch({
+      type: PaginationActionTypes.SET_ITEMS_PER_PAGE,
+      payload: itemsPerPage,
+    });
   };
 
   const setPage = (page: number) =>
@@ -80,16 +79,6 @@ export const usePagination = <T>({
       type: PaginationActionTypes.SET_CURRENT_PAGE,
       payload: page - 1,
     });
-  const setItemsPerPageQuery = useCallback(() => {
-    if (itemsPerPageInputValue) {
-      dispatch({
-        type: PaginationActionTypes.SET_ITEMS_PER_PAGE,
-        payload: itemsPerPageInputValue,
-      });
-    }
-  }, [itemsPerPageInputValue]);
-
-  useDebounce(setItemsPerPageQuery);
 
   return {
     items: data?.result || [],
@@ -102,8 +91,7 @@ export const usePagination = <T>({
     isError,
     refetch,
     setPage,
-    itemsPerPage: itemsPerPageInputValue,
-    setItemsPerPage: handleSetItemsPerPageInputValue,
-    isLoadingInitially: isFetching,
+    itemsPerPage: limit,
+    setItemsPerPage: handleSetItemsPerPageValue,
   };
 };

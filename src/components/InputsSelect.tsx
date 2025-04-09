@@ -57,13 +57,13 @@ export const InputsSelect = () => {
               placeholder="From"
               value={localPropertyValue.from || ''}
               onChange={(e) => handlePropertyValueChange(e, 'from')}
-              className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-[#4379F2] sm:text-sm/6"
+              className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-primary sm:text-sm/6"
             />
             <input
               placeholder="To"
               value={localPropertyValue.to || ''}
               onChange={(e) => handlePropertyValueChange(e, 'to')}
-              className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-[#4379F2] sm:text-sm/6"
+              className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-primary sm:text-sm/6"
             />
           </div>
         </div>
@@ -80,7 +80,7 @@ export const InputsSelect = () => {
               value={localDate.from}
               onChange={(e) => handleDateChange(e, 'from')}
               onFocus={(e) => e.target.showPicker()}
-              className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-[#4379F2] sm:text-sm/6"
+              className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 hover:cursor-pointer outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-primary sm:text-sm/6"
             />
             <input
               type="date"
@@ -88,7 +88,7 @@ export const InputsSelect = () => {
               value={localDate.to}
               onChange={(e) => handleDateChange(e, 'to')}
               onFocus={(e) => e.target.showPicker()}
-              className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-[#4379F2] sm:text-sm/6"
+              className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 hover:cursor-pointer outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-primary sm:text-sm/6"
             />
           </div>
         </div>

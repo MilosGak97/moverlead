@@ -41,8 +41,6 @@ export const ComboSelect = () => {
     );
   };
 
-  console.log(states);
-
   return (
     <Combobox
       multiple

@@ -31,7 +31,7 @@ export const Subscriptions = () => {
   });
 
   return (
-    <div className="w-full">
+    <div className="w-full grid grid-rows-[auto_1fr]">
       <div className="m-4">
         <div className="sm:grid sm:grid-cols-2 gap-4">
           <div className="sm:flex-auto">
@@ -43,7 +43,7 @@ export const Subscriptions = () => {
             </p>
           </div>
         </div>
-        <div className="mt-8 mb-4 max-w-80">
+        <div className="mt-8 max-w-80">
           <SelectStatus
             selectedStatus={selectedStatus}
             setSelectedStatus={setSelectedStatus}
@@ -70,7 +70,7 @@ export const Subscriptions = () => {
         }
         emptyButtonText={'Subscribe'}
       >
-        <div className="mt-10 flex flex-col gap-4">
+        <div className="flex flex-col gap-4">
           {data?.map(
             ({
               id,

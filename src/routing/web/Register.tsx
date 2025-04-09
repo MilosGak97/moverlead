@@ -2,7 +2,7 @@ import { SlimLayout } from './components/SlimLayout.tsx';
 import { Link, useNavigate } from 'react-router-dom';
 import { Logo } from './components/Logo.tsx';
 import { TextField } from './components/Fields.tsx';
-import { Button } from './components/Button.tsx';
+import { Button } from '../../components/Button.tsx';
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { api } from '../../api/api.ts';
@@ -128,12 +128,7 @@ const Register = () => {
             onChange={handleInputChange}
           />
           <div className="col-span-full">
-            <Button
-              type="submit"
-              variant="solid"
-              color="blue"
-              className="w-full"
-            >
+            <Button type="submit" className="w-full" rounded={'full'}>
               <span>
                 Sign up <span aria-hidden="true">&rarr;</span>
               </span>

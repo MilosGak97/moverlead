@@ -1,11 +1,12 @@
 import { Container } from './Container.tsx';
-import { Button } from './Button.tsx';
+import { Button } from '../../../components/Button.tsx';
 
 import amExpress from '../images/logos/am_express_logo.png';
 import ecoBins from '../images/logos/eco_bins_logo.png';
 import vanExpress from '../images/logos/van_express_logo.png';
 import viteMoving from '../images/logos/vite_moving_logo.png';
 import { routes } from '../../../router/routes.ts';
+import { useNavigate } from 'react-router-dom';
 
 const trustedByCompanies = [
   { name: 'Transistor', logo: vanExpress },
@@ -15,11 +16,13 @@ const trustedByCompanies = [
 ];
 
 export function Hero() {
+  const navigate = useNavigate();
+
   return (
     <Container className="pb-16 pt-20 text-center lg:pt-32">
       <h1 className="mx-auto max-w-4xl font-display text-5xl font-medium tracking-tight text-slate-900 sm:text-7xl">
         Filtered{' '}
-        <span className="relative whitespace-nowrap text-[#4379F2]">
+        <span className="relative whitespace-nowrap text-primary">
           <svg
             aria-hidden="true"
             viewBox="0 0 418 42"
@@ -37,10 +40,25 @@ export function Hero() {
         properties—saving time and cutting marketing costs.
       </p>
       <div className="mt-10 flex justify-center gap-x-6">
-        <Button href={routes.auth.register}>Create an account</Button>
         <Button
-          href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-          variant="outline"
+          color={'black'}
+          size={'small'}
+          onClick={() => navigate(routes.auth.register)}
+          rounded={'full'}
+        >
+          Create an account
+        </Button>
+        <Button
+          onClick={() =>
+            window.open(
+              'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+              '_target'
+            )
+          }
+          rounded={'full'}
+          className={'flex items-center font-normal'}
+          color={'none'}
+          size={'small'}
         >
           <svg
             aria-hidden="true"

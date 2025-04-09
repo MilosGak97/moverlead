@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { PuffLoader } from 'react-spinners';
+import { Button } from './Button';
 
 type StateContainerWithEmptyProps = {
   isEmpty: boolean;
@@ -28,7 +29,7 @@ export type StateContainerProps = {
   onErrorButtonClick?: () => void;
   children: ReactNode;
   isCentered?: boolean;
-  includeMargin?: boolean;
+  includePadding?: boolean;
   wrapperClassName?: string;
 } & StateContainerEmptyProps;
 
@@ -43,7 +44,7 @@ export const StateContainer = ({
   onEmptyClick,
   emptyButtonText,
   isCentered = false,
-  includeMargin = true,
+  includePadding = true,
   wrapperClassName,
 }: StateContainerProps) => {
   const positionClass = isCentered ? 'absolute' : '';
@@ -64,12 +65,7 @@ export const StateContainer = ({
       >
         <p>Something went wrong!</p>
         {onErrorButtonClick && (
-          <button
-            className="rounded-md bg-[#4379F2] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4379F2] disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100"
-            onClick={onErrorButtonClick}
-          >
-            Try again!
-          </button>
+          <Button onClick={onErrorButtonClick}>Try again!</Button>
         )}
       </div>
     );
@@ -82,19 +78,14 @@ export const StateContainer = ({
         <p>{emptyTitle}</p>
         {emptyDescription && <p>{emptyDescription}</p>}
         {onEmptyClick && (
-          <button
-            className="rounded-md bg-[#4379F2] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4379F2] disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100"
-            onClick={onEmptyClick}
-          >
-            {emptyButtonText}
-          </button>
+          <Button onClick={onEmptyClick}>{emptyButtonText}</Button>
         )}
       </div>
     );
 
   return (
     <div
-      className={twMerge(`w-full ${includeMargin && 'm-4'}`, wrapperClassName)}
+      className={twMerge(`w-full ${includePadding && 'p-4'}`, wrapperClassName)}
     >
       {children}
     </div>

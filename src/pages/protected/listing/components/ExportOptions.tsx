@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { Modal } from '../../../../components/Modal';
 import { ArrowDownTrayIcon } from '@heroicons/react/20/solid';
 import { format } from 'date-fns';
+import { Button } from '../../../../components/Button';
 
 type ExportOptionsProps = {
   selectedListings: string[];
@@ -17,11 +18,19 @@ enum ExportOption {
   EXPORT_USPS = 'EXPORT_USPS',
 }
 
+const documentNames = new Map([
+  [ExportOption.EXPORT_DETAILED, 'Detailed'],
+  [ExportOption.EXPORT_USPS, 'USPS'],
+  [null, ''],
+]);
+
 const currentDate = format(new Date(), 'MM-dd-yyyy');
 
 export const ExportOptions = ({ selectedListings }: ExportOptionsProps) => {
   const [downloadExportOption, setDownloadExportOption] =
     useState<ExportOption | null>(null);
+  const [isDownloadExportModalOpen, setIsDownloadExportModalOpen] =
+    useState(false);
   const { toastText, addToast } = useToast();
   const { toastText: successExportToastText, addToast: addSuccessExportToast } =
     useToast();
@@ -32,8 +41,8 @@ export const ExportOptions = ({ selectedListings }: ExportOptionsProps) => {
   const handleDownloadMutationProps = (fileName: string) => ({
     onSuccess: async (res: string) => {
       await downloadFile(res, `${fileName}.csv`);
-      setDownloadExportOption(null);
       addSuccessExportToast('Properties have been successfully exported!');
+      setIsDownloadExportModalOpen(false);
     },
 
     onError: () => addToast(),
@@ -82,47 +91,42 @@ export const ExportOptions = ({ selectedListings }: ExportOptionsProps) => {
   const handleDialogClose = () => {
     if (isPendingExportMutation) return;
 
-    setDownloadExportOption(null);
+    setIsDownloadExportModalOpen(false);
   };
+
+  const handleExportOptionClick = (exportOption: ExportOption) => {
+    setIsDownloadExportModalOpen(true);
+    setDownloadExportOption(exportOption);
+  };
+
+  const areButtonsDisabled = isPendingMutation || isListingsEmpty;
 
   return (
     <>
       <div className="mt-4 flex items-center gap-3 bg-white">
-        <button
-          type="button"
-          className="rounded-md bg-[#4379F2] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4379F2] disabled:border-gray-300 disabled:bg-gray-100"
-          disabled={isPendingMutation || isListingsEmpty}
-          onClick={() => setDownloadExportOption(ExportOption.EXPORT_DETAILED)}
+        <Button
+          color={'success'}
+          disabled={areButtonsDisabled}
+          onClick={() => handleExportOptionClick(ExportOption.EXPORT_DETAILED)}
         >
           Export Detailed
-        </button>
-        <button
-          type="button"
-          className="rounded-md bg-[#4379F2] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4379F2] disabled:border-gray-300 disabled:bg-gray-100"
-          disabled={isPendingMutation || isListingsEmpty}
-          onClick={() => setDownloadExportOption(ExportOption.EXPORT_USPS)}
+        </Button>
+        <Button
+          disabled={areButtonsDisabled}
+          onClick={() => handleExportOptionClick(ExportOption.EXPORT_USPS)}
         >
           Export USPS
-        </button>
-        <button
-          type="button"
-          className="rounded-md bg-[#4379F2] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4379F2] disabled:border-gray-300 disabled:bg-gray-100"
-          disabled={isPendingMutation || isListingsEmpty}
-          onClick={() => getOwnersInfo()}
-        >
+        </Button>
+        <Button disabled={areButtonsDisabled} onClick={() => getOwnersInfo()}>
           Get Owners Info
-        </button>
+        </Button>
       </div>
       <Modal
-        title={`Export ${
-          downloadExportOption === ExportOption.EXPORT_DETAILED
-            ? 'Detailed'
-            : 'USPS'
-        }`}
+        title={`Export ${documentNames.get(downloadExportOption)}`}
         description={`Are you sure you want to export data for ${
           selectedListings.length
         } ${selectedListings.length === 1 ? 'property' : 'properties'}?`}
-        isDialogOpen={!!downloadExportOption}
+        isDialogOpen={isDownloadExportModalOpen}
         onClose={handleDialogClose}
         onConfirmButtonClick={
           downloadExportOption === ExportOption.EXPORT_DETAILED

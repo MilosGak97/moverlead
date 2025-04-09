@@ -40,7 +40,7 @@ export const OptionSelect = <T,>({
                     id={uniqueId}
                     name={`${filterGroup.title}-color[]`}
                     type="checkbox"
-                    className="col-start-1 row-start-1 appearance-none rounded border border-gray-300 bg-white checked:border-blue-600 checked:bg-blue-600 indeterminate:border-blue-600 indeterminate:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
+                    className="col-start-1 row-start-1 appearance-none rounded border border-gray-300 bg-white checked:border-blue-600 checked:bg-blue-600 indeterminate:border-blue-600 indeterminate:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto hover:cursor-pointer"
                   />
                   <svg
                     fill="none"
@@ -66,7 +66,7 @@ export const OptionSelect = <T,>({
               </div>
               <label
                 htmlFor={uniqueId}
-                className="text-base text-gray-600 sm:text-sm line-clamp-1"
+                className="text-base text-gray-600 sm:text-sm line-clamp-1 hover:cursor-pointer"
               >
                 {option.label}
               </label>

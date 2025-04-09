@@ -70,7 +70,7 @@ export const InsertCode = ({ email }: InsertCodeProps) => {
 
             characterInactive: 'border-gray-300 text-gray-400',
             characterSelected:
-              'border-[#4379F2] ring-2 ring-[#4379F2] ring-opacity-50',
+              'border-primary ring-2 ring-primary ring-opacity-50',
           }}
           validChars={'0-9'}
           onComplete={insertCodeMutate}

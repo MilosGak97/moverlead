@@ -1,6 +1,7 @@
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 import { useNavigate } from 'react-router-dom';
 import { routes } from '../../router/routes';
+import { Button } from '../../components/Button';
 
 export const SuccessfullSubscription = () => {
   const navigate = useNavigate();
@@ -21,12 +22,13 @@ export const SuccessfullSubscription = () => {
             You have successfully subscribed to leads for your selected
             counties. Get ready to receive new opportunities!
           </p>
-          <button
+          <Button
             onClick={navigateToDashboard}
-            className="px-6 py-3 rounded-md bg-[#4379F2] text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4379F2]"
+            size={'large'}
+            className={'text-base'}
           >
             Dashboard
-          </button>
+          </Button>
         </DialogPanel>
       </div>
     </Dialog>

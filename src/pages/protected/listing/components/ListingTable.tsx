@@ -23,11 +23,10 @@ export const ListingTable = ({
   selectedListings,
 }: ListingTableProps) => {
   return (
-    <table className="table-fixed divide-y divide-gray-300">
+    <table className="divide-y divide-gray-300 w-full">
       <thead>
         <tr className=" text-nowrap">
           <th className="w-8"></th>
-
           <th scope="col" className="relative px-7 sm:w-12 sm:px-6">
             <input
               type="checkbox"
