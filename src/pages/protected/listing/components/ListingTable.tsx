@@ -27,10 +27,10 @@ export const ListingTable = ({
       <thead>
         <tr className=" text-nowrap">
           <th className="w-8"></th>
-          <th scope="col" className="relative px-7 sm:w-12 sm:px-6">
+          <th scope="col" className="relative w-14 px-6">
             <input
               type="checkbox"
-              className="absolute left-4 top-1/2 -mt-2 h-4 w-4 cursor-pointer"
+              className="h-4 w-4 translate-y-0.5 cursor-pointer"
               ref={checkbox}
               checked={checked}
               onChange={toggleAll}
@@ -130,13 +130,13 @@ export const ListingTable = ({
                 toggleIndividual(item.id || '', !isPropertySelected)
               }
             >
-              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+              <td className="whitespace-nowrap px-1 py-4 text-sm text-gray-500 text-center">
                 {index + 1}
               </td>
-              <td className="relative px-7 sm:w-12 sm:px-6">
+              <td className="relative text-center">
                 <input
                   type="checkbox"
-                  className="absolute left-4 top-1/2 -mt-2 h-4 w-4 cursor-pointer"
+                  className="h-4 w-4 cursor-pointer translate-y-0.5"
                   checked={isPropertySelected}
                   onChange={(e) =>
                     toggleIndividual(item.id || '', e.target.checked)

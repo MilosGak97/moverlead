@@ -218,13 +218,10 @@ export const Order = () => {
                     <table className="min-w-full table-fixed divide-y divide-gray-300">
                       <thead>
                         <tr>
-                          <th
-                            scope="col"
-                            className="relative px-7 sm:w-12 sm:px-6"
-                          >
+                          <th scope="col" className="relative w-14 px-6">
                             <input
                               type="checkbox"
-                              className="absolute left-4 top-1/2 -mt-2 h-4 w-4 cursor-pointer disabled:cursor-default"
+                              className="h-4 w-4 translate-y-0.5 cursor-pointer disabled:cursor-default"
                               ref={checkbox}
                               checked={checked}
                               onChange={toggleSelectedAllCounties}
@@ -281,7 +278,7 @@ export const Order = () => {
                                 )
                               }
                             >
-                              <td className=" px-7 sm:w-12 sm:px-6 group">
+                              <td className="group text-center">
                                 {/* TOOLTIP - mora unutar td-a zbog table, u suprotnom pobrka tabelu */}
                                 <div
                                   className={`absolute top-0 -translate-y-full bg-gray-500 left-1/2 -translate-x-1/2 p-1 px-2 rounded-xl text-sm text-white opacity-0 invisible group-hover:opacity-100 ${
@@ -297,7 +294,7 @@ export const Order = () => {
 
                                 <input
                                   type="checkbox"
-                                  className={`absolute left-4 top-1/2 -mt-2 h-4 w-4 cursor-pointer disabled:cursor-default`}
+                                  className={`h-4 w-4 translate-y-0.5 cursor-pointer disabled:cursor-default`}
                                   checked={isCountySelected || isCountyInCart}
                                   onClick={(e) => e.stopPropagation()} // Sprečava dvostruki klik
                                   disabled={

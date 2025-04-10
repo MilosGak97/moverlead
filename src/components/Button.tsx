@@ -3,14 +3,14 @@ import { cva, VariantProps } from 'class-variance-authority';
 import { twMerge } from 'tailwind-merge';
 
 const buttonVariants = cva(
-  'border border-transparent text-sm block px-3 py-2 text-center font-semibold text-white shadow-sm',
+  'border border-transparent text-sm block text-center font-semibold text-white shadow-sm',
   {
     variants: {
       size: {
         extraSmall: 'px-2 py-1',
         small: 'py-2 px-4',
         base: 'px-3 py-2',
-        large: 'px-6 py-3 text-xl',
+        large: 'px-4 xl:px-6 py-3 text-lg xl:text-xl',
       },
       color: {
         primary:

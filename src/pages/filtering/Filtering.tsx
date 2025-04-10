@@ -10,31 +10,9 @@ import { useNavigate } from 'react-router-dom';
 import { routes } from '../../router/routes';
 import { Button } from '../../components/Button';
 import {
-  ArrowLeftIcon,
-  ArrowRightIcon,
-  ArrowUpIcon,
-} from '@heroicons/react/20/solid';
-
-const statusIcons: Record<FilteredStatus, React.ReactNode> = {
-  [FilteredStatus.EMPTY]: <ArrowLeftIcon />,
-  [FilteredStatus.NO_DATA]: <ArrowUpIcon />,
-  [FilteredStatus.FURNISHED]: <ArrowRightIcon />,
-};
-
-const filterButtonOptions = [
-  {
-    label: 'Empty',
-    value: FilteredStatus.EMPTY,
-  },
-  {
-    label: 'No Data',
-    value: FilteredStatus.NO_DATA,
-  },
-  {
-    label: 'Furnished',
-    value: FilteredStatus.FURNISHED,
-  },
-];
+  filterButtonOptionIds,
+  filterButtonOptions,
+} from './data/filterButtonOptions';
 
 const PAGINATION_LIMIT = 20;
 
@@ -43,6 +21,7 @@ export const Filtering = () => {
   const queryClient = useQueryClient();
   const { toastText, addToast } = useToast();
   const [currentProperty, setCurrentProperty] = useState(0);
+  const [activeButton, setActiveButton] = useState<string | null>(null);
 
   const { data, isLoading, isError, refetch } = useQuery({
     queryKey: [QueryKeys.PROPERTIES_FILTERING],
@@ -72,6 +51,7 @@ export const Filtering = () => {
       });
     },
     onSuccess: () => {
+      setActiveButton(null);
       if (currentProperty + 1 === PAGINATION_LIMIT) {
         removePropertyFilteringQuery();
         setCurrentProperty(0);
@@ -83,28 +63,37 @@ export const Filtering = () => {
   });
 
   const onFilterButtonClick = useCallback(
-    (filterStatus: FilteredStatus) => {
+    (filterStatus: FilteredStatus, buttonId: string) => {
+      if (isPending) return;
+
+      setActiveButton(buttonId);
       mutate(filterStatus);
     },
-    [mutate]
+    [isPending, mutate]
   );
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'e' || event.key === 'ArrowLeft' || event.key === 'E') {
-        onFilterButtonClick(FilteredStatus.EMPTY);
+        onFilterButtonClick(FilteredStatus.EMPTY, filterButtonOptionIds.empty);
       } else if (
         event.key === 'f' ||
         event.key === 'ArrowRight' ||
         event.key === 'F'
       ) {
-        onFilterButtonClick(FilteredStatus.FURNISHED);
+        onFilterButtonClick(
+          FilteredStatus.FURNISHED,
+          filterButtonOptionIds.furnished
+        );
       } else if (
         event.key === 'n' ||
         event.key === 'ArrowUp' ||
         event.key === 'N'
       ) {
-        onFilterButtonClick(FilteredStatus.NO_DATA);
+        onFilterButtonClick(
+          FilteredStatus.NO_DATA,
+          filterButtonOptionIds.noData
+        );
       }
     };
 
@@ -148,27 +137,30 @@ export const Filtering = () => {
       </div>
 
       {!isPropertyFilteringEmpty && (
-        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 flex gap-4">
-          {filterButtonOptions.map(({ label, value }) => (
-            <Button
-              key={value}
-              onClick={() => onFilterButtonClick(value)}
-              disabled={isPending}
-              size={'large'}
-              className={'text-nowrap flex items-center gap-2'}
-            >
-              {label}
-              <span className="flex items-center">
-                ({<div className="w-5 h-full">{statusIcons[value]}</div>})
-              </span>
-            </Button>
-          ))}
+        <div className="fixed bottom-0 sm:bottom-4 left-1/2 transform -translate-x-1/2 flex flex-col sm:flex-row gap-2 xl:gap-4 w-full sm:w-fit p-4 sm:p-0">
+          {filterButtonOptions.map(
+            ({ id, value, label, icon: Icon, reverse }) => (
+              <Button
+                key={id}
+                onClick={() => onFilterButtonClick(value, id)}
+                size={'large'}
+                className={`text-nowrap flex items-center justify-center gap-2 w-full ${
+                  reverse && 'flex-row-reverse'
+                } ${activeButton === id && 'bg-primaryActive'}`}
+              >
+                {label}
+                <span className="hidden sm:flex items-center">
+                  (<Icon className={'w-5 h-5'} />)
+                </span>
+              </Button>
+            )
+          )}
         </div>
       )}
 
       <div className="fixed md:bottom-4 md:top-auto top-20 right-8">
         <div className="px-6 py-3 bg-primary text-white text-xl font-medium rounded-lg shadow-md min-w-20 w-full text-center">
-          {isPending ? '...' : data?.count}
+          {isPending ? '...' : (data?.count || 0) - currentProperty}
         </div>
       </div>
       {toastText && <Toast text={toastText} />}
