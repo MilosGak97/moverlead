@@ -13,6 +13,8 @@ export type County = {
   zipCodes?: Array<any[]>;
   scrappingEndDate?: string;
   zillowLinks?: Array<any[]>;
+  zillowLink?: string;
+  zillowDefineInput?: Array<any[]>;
   createdAt: string;
   updatedAt: string;
 };

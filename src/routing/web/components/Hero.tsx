@@ -39,12 +39,13 @@ export function Hero() {
         Maximize your outreach efficiency by targeting furnished, move-ready
         properties—saving time and cutting marketing costs.
       </p>
-      <div className="mt-10 flex justify-center gap-x-6">
+      <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-6">
         <Button
           color={'black'}
           size={'small'}
           onClick={() => navigate(routes.auth.register)}
           rounded={'full'}
+          className={'w-full sm:w-fit'}
         >
           Create an account
         </Button>
@@ -56,7 +57,9 @@ export function Hero() {
             )
           }
           rounded={'full'}
-          className={'flex items-center font-normal'}
+          className={
+            'flex items-center justify-center font-normal w-full sm:w-fit'
+          }
           color={'none'}
           size={'small'}
         >
@@ -69,7 +72,7 @@ export function Hero() {
           <span className="ml-3">Schedule meeting</span>
         </Button>
       </div>
-      <div className="mt-36 lg:mt-44">
+      <div className="mt-20 sm:mt-36 lg:mt-44">
         <p className="font-display text-base text-slate-900">
           Trusted by top moving companies nationwide
         </p>

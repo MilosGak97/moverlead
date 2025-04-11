@@ -1,9 +1,10 @@
 import { RefObject } from 'react';
 import { GetListingObjectDto } from '../../../../generated-api';
 import { FilteredStatusBedge } from './FilteredStatusBedge';
-import { formatEnumText } from '../../../../helpers/formatEnumText';
 import { PropertyStatusBedge } from './PropertyStatusBedge';
 import { formatDateToUSDate } from '../../../../helpers/formatDate';
+import { normalizeScreamingSnakeText } from '../../../../helpers/normalizeScreamingSnakeText';
+import { OwnerNameText } from './OwnerNameText';
 
 type ListingTableProps = {
   checkbox?: RefObject<HTMLInputElement>;
@@ -148,8 +149,7 @@ export const ListingTable = ({
                 {item?.fullAddress || ''}
               </td>
               <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                {/* TODO - instead of country use item.owner */}
-                To be updated
+                <OwnerNameText statusOrName={item.fullName} />
               </td>
               <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                 <FilteredStatusBedge status={item.filteredStatus} />
@@ -173,7 +173,7 @@ export const ListingTable = ({
                 scope="col"
                 className="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
               >
-                {formatEnumText(item.homeType)}
+                {normalizeScreamingSnakeText(item.homeType)}
               </th>
               <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                 <PropertyStatusBedge status={item.propertyStatus} />
@@ -191,7 +191,7 @@ export const ListingTable = ({
                 {item.brokerageName}
               </td>
               <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                {item.brokeragePhone}
+                {item.brokeragePhone || '-'}
               </td>
             </tr>
           );

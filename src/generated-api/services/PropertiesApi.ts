@@ -229,14 +229,4 @@ export class PropertiesApi {
       },
     });
   }
-  /**
-   * @returns any
-   * @throws ApiError
-   */
-  public propertiesControllerBrightdataEnrichment(): CancelablePromise<any> {
-    return this.httpRequest.request({
-      method: 'POST',
-      url: '/api/properties/brightdata-enrichment-trigger',
-    });
-  }
 }

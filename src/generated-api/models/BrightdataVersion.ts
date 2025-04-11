@@ -2,7 +2,4 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type BrightdataEnrichmentFillerDto = {
-  snapshotId: string;
-};
-
+export type BrightdataVersion = 'BRIGHTDATA_DATASET_ID_V1' | 'BRIGHTDATA_DATASET_ID_V2';

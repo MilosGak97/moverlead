@@ -29,6 +29,15 @@ const ListingsView = () => {
 
   const selectedListingCount = selectedListings.length;
 
+  const getListingQueryKey = [
+    QueryKeys.LISTINGS,
+    selectedStatesList,
+    date,
+    propertyValue,
+    filteredStatus,
+    propertyStatus,
+  ];
+
   const {
     items,
     totalItems,
@@ -40,14 +49,7 @@ const ListingsView = () => {
     itemsPerPage,
     setPage,
   } = usePagination({
-    queryKey: [
-      QueryKeys.LISTINGS,
-      selectedStatesList,
-      date,
-      propertyValue,
-      filteredStatus,
-      propertyStatus,
-    ],
+    queryKey: getListingQueryKey,
     queryFn: (limit, offset) =>
       api.properties.propertiesControllerGetListings({
         state: selectedStatesList,
@@ -133,7 +135,10 @@ const ListingsView = () => {
           totalCount={totalItems}
           selectedItemsCount={selectedListingCount}
         />
-        <ExportOptions selectedListings={selectedListings} />
+        <ExportOptions
+          selectedListings={selectedListings}
+          getListingQueryKey={getListingQueryKey}
+        />
       </div>
       <ItemsTable
         isLoading={isLoading}

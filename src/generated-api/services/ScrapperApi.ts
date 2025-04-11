@@ -2,8 +2,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { BrightdataEnrichmentFillerDto } from '../models/BrightdataEnrichmentFillerDto';
+import type { BrightdataVersion } from '../models/BrightdataVersion';
 import type { FetchDataDto } from '../models/FetchDataDto';
+import type { GetZillowUrlsForCountyDto } from '../models/GetZillowUrlsForCountyDto';
+import type { RunScrapperV2Dto } from '../models/RunScrapperV2Dto';
 import type { StartScrapperDto } from '../models/StartScrapperDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
@@ -20,25 +22,57 @@ export class ScrapperApi {
   }): CancelablePromise<any> {
     return this.httpRequest.request({
       method: 'POST',
-      url: '/api/scrapper',
+      url: '/api/scrapper/reddis/trigger-scrapping',
       body: requestBody,
       mediaType: 'application/json',
+    });
+  }
+  /**
+   * Trigger brightdata
+   * @returns any
+   * @throws ApiError
+   */
+  public scrapperControllerBrightdataEnrichmentTrigger({
+    brightdataVersion,
+  }: {
+    brightdataVersion: BrightdataVersion,
+  }): CancelablePromise<any> {
+    return this.httpRequest.request({
+      method: 'POST',
+      url: '/api/scrapper/brightdata/trigger',
+      query: {
+        'brightdataVersion': brightdataVersion,
+      },
     });
   }
   /**
    * @returns any
    * @throws ApiError
    */
-  public scrapperControllerBrightdataFiller({
-    requestBody,
+  public scrapperControllerBrightdataEnrichmentFiller({
+    snapshotId,
+    brightdataVersion,
   }: {
-    requestBody: BrightdataEnrichmentFillerDto,
+    snapshotId: string,
+    brightdataVersion: 'BRIGHTDATA_DATASET_ID_V1' | 'BRIGHTDATA_DATASET_ID_V2',
   }): CancelablePromise<any> {
     return this.httpRequest.request({
       method: 'POST',
-      url: '/api/scrapper/brightdata-filler',
-      body: requestBody,
-      mediaType: 'application/json',
+      url: '/api/scrapper/brightdata/filler',
+      query: {
+        'snapshotId': snapshotId,
+        'brightdataVersion': brightdataVersion,
+      },
+    });
+  }
+  /**
+   * @returns any
+   * @throws ApiError
+   */
+  public scrapperControllerHasdataProperty(): CancelablePromise<any> {
+    return this.httpRequest.request({
+      method: 'POST',
+      url: '/api/scrapper/hasdata/trigger',
     });
   }
   /**
@@ -75,6 +109,38 @@ export class ScrapperApi {
     return this.httpRequest.request({
       method: 'POST',
       url: '/api/scrapper/resume',
+    });
+  }
+  /**
+   * @returns any
+   * @throws ApiError
+   */
+  public scrapperControllerGetZillowUrlsForCounty({
+    requestBody,
+  }: {
+    requestBody: GetZillowUrlsForCountyDto,
+  }): CancelablePromise<any> {
+    return this.httpRequest.request({
+      method: 'POST',
+      url: '/api/scrapper/get-zillow-urls-for-county',
+      body: requestBody,
+      mediaType: 'application/json',
+    });
+  }
+  /**
+   * @returns any
+   * @throws ApiError
+   */
+  public scrapperControllerRunScrapperV2({
+    requestBody,
+  }: {
+    requestBody: RunScrapperV2Dto,
+  }): CancelablePromise<any> {
+    return this.httpRequest.request({
+      method: 'POST',
+      url: '/api/scrapper/run-scrapper-v2',
+      body: requestBody,
+      mediaType: 'application/json',
     });
   }
 }

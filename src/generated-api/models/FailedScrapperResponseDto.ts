@@ -5,6 +5,8 @@
 export type FailedScrapperResponseDto = {
   s3Key: string;
   zillowUrl: string;
+  minPrice: string;
+  maxPrice: string;
   countyId: string;
 };
 

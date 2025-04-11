@@ -4,6 +4,7 @@
 /* eslint-disable */
 export type GetListingObjectDto = {
   id: string;
+  fullName: string;
   filteredStatus?: 'FURNISHED' | 'EMPTY' | 'NO_DATA';
   propertyStatus: 'COMING_SOON' | 'FOR_SALE' | 'PENDING';
   propertyStatusDate: string;
@@ -11,7 +12,7 @@ export type GetListingObjectDto = {
   state: string;
   bedrooms?: number;
   bathrooms?: number;
-  price?: number;
+  price?: string;
   homeType: string;
   realtorName?: string;
   realtorPhone?: string;

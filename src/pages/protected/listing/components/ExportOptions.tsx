@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../../../../api/api';
 import { useToast } from '../../../../hooks/useToast';
 import { Toast } from '../../../../components/Toast';
@@ -10,6 +10,7 @@ import { format } from 'date-fns';
 import { Button } from '../../../../components/Button';
 
 type ExportOptionsProps = {
+  getListingQueryKey: unknown[];
   selectedListings: string[];
 };
 
@@ -26,10 +27,16 @@ const documentNames = new Map([
 
 const currentDate = format(new Date(), 'MM-dd-yyyy');
 
-export const ExportOptions = ({ selectedListings }: ExportOptionsProps) => {
+export const ExportOptions = ({
+  selectedListings,
+  getListingQueryKey,
+}: ExportOptionsProps) => {
+  const queryClient = useQueryClient();
   const [downloadExportOption, setDownloadExportOption] =
     useState<ExportOption | null>(null);
   const [isDownloadExportModalOpen, setIsDownloadExportModalOpen] =
+    useState(false);
+  const [isGetOwnersInfoModalOpen, setIsGetOwnersInfoModalOpen] =
     useState(false);
   const { toastText, addToast } = useToast();
   const { toastText: successExportToastText, addToast: addSuccessExportToast } =
@@ -79,6 +86,8 @@ export const ExportOptions = ({ selectedListings }: ExportOptionsProps) => {
         addSuccessOwnerToast(
           'Your home owners information are successfully updated!'
         );
+        queryClient.invalidateQueries({ queryKey: getListingQueryKey });
+        setIsGetOwnersInfoModalOpen(false);
       },
       onError: () => addToast(),
     });
@@ -88,10 +97,16 @@ export const ExportOptions = ({ selectedListings }: ExportOptionsProps) => {
   const isPendingExportMutation =
     isPendingExportDetailed || isPendingExportUsps;
 
-  const handleDialogClose = () => {
+  const handleExportDialogClose = () => {
     if (isPendingExportMutation) return;
 
     setIsDownloadExportModalOpen(false);
+  };
+
+  const handleGetOwnersDialogClose = () => {
+    if (isPendingExportMutation) return;
+
+    setIsGetOwnersInfoModalOpen(false);
   };
 
   const handleExportOptionClick = (exportOption: ExportOption) => {
@@ -105,7 +120,6 @@ export const ExportOptions = ({ selectedListings }: ExportOptionsProps) => {
     <>
       <div className="mt-4 flex items-center gap-3 bg-white">
         <Button
-          color={'success'}
           disabled={areButtonsDisabled}
           onClick={() => handleExportOptionClick(ExportOption.EXPORT_DETAILED)}
         >
@@ -117,7 +131,10 @@ export const ExportOptions = ({ selectedListings }: ExportOptionsProps) => {
         >
           Export USPS
         </Button>
-        <Button disabled={areButtonsDisabled} onClick={() => getOwnersInfo()}>
+        <Button
+          disabled={areButtonsDisabled}
+          onClick={() => setIsGetOwnersInfoModalOpen(true)}
+        >
           Get Owners Info
         </Button>
       </div>
@@ -127,7 +144,7 @@ export const ExportOptions = ({ selectedListings }: ExportOptionsProps) => {
           selectedListings.length
         } ${selectedListings.length === 1 ? 'property' : 'properties'}?`}
         isDialogOpen={isDownloadExportModalOpen}
-        onClose={handleDialogClose}
+        onClose={handleExportDialogClose}
         onConfirmButtonClick={
           downloadExportOption === ExportOption.EXPORT_DETAILED
             ? exportDetailed
@@ -137,6 +154,19 @@ export const ExportOptions = ({ selectedListings }: ExportOptionsProps) => {
         isConfirmButtonLoading={isPendingExportMutation}
         isConfirmButtonDisabled={isPendingExportMutation}
         isCancelButtonDisabled={isPendingExportMutation}
+      />
+      <Modal
+        title={'Get Owners Info'}
+        description={`Are you sure you want to get owners info for ${
+          selectedListings.length
+        } ${selectedListings.length === 1 ? 'property' : 'properties'}?`}
+        isDialogOpen={isGetOwnersInfoModalOpen}
+        onClose={handleGetOwnersDialogClose}
+        onConfirmButtonClick={getOwnersInfo}
+        icon={<ArrowDownTrayIcon />}
+        isConfirmButtonLoading={isPendingGetOwnersInfo}
+        isConfirmButtonDisabled={isPendingGetOwnersInfo}
+        isCancelButtonDisabled={isPendingGetOwnersInfo}
       />
       {toastText && <Toast text={toastText} />}
       {successExportToastText && (
