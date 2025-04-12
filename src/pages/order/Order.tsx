@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { QueryKeys } from '../../enums/queryKeys';
 import { api } from '../../api/api';
 import { SelectState } from './components/SelectState';
@@ -10,11 +10,11 @@ import { Toast } from '../../components/Toast';
 import { XMarkIcon } from '@heroicons/react/20/solid';
 import { StateContainer } from '../../components/StateContainer';
 import { Button } from '../../components/Button';
+import { OrderTable } from './components/OrderTable';
 
 const MAX_NUMBER_OF_COUNTIES = 20;
 
 export const Order = () => {
-  const checkbox = useRef<HTMLInputElement>(null);
   const [checked, setChecked] = useState(false);
   const [selectedState, setSelectedState] = useState<StateResponseDto | null>(
     null
@@ -63,7 +63,7 @@ export const Order = () => {
     onError: addStripePaymentFailedToastText,
   });
 
-  const toggleSelectedAllCounties = () => {
+  const toggleSelectAllCounties = () => {
     if (!counties) return;
 
     setChecked((prevChecked) => {
@@ -88,7 +88,7 @@ export const Order = () => {
     });
   };
 
-  const toggleIndividualCounty = (county: County, isChecked: boolean) => {
+  const toggleSingleCounty = (county: County, isChecked: boolean) => {
     if (isChecked && isMaxNumberOfCountiesReached) return;
 
     setSelectedCounties((prevSelected) =>
@@ -125,7 +125,7 @@ export const Order = () => {
     <>
       <div className="w-full grid grid-rows-[auto_1fr]">
         <div className="m-4">
-          <div className="sm:grid sm:grid-cols-2 gap-4">
+          <div className="grid xl:grid-cols-2 gap-4">
             <div className="sm:flex-auto">
               <h1 className="text-base font-semibold text-gray-900">Order</h1>
               <p className="mt-2 text-sm text-gray-700">
@@ -134,7 +134,7 @@ export const Order = () => {
               </p>
             </div>
 
-            <div className="flex gap-4 mt-4 sm:mt-0 sm:flex-none h-full">
+            <div className="flex flex-col sm:flex-row gap-4 h-full">
               <div className="flex gap-2 flex-wrap px-2 py-1 w-full border rounded-lg max-h-20 overflow-y-auto">
                 {cartCounties.length > 0 ? (
                   cartCounties.map((county) => (
@@ -155,10 +155,11 @@ export const Order = () => {
                   <span className="italic text-sm">No county in the cart</span>
                 )}
               </div>
-              <div className="flex flex-shrink-0 h-fit gap-2">
+              <div className="grid xs:grid-cols-2 flex-shrink-0 gap-2">
                 <Button
                   onClick={mutate as () => void}
                   disabled={!cartCounties.length || isPending}
+                  className="w-full h-fit"
                 >
                   {isPending ? 'Loading...' : 'Checkout'}
                 </Button>
@@ -166,6 +167,7 @@ export const Order = () => {
                   onClick={() => setCartCounties([])}
                   disabled={!cartCounties.length}
                   color={'none'}
+                  className="w-full h-fit"
                 >
                   Clear Cart
                 </Button>
@@ -186,8 +188,8 @@ export const Order = () => {
             Promise.all([refetchStates(), refetchCounties()])
           }
         >
-          <div className="overflow-x-auto">
-            <div className="inline-block min-w-full">
+          <div className="overflow-auto grid">
+            <div className=" inline-block min-w-full">
               {selectedState ? (
                 <div className="relative">
                   {selectedCounties.length > 0 && (
@@ -214,122 +216,19 @@ export const Order = () => {
                       </span>
                     </div>
                   )}
+
                   {counties && counties?.length > 0 ? (
-                    <table className="min-w-full table-fixed divide-y divide-gray-300">
-                      <thead>
-                        <tr>
-                          <th scope="col" className="relative w-14 px-6">
-                            <input
-                              type="checkbox"
-                              className="h-4 w-4 translate-y-0.5 cursor-pointer disabled:cursor-default"
-                              ref={checkbox}
-                              checked={checked}
-                              onChange={toggleSelectedAllCounties}
-                              disabled={isMaxNumberOfCountiesReached}
-                            />
-                          </th>
-                          <th
-                            scope="col"
-                            className="py-3.5 pr-3 text-left text-sm font-semibold text-gray-900"
-                          >
-                            County
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                          >
-                            State
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                          >
-                            Price
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-gray-200 bg-white">
-                        {counties.map((county) => {
-                          const isCountySelected = selectedCounties.some(
-                            (c) => c.id === county.id
-                          );
-                          const isCountyInCart = checkIsCountyInCart(county);
-
-                          return (
-                            <tr
-                              key={county.id}
-                              className={`relative group ${
-                                isCountySelected
-                                  ? 'bg-gray-100'
-                                  : 'hover:bg-gray-50'
-                              } ${
-                                isCountyInCart
-                                  ? 'cursor-default pointer-events-none opacity-25'
-                                  : `${
-                                      (!isMaxNumberOfCountiesReached ||
-                                        isCountySelected) &&
-                                      'cursor-pointer'
-                                    }`
-                              }`}
-                              onClick={() =>
-                                toggleIndividualCounty(
-                                  county,
-                                  !isCountySelected
-                                )
-                              }
-                            >
-                              <td className="group text-center">
-                                {/* TOOLTIP - mora unutar td-a zbog table, u suprotnom pobrka tabelu */}
-                                <div
-                                  className={`absolute top-0 -translate-y-full bg-gray-500 left-1/2 -translate-x-1/2 p-1 px-2 rounded-xl text-sm text-white opacity-0 invisible group-hover:opacity-100 ${
-                                    isMaxNumberOfCountiesReached &&
-                                    !isCountySelected &&
-                                    'group-hover:visible transition-opacity'
-                                  }`}
-                                >
-                                  Maximum limit reached. You can select up to 20
-                                  counties.
-                                  <div className="w-2 h-2 bg-gray-500 absolute left-1/2 -translate-x-1/2 rotate-45"></div>
-                                </div>
-
-                                <input
-                                  type="checkbox"
-                                  className={`h-4 w-4 translate-y-0.5 cursor-pointer disabled:cursor-default`}
-                                  checked={isCountySelected || isCountyInCart}
-                                  onClick={(e) => e.stopPropagation()} // Sprečava dvostruki klik
-                                  disabled={
-                                    isMaxNumberOfCountiesReached &&
-                                    !isCountySelected
-                                  }
-                                  onChange={(e) =>
-                                    toggleIndividualCounty(
-                                      county,
-                                      e.target.checked
-                                    )
-                                  }
-                                />
-                                {isCountyInCart && (
-                                  <div className="hidden group-hover:block absolute whitespace-nowrap top-1/2 -translate-y-1/2 left-full bg-white border border-gray-200 p-1 px-2 rounded-md">
-                                    <span className="text-sm">
-                                      County is in the cart already
-                                    </span>
-                                  </div>
-                                )}
-                              </td>
-                              <td className="whitespace-nowrap py-4 pr-3 text-sm font-medium text-gray-900">
-                                {county.name}
-                              </td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                {county.state}
-                              </td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                ${county.amount}
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
+                    <OrderTable
+                      checked={checked}
+                      toggleSelectAllCounties={toggleSelectAllCounties}
+                      isMaxNumberOfCountiesReached={
+                        isMaxNumberOfCountiesReached
+                      }
+                      counties={counties}
+                      selectedCounties={selectedCounties}
+                      checkIsCountyInCart={checkIsCountyInCart}
+                      toggleSingleCounty={toggleSingleCounty}
+                    />
                   ) : (
                     <p className="italic">
                       No counties for the selected state:{' '}

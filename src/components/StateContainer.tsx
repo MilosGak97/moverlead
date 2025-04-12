@@ -48,11 +48,12 @@ export const StateContainer = ({
   wrapperClassName,
 }: StateContainerProps) => {
   const positionClass = isCentered ? 'absolute' : '';
+  const paddingClass = includePadding ? 'p-4' : '';
 
   if (isLoading)
     return (
       <div
-        className={`h-full w-full grid place-content-center ${positionClass}`}
+        className={`h-full w-full grid place-content-center ${paddingClass} ${positionClass}`}
       >
         <PuffLoader color="#4379F2" />
       </div>
@@ -61,7 +62,7 @@ export const StateContainer = ({
   if (isError)
     return (
       <div
-        className={`h-full w-full grid place-content-center gap-4 ${positionClass}`}
+        className={`h-full w-full grid place-content-center ${paddingClass} gap-4 ${positionClass}`}
       >
         <p>Something went wrong!</p>
         {onErrorButtonClick && (
@@ -73,7 +74,7 @@ export const StateContainer = ({
   if (isEmpty)
     return (
       <div
-        className={`h-full w-full grid place-content-center gap-4 text-center ${positionClass}`}
+        className={`h-full w-full grid place-content-center ${paddingClass} gap-4 text-center ${positionClass}`}
       >
         <p>{emptyTitle}</p>
         {emptyDescription && <p>{emptyDescription}</p>}
@@ -84,9 +85,7 @@ export const StateContainer = ({
     );
 
   return (
-    <div
-      className={twMerge(`w-full ${includePadding && 'p-4'}`, wrapperClassName)}
-    >
+    <div className={twMerge(`w-full ${paddingClass}`, wrapperClassName)}>
       {children}
     </div>
   );

@@ -11,18 +11,18 @@ import clsx from 'clsx';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { Button } from '../../../components/Button.tsx';
-import { Container } from './Container';
-import { Logo } from './Logo.tsx';
-import { NavLink } from './NavLink';
+import { Container } from '../components/Container.tsx';
+import { Logo } from '../components/Logo.tsx';
+import { LocalNavLink } from '../components/LocalNavLink.tsx';
 import { routes } from '../../../router/routes.ts';
 
-function MobileNavLink({
+const MobileNavLink = ({
   href,
   children,
 }: {
   href: string;
   children: React.ReactNode;
-}) {
+}) => {
   return (
     <PopoverButton as="div" className="block w-full">
       <a className="block p-2 rounded-md hover:bg-gray-50" href={href}>
@@ -30,9 +30,9 @@ function MobileNavLink({
       </a>
     </PopoverButton>
   );
-}
+};
 
-function MobileNavIcon({ open }: { open: boolean }) {
+const MobileNavIcon = ({ open }: { open: boolean }) => {
   return (
     <svg
       aria-hidden="true"
@@ -57,9 +57,9 @@ function MobileNavIcon({ open }: { open: boolean }) {
       />
     </svg>
   );
-}
+};
 
-function MobileNavigation() {
+const MobileNavigation = () => {
   return (
     <Popover>
       <PopoverButton
@@ -86,7 +86,7 @@ function MobileNavigation() {
       </PopoverPanel>
     </Popover>
   );
-}
+};
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -100,15 +100,17 @@ export const Header = () => {
               <Logo />
             </Link>
             <div className="hidden md:flex md:gap-x-6">
-              <NavLink href="#features">Features</NavLink>
-              <NavLink href="#benefits">Benefits</NavLink>
-              <NavLink href="#testimonials">Testimonials</NavLink>
-              <NavLink href="#faq">FAQ</NavLink>
+              <LocalNavLink href="#features">Features</LocalNavLink>
+              <LocalNavLink href="#benefits">Benefits</LocalNavLink>
+              <LocalNavLink href="#testimonials">Testimonials</LocalNavLink>
+              <LocalNavLink href="#faq">FAQ</LocalNavLink>
             </div>
           </div>
           <div className="flex items-center gap-x-5 md:gap-x-8">
             <div className="hidden md:block">
-              <NavLink href={routes.auth.login}>Sign in</NavLink>
+              <LocalNavLink onClick={() => navigate(routes.auth.login)}>
+                Sign in
+              </LocalNavLink>
             </div>
             <Button
               onClick={() => navigate(routes.auth.register)}

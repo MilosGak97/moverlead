@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef, useState, useEffect } from 'react';
 
-import { FilterListings } from '../../../components/FilterSelection.tsx';
+import { FilterListings } from './components/FilterSelection.tsx';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../../../api/api.ts';
 import { QueryKeys } from '../../../enums/queryKeys.ts';
@@ -13,8 +13,11 @@ import { ListingTable } from './components/ListingTable.tsx';
 import { usePagination } from '../../../hooks/usePagination.ts';
 import { ItemsTable } from '../../../components/ItemsTable.tsx';
 import { Button } from '../../../components/Button.tsx';
+import { useNavigate } from 'react-router-dom';
+import { routes } from '../../../router/routes.ts';
 
 const ListingsView = () => {
+  const navigate = useNavigate();
   const checkbox = useRef<HTMLInputElement>(null);
   const [checked, setChecked] = useState(false);
   const [indeterminate, setIndeterminate] = useState(false);
@@ -144,6 +147,11 @@ const ListingsView = () => {
         isLoading={isLoading}
         isError={isError}
         onErrorButtonClick={refetch}
+        isEmpty={!items.length}
+        emptyTitle={'No properties available at the moment.'}
+        emptyDescription={'Check again tomorrow or subscribe to more counites'}
+        emptyButtonText={'Order now'}
+        onEmptyClick={() => navigate(routes.order)}
         paginationData={{
           currentPage,
           onPageClick: setPage,

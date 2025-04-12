@@ -1,3 +1,4 @@
+import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { ReactNode, useState } from 'react';
 
 type ExpandableCardProps = {
@@ -16,10 +17,15 @@ export const ExpandableCard = ({
   return (
     <div className="rounded-lg border overflow-hidden">
       <div
-        className="bg-primary hover:bg-primaryHover px-4 py-2 text-white cursor-pointer"
+        className="bg-primary hover:bg-primaryHover px-4 py-2 text-white cursor-pointer flex items-center gap-4"
         onClick={() => setIsExpanded((prevState) => !prevState)}
       >
         {title || renderHeaderComponent}
+        <ChevronDownIcon
+          className={`size-5 transition-transform duration-200 ${
+            isExpanded ? 'rotate-180' : ''
+          }`}
+        />
       </div>
       <div
         className={`grid transition-all ${

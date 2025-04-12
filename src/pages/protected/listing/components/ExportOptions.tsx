@@ -118,7 +118,7 @@ export const ExportOptions = ({
 
   return (
     <>
-      <div className="mt-4 flex items-center gap-3 bg-white">
+      <div className="mt-4 flex flex-wrap items-center gap-3 bg-white">
         <Button
           disabled={areButtonsDisabled}
           onClick={() => handleExportOptionClick(ExportOption.EXPORT_DETAILED)}

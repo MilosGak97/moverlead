@@ -13,6 +13,9 @@ module.exports = {
         successHover: '#00a99a',
         successActive: '#00a396',
       },
+      screens: {
+        xs: '420px',
+      },
     },
   },
   plugins: [],

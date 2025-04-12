@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react';
-import { useListingFilterContext } from '../pages/protected/listing/context/ListingFilterContext';
-import { useDebounceValue } from '../hooks/useDebounceValue';
+import { useListingFilterContext } from '../context/ListingFilterContext';
+import { useDebounceValue } from '../../../../hooks/useDebounceValue';
 
 export const InputsSelect = () => {
   const { propertyValue, setPropertyValue, date, setDate } =

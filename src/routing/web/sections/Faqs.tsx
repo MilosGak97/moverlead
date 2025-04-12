@@ -1,4 +1,4 @@
-import { Container } from './Container';
+import { Container } from '../components/Container';
 import backgroundImage from '../images/background-faqs.jpg';
 
 const faqs = [
@@ -56,7 +56,7 @@ const faqs = [
   ],
 ];
 
-export function Faqs() {
+export const Faqs = () => {
   return (
     <section
       id="faq"
@@ -105,4 +105,4 @@ export function Faqs() {
       </Container>
     </section>
   );
-}
+};

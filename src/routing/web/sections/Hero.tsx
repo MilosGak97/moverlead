@@ -1,4 +1,4 @@
-import { Container } from './Container.tsx';
+import { Container } from '../components/Container.tsx';
 import { Button } from '../../../components/Button.tsx';
 
 import amExpress from '../images/logos/am_express_logo.png';
@@ -15,12 +15,12 @@ const trustedByCompanies = [
   { name: 'Mirage', logo: amExpress },
 ];
 
-export function Hero() {
+export const Hero = () => {
   const navigate = useNavigate();
 
   return (
     <Container className="pb-16 pt-20 text-center lg:pt-32">
-      <h1 className="mx-auto max-w-4xl font-display text-5xl font-medium tracking-tight text-slate-900 sm:text-7xl">
+      <h1 className="mx-auto max-w-4xl font-display text-4xl xs:text-5xl font-medium tracking-tight text-slate-900 sm:text-7xl">
         Filtered{' '}
         <span className="relative whitespace-nowrap text-primary">
           <svg
@@ -89,4 +89,4 @@ export function Hero() {
       </div>
     </Container>
   );
-}
+};

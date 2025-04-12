@@ -82,7 +82,7 @@ export const Subscriptions = () => {
               <ExpandableCard
                 key={id}
                 renderHeaderComponent={
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between flex-col sm:flex-row gap-4 flex-wrap w-full text-center">
                     <span className="font-medium">
                       {`${formatDateToUs(
                         currentPeriodStart as string

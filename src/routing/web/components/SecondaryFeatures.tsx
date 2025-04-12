@@ -9,6 +9,7 @@ import { Container } from './Container';
 import screenshotContacts from '../images/screenshots/contacts.png';
 import screenshotInventory from '../images/screenshots/inventory.png';
 import screenshotProfitLoss from '../images/screenshots/profit-loss.png';
+import { SectionHeader } from './SectionHeader';
 
 interface Feature {
   name: React.ReactNode;
@@ -104,7 +105,7 @@ const features: Array<Feature> = [
   },
 ];
 
-function Feature({
+const SingleSecondaryFeature = ({
   feature,
   isActive,
   className,
@@ -112,7 +113,7 @@ function Feature({
 }: React.ComponentPropsWithoutRef<'div'> & {
   feature: Feature;
   isActive: boolean;
-}) {
+}) => {
   return (
     <div
       className={clsx(className, !isActive && 'opacity-75 hover:opacity-100')}
@@ -142,39 +143,38 @@ function Feature({
       <p className="mt-4 text-sm text-slate-600">{feature.description}</p>
     </div>
   );
-}
+};
 
-function FeaturesMobile() {
+const SecondaryFeaturesMobile = () => {
   return (
-    <div className="-mx-4 mt-20 flex flex-col gap-y-10 overflow-hidden px-4 sm:-mx-6 sm:px-6 lg:hidden">
+    <div className="-mx-4 mt-16 flex flex-col gap-y-10 overflow-hidden px-4 sm:-mx-6 sm:px-6 lg:hidden">
       {features.map((feature) => (
         <div key={feature.summary}>
-          <Feature feature={feature} className="mx-auto max-w-2xl" isActive />
+          <SingleSecondaryFeature
+            feature={feature}
+            className="mx-auto max-w-2xl"
+            isActive
+          />
           <div className="relative mt-10 pb-10">
             <div className="absolute -inset-x-4 bottom-0 top-8 bg-slate-200 sm:-inset-x-6" />
-            <div className="relative mx-auto w-[52.75rem] overflow-hidden rounded-xl bg-white shadow-lg shadow-slate-900/5 ring-1 ring-slate-500/10">
-              <img
-                className="w-full"
-                src={feature.image}
-                alt=""
-                sizes="52.75rem"
-              />
+            <div className="relative mx-auto overflow-hidden rounded-xl bg-white shadow-lg shadow-slate-900/5 ring-1 ring-slate-500/10">
+              <img className="w-full" src={feature.image} />
             </div>
           </div>
         </div>
       ))}
     </div>
   );
-}
+};
 
-function FeaturesDesktop() {
+const SecondaryFeaturesDesktop = () => {
   return (
     <TabGroup className="hidden lg:mt-20 lg:block">
       {({ selectedIndex }) => (
         <>
           <TabList className="grid grid-cols-3 gap-x-8">
             {features.map((feature, featureIndex) => (
-              <Feature
+              <SingleSecondaryFeature
                 key={feature.summary}
                 feature={{
                   ...feature,
@@ -220,9 +220,9 @@ function FeaturesDesktop() {
       )}
     </TabGroup>
   );
-}
+};
 
-export function SecondaryFeatures() {
+export const SecondaryFeatures = () => {
   return (
     <section
       id="benefits"
@@ -230,20 +230,16 @@ export function SecondaryFeatures() {
       className="pb-14 pt-20 sm:pb-20 sm:pt-32 lg:pb-32"
     >
       <Container>
-        <div className="mx-auto max-w-2xl md:text-center">
-          <h2 className="font-display text-3xl tracking-tight text-slate-900 sm:text-4xl">
-            Benefits of using Mover Lead
-          </h2>
-          <p className="mt-4 text-lg tracking-tight text-slate-700">
-            Stay ahead of the competition by identifying homeowners who are
+        <SectionHeader
+          title="Benefits of using Mover Lead"
+          description="Stay ahead of the competition by identifying homeowners who are
             preparing to move. Our advanced filtering technology pinpoints
             furnished, move-ready homes—helping moving and storage companies
-            focus on the most profitable opportunities.
-          </p>
-        </div>
-        <FeaturesMobile />
-        <FeaturesDesktop />
+            focus on the most profitable opportunities."
+        />
+        <SecondaryFeaturesMobile />
+        <SecondaryFeaturesDesktop />
       </Container>
     </section>
   );
-}
+};

@@ -1,17 +1,17 @@
-import { Header } from './web/components/Header.tsx';
-import { Testimonials } from './web/components/Testimonials.tsx';
-import { Hero } from './web/components/Hero.tsx';
-import { PrimaryFeatures } from './web/components/PrimaryFeatures.tsx';
+import { Header } from './web/sections/Header.tsx';
+import { Hero } from './web/sections/Hero.tsx';
+import { PrimaryFeatures } from './web/sections/primary-features/PrimaryFeatures.tsx';
 import { SecondaryFeatures } from './web/components/SecondaryFeatures.tsx';
-import { CallToAction } from './web/components/CallToAction.tsx';
-import { Faqs } from './web/components/Faqs.tsx';
-import { Footer } from './web/components/Footer.tsx';
+import { CallToAction } from './web/sections/CallToAction.tsx';
+import { Testimonials } from './web/sections/Testimonials.tsx';
+import { Faqs } from './web/sections/Faqs.tsx';
+import { Footer } from './web/sections/Footer.tsx';
 
 function Web() {
   return (
     <>
       <Header />
-      <main>
+      <main className="overflow-x-hidden">
         <Hero />
         <PrimaryFeatures />
         <SecondaryFeatures />

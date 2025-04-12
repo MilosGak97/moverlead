@@ -1,21 +1,21 @@
 import { Link } from 'react-router-dom';
-import { Container } from './Container';
-import { Logo } from './Logo';
-import { NavLink } from './NavLink';
+import { Container } from '../components/Container';
+import { Logo } from '../components/Logo';
+import { LocalNavLink } from '../components/LocalNavLink';
 
-export function Footer() {
+export const Footer = () => {
   return (
     <footer className="bg-slate-50">
       <Container>
         <div className="py-16">
           <Logo />
           <nav className="mt-10 text-sm" aria-label="quick links">
-            <div className="-my-1 flex justify-center gap-x-6">
-              <NavLink href="#features">Features</NavLink>
-              <NavLink href="#benefits">Benefits</NavLink>
-              <NavLink href="#testimonials">Testimonials</NavLink>
-              <NavLink href="#faq">FAQ</NavLink>
-              <NavLink href="#faq">Contact us</NavLink>
+            <div className="flex items-center flex-wrap gap-2">
+              <LocalNavLink href="#features">Features</LocalNavLink>
+              <LocalNavLink href="#benefits">Benefits</LocalNavLink>
+              <LocalNavLink href="#testimonials">Testimonials</LocalNavLink>
+              <LocalNavLink href="#faq">FAQ</LocalNavLink>
+              <LocalNavLink href="#faq">Contact us</LocalNavLink>
             </div>
           </nav>
         </div>
@@ -67,7 +67,7 @@ export function Footer() {
               </svg>
             </Link>
           </div>
-          <p className="mt-6 text-sm text-slate-500 sm:mt-0">
+          <p className="mt-6 text-sm text-center text-slate-500 sm:mt-0">
             Copyright &copy; {new Date().getFullYear()} TaxPal. All rights
             reserved.
           </p>
@@ -75,4 +75,4 @@ export function Footer() {
       </Container>
     </footer>
   );
-}
+};

@@ -21,7 +21,9 @@ export const OptionSelect = <T,>({
 }: Props<T>) => {
   return (
     <fieldset>
-      <legend className="block font-medium">{filterGroup.title}</legend>
+      <legend className="block font-medium line-clamp-1 text-nowrap">
+        {filterGroup.title}
+      </legend>
       <div className="space-y-6 pt-6 sm:space-y-4 sm:pt-4">
         {filterGroup.options.map((option, optionIdx) => {
           const uniqueId = `${filterGroup.title.replace(

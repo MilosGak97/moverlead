@@ -4,12 +4,12 @@ import {
   DisclosurePanel,
 } from '@headlessui/react';
 import { FunnelIcon } from '@heroicons/react/20/solid';
-import { ComboSelect } from '../pages/protected/listing/components/ComboSelect.tsx';
-import { OptionSelect } from './OptionSelect.tsx';
+import { ComboSelect } from './ComboSelect.tsx';
+import { OptionSelect } from '../../../../components/OptionSelect.tsx';
 import { InputsSelect } from './InputsSelect.tsx';
-import { FilteredStatus } from '../enums/filteredStatus.ts';
-import { PropertyStatus } from '../enums/propertyStatus.ts';
-import { useListingFilterContext } from '../pages/protected/listing/context/ListingFilterContext.tsx';
+import { FilteredStatus } from '../../../../enums/filteredStatus.ts';
+import { PropertyStatus } from '../../../../enums/propertyStatus.ts';
+import { useListingFilterContext } from '../context/ListingFilterContext.tsx';
 
 {
   /* FILTER LISTINGS */
@@ -141,16 +141,16 @@ const FilterListings = ({
           className="border-t border-gray-200 py-10"
           unmount={false}
         >
-          <div className="grid grid-cols-4">
-            <div className="grid grid-cols-5 col-span-3 gap-x-4 px-4 text-sm sm:px-6 md:gap-x-6 lg:px-8">
-              <div className="col-span-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+            <div className="grid sm:grid-cols-5 sm:col-span-3 text-sm gap-6">
+              <div className="sm:col-span-2">
                 <ComboSelect />
               </div>
-              <div className="col-span-3">
+              <div className="sm:col-span-3">
                 <InputsSelect />
               </div>
             </div>
-            <div className="grid grid-cols-2">
+            <div className="grid grid-cols-2 gap-6">
               <OptionSelect
                 filterGroup={filtersListing.filterStatus}
                 selectedValues={filteredStatus}
