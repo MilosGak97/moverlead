@@ -9,66 +9,60 @@ import avatarImage5 from '../images/avatars/avatar-5.png';
 import { SectionHeader } from '../components/SectionHeader';
 
 const testimonials = [
-  [
-    {
-      content:
-        'We used to send postcards to every new listing, hoping to catch a few homeowners who actually needed moving services. With Mover Lead, we only target move-ready homes, cutting marketing costs significantly while actually increasing our bookings. More results, less waste—it’s a no-brainer.',
-      author: {
-        name: 'Lazhar Berkat',
-        role: 'CEO at Van Express Moving',
-        image: avatarImage1,
-      },
+  {
+    content:
+      'We used to send postcards to every new listing, hoping to catch a few homeowners who actually needed moving services. With Mover Lead, we only target move-ready homes, cutting marketing costs significantly while actually increasing our bookings. More results, less waste—it’s a no-brainer.',
+    author: {
+      name: 'Lazhar Berkat',
+      role: 'CEO at Van Express Moving',
+      image: avatarImage1,
     },
-    {
-      content:
-        'Every morning, my employees would manually go through new listings, checking photos one by one to see if a home was furnished. It was slow and inefficient. Now, Mover Lead does all the heavy lifting for us, and my team can finally focus on running the business instead of playing detective.',
-      author: {
-        name: 'Djallal ',
-        role: 'CEO at Vite Moving LLC',
-        image: avatarImage4,
-      },
+  },
+  {
+    content:
+      'Every morning, my employees would manually go through new listings, checking photos one by one to see if a home was furnished. It was slow and inefficient. Now, Mover Lead does all the heavy lifting for us, and my team can finally focus on running the business instead of playing detective.',
+    author: {
+      name: 'Djallal ',
+      role: 'CEO at Vite Moving LLC',
+      image: avatarImage4,
     },
-  ],
-  [
-    {
-      content:
-        'Before Mover Lead, we were taking on any job that came our way. Now, we’re not just closing deals faster, we’re booking moves that are worth more per job. Bigger moves, higher revenue—it’s a game-changer.',
-      author: {
-        name: 'Toufik Kiehn',
-        role: 'Founder of TWF Moving',
-        image: avatarImage5,
-      },
+  },
+  {
+    content:
+      'Before Mover Lead, we were taking on any job that came our way. Now, we’re not just closing deals faster, we’re booking moves that are worth more per job. Bigger moves, higher revenue—it’s a game-changer.',
+    author: {
+      name: 'Toufik Kiehn',
+      role: 'Founder of TWF Moving',
+      image: avatarImage5,
     },
-    {
-      content:
-        'We used to spend money on all kinds of ads and mailers, hoping to reach the right audience. With Mover Lead, we already know who’s getting ready to move. We’re booking more jobs with less effort—and spending less to do it.',
-      author: {
-        name: '[Name of owner]',
-        role: '[Name of company]',
-        image: avatarImage2,
-      },
+  },
+  {
+    content:
+      'We used to spend money on all kinds of ads and mailers, hoping to reach the right audience. With Mover Lead, we already know who’s getting ready to move. We’re booking more jobs with less effort—and spending less to do it.',
+    author: {
+      name: '[Name of owner]',
+      role: '[Name of company]',
+      image: avatarImage2,
     },
-  ],
-  [
-    {
-      content:
-        'I can’t believe how much time we wasted on unqualified leads before. Mover Lead delivers exactly the right customers—people who are actually moving. It’s not just lead generation; it’s smart, profitable business.',
-      author: {
-        name: '[Name of owner]',
-        role: '[Name of company]',
-        image: avatarImage3,
-      },
+  },
+  {
+    content:
+      'I can’t believe how much time we wasted on unqualified leads before. Mover Lead delivers exactly the right customers—people who are actually moving. It’s not just lead generation; it’s smart, profitable business.',
+    author: {
+      name: '[Name of owner]',
+      role: '[Name of company]',
+      image: avatarImage3,
     },
-    {
-      content:
-        'Mover Lead isn’t just about more leads—it’s about the right leads. We’re closing deals faster, and every job is worth more. Our average move value has never been higher, and we’re finally running our business efficiently.',
-      author: {
-        name: '[Name of owner]',
-        role: '[Name of company]',
-        image: avatarImage4,
-      },
+  },
+  {
+    content:
+      'Mover Lead isn’t just about more leads—it’s about the right leads. We’re closing deals faster, and every job is worth more. Our average move value has never been higher, and we’re finally running our business efficiently.',
+    author: {
+      name: '[Name of owner]',
+      role: '[Name of company]',
+      image: avatarImage4,
     },
-  ],
+  },
 ];
 
 const QuoteIcon = (props: React.ComponentPropsWithoutRef<'svg'>) => {
@@ -95,45 +89,39 @@ export const Testimonials = () => {
         />
         <ul
           role="list"
-          className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-6 sm:gap-8 lg:mt-20 lg:max-w-none lg:grid-cols-3"
+          className="mt-16 grid grid-cols-1 auto-rows-fr lg:grid-cols-3 gap-6 sm:gap-8 lg:mt-20"
         >
-          {testimonials.map((column, columnIndex) => (
-            <li key={columnIndex}>
-              <ul role="list" className="flex flex-col gap-y-6 sm:gap-y-8">
-                {column.map((testimonial, testimonialIndex) => (
-                  <li key={testimonialIndex}>
-                    <figure className="relative rounded-2xl bg-white p-6 shadow-xl shadow-slate-900/10">
-                      <QuoteIcon className="absolute left-6 top-6 fill-slate-100" />
-                      <blockquote className="relative">
-                        <p className="text-lg tracking-tight text-slate-900">
-                          {testimonial.content}
-                        </p>
-                      </blockquote>
-                      <figcaption className="relative mt-6 flex items-center justify-between border-t border-slate-100 pt-6">
-                        <div>
-                          <div className="font-display text-base text-slate-900">
-                            {testimonial.author.name}
-                          </div>
-                          <div className="mt-1 text-sm text-slate-500">
-                            {testimonial.author.role}
-                          </div>
-                        </div>
-                        <div className="overflow-hidden rounded-full bg-slate-50">
-                          <img
-                            className="h-14 w-14 object-cover"
-                            src={testimonial.author.image}
-                            alt=""
-                            width={56}
-                            height={56}
-                          />
-                        </div>
-                      </figcaption>
-                    </figure>
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
+          {testimonials.map(
+            ({ content, author: { name, role, image } }, index) => (
+              <li key={`${name}_${role}_${index}`}>
+                <figure className="relative flex flex-col gap-6 justify-between rounded-2xl bg-white p-6 shadow-xl shadow-slate-900/10 h-full">
+                  <QuoteIcon className="absolute left-6 top-6 fill-slate-100" />
+                  <blockquote className="relative">
+                    <p className="text-lg tracking-tight text-slate-900">
+                      {content}
+                    </p>
+                  </blockquote>
+                  <figcaption className="relative flex items-center justify-between border-t border-slate-100 pt-6">
+                    <div>
+                      <div className="font-display text-base text-slate-900">
+                        {name}
+                      </div>
+                      <div className="mt-1 text-sm text-slate-500">{role}</div>
+                    </div>
+                    <div className="overflow-hidden rounded-full bg-slate-50">
+                      <img
+                        className="h-14 w-14 object-cover"
+                        src={image}
+                        alt=""
+                        width={56}
+                        height={56}
+                      />
+                    </div>
+                  </figcaption>
+                </figure>
+              </li>
+            )
+          )}
         </ul>
       </Container>
     </section>

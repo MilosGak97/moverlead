@@ -19,7 +19,7 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: () =>
       api.auth.authControllerLogin({ requestBody: { email, password } }),
     onSuccess: () => {
@@ -95,7 +95,12 @@ const Login = () => {
           }
         />
         <div>
-          <Button type="submit" rounded={'full'} className="w-full">
+          <Button
+            type="submit"
+            rounded={'full'}
+            className="w-full"
+            isLoading={isPending}
+          >
             <span>
               Sign in <span aria-hidden="true">&rarr;</span>
             </span>

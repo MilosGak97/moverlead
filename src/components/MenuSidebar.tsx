@@ -10,27 +10,22 @@ import Sidebar from './Sidebar.tsx';
 
 interface Props {
   sidebarOpen: boolean;
-  setSidebarOpen: () => void;
   setSidebarClose: () => void;
 }
 
-const MenuSidebar = ({
-  sidebarOpen,
-  setSidebarOpen,
-  setSidebarClose,
-}: Props) => {
+const MenuSidebar = ({ sidebarOpen, setSidebarClose }: Props) => {
   return (
     <>
       <Dialog
         open={sidebarOpen}
-        onClose={setSidebarOpen}
+        onClose={setSidebarClose}
         className="relative z-50 lg:hidden"
       >
         <DialogBackdrop
           transition
           className="fixed inset-0 bg-gray-900/80 transition-opacity duration-300 ease-linear data-[closed]:opacity-0"
+          onClick={setSidebarClose}
         />
-
         <div className="fixed inset-0 flex">
           <DialogPanel
             transition
@@ -48,7 +43,6 @@ const MenuSidebar = ({
                 </button>
               </div>
             </TransitionChild>
-            {/* Sidebar component, swap this element with another sidebar if you like */}
             <Sidebar onSidebarItemClick={setSidebarClose} />
           </DialogPanel>
         </div>

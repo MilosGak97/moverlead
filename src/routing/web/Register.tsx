@@ -7,8 +7,12 @@ import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { api } from '../../api/api.ts';
 import { routes } from '../../router/routes.ts';
+import { useToast } from '../../hooks/useToast.ts';
+import { Toast } from '../../components/Toast.tsx';
 
 const Register = () => {
+  const { toastText, addToast } = useToast();
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -26,16 +30,14 @@ const Register = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: () =>
       api.auth.authControllerRegister({ requestBody: formData }),
     onSuccess: (response) => {
       console.log('User registered:', response);
       navigate(routes.auth.verifyEmail);
     },
-    onError: () => {
-      setError('An error occurred');
-    },
+    onError: () => addToast(),
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -128,7 +130,12 @@ const Register = () => {
             onChange={handleInputChange}
           />
           <div className="col-span-full">
-            <Button type="submit" className="w-full" rounded={'full'}>
+            <Button
+              type="submit"
+              className="w-full"
+              rounded={'full'}
+              isLoading={isPending}
+            >
               <span>
                 Sign up <span aria-hidden="true">&rarr;</span>
               </span>
@@ -143,6 +150,7 @@ const Register = () => {
           with our Terms of Use.
         </div>
       </SlimLayout>
+      {toastText && <Toast text={toastText} />}
     </>
   );
 };

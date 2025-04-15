@@ -75,8 +75,9 @@ export const InsertEmailView = ({ onMutationSuccess }: InsertEmailProps) => {
           className="w-full"
           disabled={!isDirty || !isValid}
           rounded={'full'}
+          isLoading={isPending}
         >
-          {isPending ? 'Loading...' : 'Send code'}
+          Send code
         </Button>
       </form>
       {toastText && <Toast text={toastText} />}

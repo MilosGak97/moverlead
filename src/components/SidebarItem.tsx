@@ -1,8 +1,9 @@
+import { ComponentType, SVGProps } from 'react';
 import { NavLink } from 'react-router-dom';
 interface Props {
   name: string;
   href: string;
-  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; // Type for an icon component
+  icon: ComponentType<SVGProps<SVGSVGElement>>; // Type for an icon component
   current?: boolean;
   onSidebarItemClick?: () => void;
 }
@@ -24,14 +25,9 @@ const SidebarItem = ({ name, href, icon: Icon, onSidebarItemClick }: Props) => {
               : 'text-indigo-200 hover:bg-blue-600 hover:text-white group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold';
           }}
         >
-          {/*         className={({isActive})=> (isActive ? 'bg-indigo-700 text-white': 'text-indigo-200 hover:bg-indigo-700 hover:text-white',
-                             'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold')}
-                >
-
-                        className={({isActive}) => { return isActive ? 'text-white' : 'text-indigo-200 group-hover:text-white size-6 shrink-0'
-
-                */}
-          <Icon aria-hidden="true" className="  size-6 shrink-0" />
+          <div className="w-6 h-6">
+            <Icon aria-hidden="true" className="shrink-0" />
+          </div>
           {name}
         </NavLink>
       </li>

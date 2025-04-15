@@ -2,13 +2,26 @@ import { Link } from 'react-router-dom';
 import { Container } from '../components/Container';
 import { Logo } from '../components/Logo';
 import { LocalNavLink } from '../components/LocalNavLink';
+import { FacebookIcon } from '../../../components/iconography/FacebookIcon';
+import { InstagramIcon } from '../../../components/iconography/InstagramIcon';
+import { LinkedinIcon } from '../../../components/iconography/LinkedinIcon';
+import { PhoneIcon } from '@heroicons/react/24/outline';
 
 export const Footer = () => {
   return (
     <footer className="bg-slate-50">
       <Container>
         <div className="py-16">
-          <Logo />
+          <div className="flex items-center justify-between">
+            <Logo />
+            <LocalNavLink
+              href="tel:8559708419"
+              className="flex items-center gap-1.5"
+            >
+              <PhoneIcon width={'1.5rem'} className={'fill-text-slate-700'} />
+              855 970 8419
+            </LocalNavLink>
+          </div>
           <nav className="mt-10 text-sm" aria-label="quick links">
             <div className="flex items-center flex-wrap gap-2">
               <LocalNavLink href="#features">Features</LocalNavLink>
@@ -24,52 +37,34 @@ export const Footer = () => {
             <Link
               to="http://facebook.com/moverlead"
               target="_blank"
-              className="group w-6 h-6"
+              className="group w-6 h-6 text-slate-500 hover:text-slate-700"
               aria-label="Moverlead facebook profile"
               rel="noopener noreferrer"
             >
-              <svg
-                width="100%"
-                height="100%"
-                viewBox="0 0 81 156"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="fill-slate-500 group-hover:fill-slate-700"
-              >
-                <path d="M52.584 155.139V84.378H76.326L79.888 56.793H52.584V39.184C52.584 31.2 54.792 25.759 66.254 25.759L80.849 25.753V1.08C78.325 0.752 69.661 0 59.577 0C38.52 0 24.104 12.853 24.104 36.452V56.793H0.290039V84.378H24.104V155.139H52.584Z" />
-              </svg>
+              <FacebookIcon />
             </Link>
             <Link
               to="https://www.instagram.com/mover_lead/"
               target="_blank"
-              className="group w-6 h-6"
+              className="group w-6 h-6 text-slate-500 hover:text-slate-700"
               aria-label="Moverlead facebook profile"
               rel="noopener noreferrer"
             >
-              <svg
-                width="100%"
-                height="100%"
-                viewBox="0 0 682 682"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="fill-slate-500 group-hover:fill-slate-700"
-              >
-                <g clip-path="url(#clip0_2874_294)">
-                  <path d="M680.667 200.314C679.071 164.112 673.216 139.224 664.83 117.657C656.179 94.7654 642.869 74.2702 625.431 57.2325C608.393 39.9297 587.763 26.4846 565.136 17.9684C543.445 9.58208 518.686 3.72781 482.485 2.13166C446.012 0.400336 434.434 0 341.93 0C249.426 0 237.848 0.400336 201.511 1.99648C165.309 3.59263 140.42 9.4521 118.859 17.8332C95.9622 26.4846 75.4671 39.7945 58.4294 57.2325C41.1265 74.2702 27.6867 94.9006 19.1652 117.527C10.7789 139.224 4.92466 163.977 3.32852 200.179C1.59719 236.651 1.19685 248.229 1.19685 340.733C1.19685 433.237 1.59719 444.816 3.19334 481.153C4.78948 517.354 10.649 542.243 19.0352 563.809C27.6867 586.701 41.1265 607.196 58.4294 624.234C75.4671 641.537 96.0974 654.982 118.724 663.498C140.42 671.884 165.174 677.739 201.381 679.335C237.713 680.936 249.296 681.331 341.8 681.331C434.304 681.331 445.882 680.936 482.219 679.335C518.421 677.739 543.31 671.884 564.871 663.498C610.66 645.795 646.862 609.593 664.565 563.809C672.946 542.113 678.805 517.354 680.402 481.153C681.998 444.816 682.398 433.237 682.398 340.733C682.398 248.229 682.263 236.651 680.667 200.314ZM619.311 478.491C617.845 511.765 612.256 529.734 607.598 541.713C596.149 571.395 572.592 594.952 542.909 606.401C530.931 611.059 512.832 616.648 479.687 618.109C443.751 619.711 432.973 620.106 342.065 620.106C251.158 620.106 240.245 619.711 204.438 618.109C171.163 616.648 153.195 611.059 141.216 606.401C126.445 600.942 113 592.29 102.087 580.977C90.7735 569.929 82.122 556.619 76.6629 541.848C72.0044 529.869 66.4153 511.765 64.9544 478.626C63.353 442.689 62.9579 431.906 62.9579 340.998C62.9579 250.091 63.353 239.178 64.9544 203.376C66.4153 170.101 72.0044 152.133 76.6629 140.154C82.122 125.378 90.7735 111.938 102.222 101.02C113.265 89.7066 126.575 81.0552 141.351 75.6012C153.33 70.9428 171.433 65.3536 204.573 63.8875C240.51 62.2913 251.293 61.891 342.195 61.891C433.238 61.891 444.016 62.2913 479.823 63.8875C513.097 65.3536 531.066 70.9428 543.045 75.6012C557.815 81.0552 571.261 89.7066 582.174 101.02C593.487 112.068 602.138 125.378 607.598 140.154C612.256 152.133 617.845 170.231 619.311 203.376C620.907 239.313 621.308 250.091 621.308 340.998C621.308 431.906 620.907 442.554 619.311 478.491Z" />
-                  <path d="M341.93 165.708C245.303 165.708 166.905 244.101 166.905 340.733C166.905 437.365 245.303 515.758 341.93 515.758C438.562 515.758 516.955 437.365 516.955 340.733C516.955 244.101 438.562 165.708 341.93 165.708ZM341.93 454.267C279.244 454.267 228.396 403.425 228.396 340.733C228.396 278.041 279.244 227.199 341.93 227.199C404.622 227.199 455.464 278.041 455.464 340.733C455.464 403.425 404.622 454.267 341.93 454.267Z" />
-                  <path d="M564.741 158.788C564.741 181.352 546.445 199.648 523.875 199.648C501.311 199.648 483.015 181.352 483.015 158.788C483.015 136.218 501.311 117.928 523.875 117.928C546.445 117.928 564.741 136.218 564.741 158.788Z" />
-                </g>
-                <defs>
-                  <clipPath id="clip0_2874_294">
-                    <rect width="681.333" height="681.333" fill="white" />
-                  </clipPath>
-                </defs>
-              </svg>
+              <InstagramIcon />
+            </Link>
+            <Link
+              to="https://www.linkedin.com/company/mover-lead/?viewAsMember=true"
+              target="_blank"
+              className="group w-6 h-6 text-slate-500 hover:text-slate-700"
+              aria-label="Moverlead facebook profile"
+              rel="noopener noreferrer"
+            >
+              <LinkedinIcon />
             </Link>
           </div>
           <p className="mt-6 text-sm text-center text-slate-500 sm:mt-0">
-            Copyright &copy; {new Date().getFullYear()} TaxPal. All rights
-            reserved.
+            Copyright &copy; {new Date().getFullYear()} MoverLead.com. All
+            rights reserved.
           </p>
         </div>
       </Container>

@@ -15,7 +15,6 @@ export const ProtectedLayout = () => {
         {/* MOBILE SIDEBAR MENU */}
         <MenuSidebar
           sidebarOpen={sidebarOpen}
-          setSidebarOpen={() => setSidebarOpen(true)}
           setSidebarClose={() => setSidebarOpen(false)}
         />
 

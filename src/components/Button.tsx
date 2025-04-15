@@ -1,9 +1,10 @@
 import { HTMLProps, ReactNode } from 'react';
 import { cva, VariantProps } from 'class-variance-authority';
 import { twMerge } from 'tailwind-merge';
+import { ClipLoader } from 'react-spinners';
 
 const buttonVariants = cva(
-  'border border-transparent text-sm block text-center font-semibold text-white shadow-sm',
+  'relative border border-transparent text-sm block text-center font-semibold text-white shadow-sm',
   {
     variants: {
       size: {
@@ -40,9 +41,28 @@ type ButtonProps = {
   children: ReactNode;
   onClick?: () => void;
   type?: 'button' | 'submit';
+  isLoading?: boolean;
   className?: string;
 } & VariantProps<typeof buttonVariants> &
   Omit<HTMLProps<HTMLButtonElement>, 'ref' | 'onClick' | 'type' | 'size'>;
+
+const ContentWrapper = ({
+  children,
+  isLoading,
+}: {
+  children: ReactNode;
+  isLoading: boolean;
+}) => {
+  return isLoading ? (
+    <span
+      className={`${isLoading ? 'invisible pointer-events-none' : 'visible'}`}
+    >
+      {children}
+    </span>
+  ) : (
+    children
+  );
+};
 
 export const Button = ({
   children,
@@ -51,6 +71,7 @@ export const Button = ({
   color,
   rounded,
   type = 'button',
+  isLoading = false,
   className,
   ...buttonProps
 }: ButtonProps) => {
@@ -61,7 +82,12 @@ export const Button = ({
       type={type}
       {...buttonProps}
     >
-      {children}
+      <ContentWrapper isLoading={isLoading}>{children}</ContentWrapper>
+      {isLoading && (
+        <div className="absolute grid w-full h-full place-content-center top-0 left-0">
+          <ClipLoader color="white" size={'1.5rem'} />
+        </div>
+      )}
     </button>
   );
 };

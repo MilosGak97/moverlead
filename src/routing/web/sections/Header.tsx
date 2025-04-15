@@ -1,5 +1,4 @@
 'use client';
-import React from 'react';
 import {
   Popover,
   PopoverButton,
@@ -13,19 +12,27 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../../../components/Button.tsx';
 import { Container } from '../components/Container.tsx';
 import { Logo } from '../components/Logo.tsx';
-import { LocalNavLink } from '../components/LocalNavLink.tsx';
+import {
+  LocalNavLink,
+  LocalNavLinkProps,
+} from '../components/LocalNavLink.tsx';
 import { routes } from '../../../router/routes.ts';
+import { PhoneIcon, UserIcon } from '@heroicons/react/24/outline';
+import { twMerge } from 'tailwind-merge';
 
 const MobileNavLink = ({
   href,
   children,
-}: {
-  href: string;
-  children: React.ReactNode;
-}) => {
+  onClick,
+  className,
+}: LocalNavLinkProps) => {
   return (
-    <PopoverButton as="div" className="block w-full">
-      <a className="block p-2 rounded-md hover:bg-gray-50" href={href}>
+    <PopoverButton as="div" className="block w-full cursor-pointer">
+      <a
+        className={twMerge('block p-2 rounded-md hover:bg-gray-50', className)}
+        href={href}
+        onClick={onClick}
+      >
         {children}
       </a>
     </PopoverButton>
@@ -60,6 +67,8 @@ const MobileNavIcon = ({ open }: { open: boolean }) => {
 };
 
 const MobileNavigation = () => {
+  const navigate = useNavigate();
+
   return (
     <Popover>
       <PopoverButton
@@ -82,7 +91,19 @@ const MobileNavigation = () => {
         <MobileNavLink href="#faq">FAQ</MobileNavLink>
         <MobileNavLink href="#features">Contact us</MobileNavLink>
         <hr className="m-2 border-slate-300/40" />
-        <MobileNavLink href={routes.auth.login}>Sign in</MobileNavLink>
+        <MobileNavLink
+          href="tel:8559708419"
+          className="flex items-center gap-2"
+        >
+          <PhoneIcon width={'1.5rem'} className={'fill-text-slate-700'} />
+          855 970 8419
+        </MobileNavLink>
+        <MobileNavLink
+          onClick={() => navigate(routes.auth.login)}
+          className="flex items-center gap-2"
+        >
+          <UserIcon width={'1.5rem'} className={'text-slate-700'} /> Log in
+        </MobileNavLink>
       </PopoverPanel>
     </Popover>
   );
@@ -96,30 +117,39 @@ export const Header = () => {
       <Container>
         <nav className="relative z-50 flex justify-between">
           <div className="flex items-center md:gap-x-12">
-            <Link to="/" aria-label="Home">
+            <Link to="/" aria-label="Home" className="flex-shrink-0">
               <Logo />
             </Link>
-            <div className="hidden md:flex md:gap-x-6">
+            <div className="hidden lg:flex lg:gap-x-6">
               <LocalNavLink href="#features">Features</LocalNavLink>
               <LocalNavLink href="#benefits">Benefits</LocalNavLink>
               <LocalNavLink href="#testimonials">Testimonials</LocalNavLink>
               <LocalNavLink href="#faq">FAQ</LocalNavLink>
             </div>
           </div>
-          <div className="flex items-center gap-x-5 md:gap-x-8">
-            <div className="hidden md:block">
-              <LocalNavLink onClick={() => navigate(routes.auth.login)}>
-                Sign in
-              </LocalNavLink>
-            </div>
+          <div className="flex items-center gap-x-5 lg::gap-x-6">
+            <LocalNavLink
+              href="tel:8559708419"
+              className="hidden lg:flex items-center gap-1.5"
+            >
+              <PhoneIcon width={'1.5rem'} className={'fill-text-slate-700'} />
+              855 970 8419
+            </LocalNavLink>
+            <LocalNavLink
+              onClick={() => navigate(routes.auth.login)}
+              className="hidden lg:flex items-center gap-1.5"
+            >
+              <UserIcon width={'1.5rem'} className={'fill-text-slate-700'} />
+              Log in
+            </LocalNavLink>
             <Button
               onClick={() => navigate(routes.auth.register)}
               size={'small'}
               rounded={'full'}
             >
-              Get started <span className="hidden lg:inline">today</span>
+              Get started today
             </Button>
-            <div className="-mr-1 md:hidden">
+            <div className="-mr-1 lg:hidden">
               <MobileNavigation />
             </div>
           </div>

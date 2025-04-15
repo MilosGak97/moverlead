@@ -5,14 +5,16 @@ import amExpress from '../images/logos/am_express_logo.png';
 import ecoBins from '../images/logos/eco_bins_logo.png';
 import vanExpress from '../images/logos/van_express_logo.png';
 import viteMoving from '../images/logos/vite_moving_logo.png';
+import transWorldMovers from '../images/logos/trans_world_movers.png';
 import { routes } from '../../../router/routes.ts';
 import { useNavigate } from 'react-router-dom';
 
 const trustedByCompanies = [
+  { name: 'FakeMirage', logo: amExpress },
+  { name: 'StaticKit', logo: ecoBins },
+  { name: 'TransWorlMovers', logo: transWorldMovers },
   { name: 'Transistor', logo: vanExpress },
   { name: 'Tuple', logo: viteMoving },
-  { name: 'StaticKit', logo: ecoBins },
-  { name: 'Mirage', logo: amExpress },
 ];
 
 export const Hero = () => {
@@ -69,7 +71,7 @@ export const Hero = () => {
           >
             <path d="m9.997 6.91-7.583 3.447A1 1 0 0 1 1 9.447V2.553a1 1 0 0 1 1.414-.91L9.997 5.09c.782.355.782 1.465 0 1.82Z" />
           </svg>
-          <span className="ml-3">Schedule meeting</span>
+          <span className="ml-3">Schedule a meeting</span>
         </Button>
       </div>
       <div className="mt-20 sm:mt-36 lg:mt-44">
@@ -78,10 +80,10 @@ export const Hero = () => {
         </p>
         <ul
           role="list"
-          className="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 justify-center gap-x-8 sm:flex-col sm:gap-x-0 sm:gap-y-10 xl:flex-row xl:gap-x-12 xl:gap-y-0"
+          className="mt-8 flex items-center flex-wrap justify-around gap-4 md:gap-6"
         >
           {trustedByCompanies.map((company) => (
-            <li key={company.name} className="flex justify-center h-20 ">
+            <li key={company.name} className="flex justify-center h-20">
               <img src={company.logo} alt={company.name} />
             </li>
           ))}

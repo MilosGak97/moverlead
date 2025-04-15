@@ -18,6 +18,7 @@ import { SuccessfullSubscription } from '../pages/successfull-subscription/Succe
 import { ForgotPassword } from '../routing/web/forgot-password/ForgotPassword.tsx';
 import { SetPassword } from '../pages/verify/set-password/SetPassword.tsx';
 import { SlimLayout } from '../routing/web/components/SlimLayout.tsx';
+import { PostcardDesigns } from '../pages/protected/postcard-designs/PostcardDesigns.tsx';
 
 const router = createBrowserRouter([
   {
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
       {
         path: 'successfull-subscription',
         element: <SuccessfullSubscription />,
+      },
+      {
+        path: 'postcard-designs',
+        element: <PostcardDesigns />,
       },
     ],
   },

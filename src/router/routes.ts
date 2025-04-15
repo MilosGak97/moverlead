@@ -17,4 +17,5 @@ export const routes = {
   subscriptions: '/portal/subscriptions',
   settings: '/portal/settings',
   successfullSubscription: '/portal/successfull-subscription',
+  postcardDesigns: '/portal/postcard-designs',
 };

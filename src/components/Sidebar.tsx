@@ -10,12 +10,13 @@ import SidebarItem from './SidebarItem.tsx';
 import logo from '../assets/images/logo.png';
 import { NavLink } from 'react-router-dom';
 import { routes } from '../router/routes.ts';
+import { PostcardIcon } from './iconography/PostcardIcon.tsx';
 
 type SidebarProps = {
   onSidebarItemClick?: () => void;
 };
 
-const navigation = [
+const sidebarItems = [
   {
     name: 'Dashboard',
     href: routes.dashboard,
@@ -34,6 +35,12 @@ const navigation = [
     name: 'Subscriptions',
     href: routes.subscriptions,
     icon: CreditCardIcon,
+    current: false,
+  },
+  {
+    name: 'Postcard Designs',
+    href: routes.postcardDesigns,
+    icon: PostcardIcon,
     current: false,
   },
 ];
@@ -55,7 +62,7 @@ const Sidebar = ({ onSidebarItemClick }: SidebarProps) => {
           <ul role="list" className="flex flex-1 flex-col gap-y-7">
             <li>
               <ul role="list" className="-mx-2 space-y-1">
-                {navigation.map((item) => (
+                {sidebarItems.map((item) => (
                   <SidebarItem
                     key={item.name}
                     name={item.name}
@@ -65,8 +72,6 @@ const Sidebar = ({ onSidebarItemClick }: SidebarProps) => {
                     onSidebarItemClick={onSidebarItemClick}
                   />
                 ))}
-
-                {/* <SidebarItem key={"Settings"} name={"Settings"} href={"/settings"} icon={Cog6ToothIcon} current={false} /> */}
               </ul>
             </li>
 
