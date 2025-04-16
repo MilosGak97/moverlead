@@ -3,6 +3,7 @@ import { Container } from '../components/Container';
 import backgroundImage from '../images/background-call-to-action.jpg';
 import { routes } from '../../../router/routes';
 import { useNavigate } from 'react-router-dom';
+import { CalendlyButton } from '../components/CalendlyButton';
 
 export const CallToAction = () => {
   const navigate = useNavigate();
@@ -37,25 +38,7 @@ export const CallToAction = () => {
             >
               Create a Free Account
             </Button>
-            <Button
-              onClick={() =>
-                window.open(
-                  'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-                  '_target'
-                )
-              }
-              rounded={'full'}
-              className={'flex items-center justify-center border-white'}
-              size={'small'}
-            >
-              <svg
-                aria-hidden="true"
-                className="h-3 w-3 flex-none fill-white group-active:fill-current"
-              >
-                <path d="m9.997 6.91-7.583 3.447A1 1 0 0 1 1 9.447V2.553a1 1 0 0 1 1.414-.91L9.997 5.09c.782.355.782 1.465 0 1.82Z" />
-              </svg>
-              <span className="ml-3">Schedule a meeting</span>
-            </Button>
+            <CalendlyButton />
           </div>
         </div>
       </Container>

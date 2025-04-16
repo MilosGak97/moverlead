@@ -2,6 +2,8 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { useListingFilterContext } from '../context/ListingFilterContext';
 import { useDebounceValue } from '../../../../hooks/useDebounceValue';
 
+const currentDateFormatted = new Date().toISOString().split('T')[0];
+
 export const InputsSelect = () => {
   const { propertyValue, setPropertyValue, date, setDate } =
     useListingFilterContext();
@@ -27,6 +29,8 @@ export const InputsSelect = () => {
     fieldKey: keyof typeof date
   ) => {
     setLocalDate((prev) => ({ ...prev, [fieldKey]: e.target.value }));
+
+    requestAnimationFrame(() => e.target.blur());
   };
 
   useEffect(() => {
@@ -77,17 +81,19 @@ export const InputsSelect = () => {
             <input
               type="date"
               placeholder="From"
-              value={localDate.from}
+              value={localDate.from || currentDateFormatted}
               onChange={(e) => handleDateChange(e, 'from')}
               onFocus={(e) => e.target.showPicker()}
+              max={currentDateFormatted}
               className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 hover:cursor-pointer outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-primary sm:text-sm/6"
             />
             <input
               type="date"
               placeholder="To"
-              value={localDate.to}
+              value={localDate.to || currentDateFormatted}
               onChange={(e) => handleDateChange(e, 'to')}
               onFocus={(e) => e.target.showPicker()}
+              max={currentDateFormatted}
               className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 hover:cursor-pointer outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-primary sm:text-sm/6"
             />
           </div>

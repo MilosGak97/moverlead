@@ -41,6 +41,20 @@ const ListingsView = () => {
     propertyStatus,
   ];
 
+  //TODO - zameni kada se upgrade endpoint
+  // const {
+  //   data: subscribedStates,
+  //   isLoading: isLoadingSubscribedStates,
+  //   isError: isErrorSubscribedStates,
+  //   refetch: refetchSubscribedStates,
+  // } = useQuery({
+  //   queryKey: [QueryKeys.SUBSCRIPTIONS],
+  //   queryFn: () =>
+  //     api.properties.propertiesControllerGetSubscriptions({
+  //       stripeSubscriptionStatus: SubscriptionStatus.ACTIVE,
+  //     }),
+  // });
+
   const {
     items,
     totalItems,

@@ -8,6 +8,7 @@ import viteMoving from '../images/logos/vite_moving_logo.png';
 import transWorldMovers from '../images/logos/trans_world_movers.png';
 import { routes } from '../../../router/routes.ts';
 import { useNavigate } from 'react-router-dom';
+import { CalendlyButton } from '../components/CalendlyButton.tsx';
 
 const trustedByCompanies = [
   { name: 'FakeMirage', logo: amExpress },
@@ -51,7 +52,8 @@ export const Hero = () => {
         >
           Create an account
         </Button>
-        <Button
+        <CalendlyButton className="bg-transparent text-slate-900 border-slate-200 hover:border-slate-300 hover:bg-transparent active:bg-slate-100" />
+        {/* <Button
           onClick={() =>
             window.open(
               'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
@@ -72,7 +74,7 @@ export const Hero = () => {
             <path d="m9.997 6.91-7.583 3.447A1 1 0 0 1 1 9.447V2.553a1 1 0 0 1 1.414-.91L9.997 5.09c.782.355.782 1.465 0 1.82Z" />
           </svg>
           <span className="ml-3">Schedule a meeting</span>
-        </Button>
+        </Button> */}
       </div>
       <div className="mt-20 sm:mt-36 lg:mt-44">
         <p className="font-display text-base text-slate-900">

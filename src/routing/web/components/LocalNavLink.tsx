@@ -39,23 +39,7 @@ export const LocalNavLink = ({
 /*
 gledaj smartmoving.com
 
-
 Na blog stranicama kreirati 
-
-sign in -> log in (and add user icon next to it)
-
-hero sekcija second button schedule a meeting -> calendly-embeded
-
-max date u listing filterima
-
-
-get started today dodati dugmic
-
-schedule a meeting 
-
-add linkedin na u footer i link do profila
-
-u listingu skloniti bold sa bedrooms, bathrooms, home type 
 
 order checkout ne radi na mobilnoj verziji
 

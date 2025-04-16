@@ -157,24 +157,15 @@ export const ListingTable = ({
               <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                 ${item.price}
               </td>
-              <th
-                scope="col"
-                className="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
-              >
+              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                 {item.bedrooms}
-              </th>
-              <th
-                scope="col"
-                className="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
-              >
+              </td>
+              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                 {item.bathrooms}
-              </th>
-              <th
-                scope="col"
-                className="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
-              >
+              </td>
+              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                 {normalizeScreamingSnakeText(item.homeType)}
-              </th>
+              </td>
               <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                 <PropertyStatusBedge status={item.propertyStatus} />
               </td>

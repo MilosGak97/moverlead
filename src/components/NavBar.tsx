@@ -9,9 +9,9 @@ import { api } from '../api/api.ts';
 import { useNavigate } from 'react-router-dom';
 import { routes } from '../router/routes.ts';
 
-interface Props {
+type Props = {
   setSidebarOpen: () => void;
-}
+};
 
 const NavBar = ({ setSidebarOpen }: Props) => {
   const queryClient = useQueryClient();
