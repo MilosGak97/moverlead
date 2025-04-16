@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
-import { Container } from '../components/Container';
 import { Logo } from '../components/Logo';
 import { LocalNavLink } from '../components/LocalNavLink';
 import { FacebookIcon } from '../../../components/iconography/FacebookIcon';
 import { InstagramIcon } from '../../../components/iconography/InstagramIcon';
 import { LinkedinIcon } from '../../../components/iconography/LinkedinIcon';
 import { PhoneIcon } from '@heroicons/react/24/outline';
+import { Container } from '../../../components/Container';
 
 export const Footer = () => {
   return (

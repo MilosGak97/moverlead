@@ -1,9 +1,9 @@
 import { Button } from '../../../components/Button';
-import { Container } from '../components/Container';
 import backgroundImage from '../images/background-call-to-action.jpg';
 import { routes } from '../../../router/routes';
 import { useNavigate } from 'react-router-dom';
 import { CalendlyButton } from '../components/CalendlyButton';
+import { Container } from '../../../components/Container';
 
 export const CallToAction = () => {
   const navigate = useNavigate();

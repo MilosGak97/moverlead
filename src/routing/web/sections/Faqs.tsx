@@ -1,4 +1,4 @@
-import { Container } from '../components/Container';
+import { Container } from '../../../components/Container';
 import backgroundImage from '../images/background-faqs.jpg';
 
 const faqs = [

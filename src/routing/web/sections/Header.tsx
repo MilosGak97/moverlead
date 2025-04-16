@@ -10,7 +10,6 @@ import clsx from 'clsx';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { Button } from '../../../components/Button.tsx';
-import { Container } from '../components/Container.tsx';
 import { Logo } from '../components/Logo.tsx';
 import {
   LocalNavLink,
@@ -19,6 +18,7 @@ import {
 import { routes } from '../../../router/routes.ts';
 import { PhoneIcon, UserIcon } from '@heroicons/react/24/outline';
 import { twMerge } from 'tailwind-merge';
+import { Container } from '../../../components/Container.tsx';
 
 const MobileNavLink = ({
   href,

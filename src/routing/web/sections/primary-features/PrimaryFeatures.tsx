@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react';
 import { TabGroup, TabList, TabPanels } from '@headlessui/react';
 import { features } from './data/features';
 
-import { Container } from '../../components/Container';
 import backgroundImage from '../../images/background-features.jpg';
 import { SectionHeader } from '../../components/SectionHeader';
 import { TabButton } from './components/TabButton';
 import { TabContent } from './components/TabContent';
+import { Container } from '../../../../components/Container';
 
 export const PrimaryFeatures = () => {
   const [tabOrientation, setTabOrientation] = useState<
