@@ -7,7 +7,7 @@ import {
 } from '@headlessui/react';
 import clsx from 'clsx';
 
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { Button } from '../../../components/Button.tsx';
 import { Logo } from '../components/Logo.tsx';
@@ -117,9 +117,13 @@ export const Header = () => {
       <Container>
         <nav className="relative z-50 flex justify-between">
           <div className="flex items-center md:gap-x-12">
-            <Link to="/" aria-label="Home" className="flex-shrink-0">
+            <LocalNavLink
+              href="#hero"
+              aria-label="Home"
+              className="flex-shrink-0 p-0"
+            >
               <Logo />
-            </Link>
+            </LocalNavLink>
             <div className="hidden lg:flex lg:gap-x-6">
               <LocalNavLink href="#features">Features</LocalNavLink>
               <LocalNavLink href="#benefits">Benefits</LocalNavLink>

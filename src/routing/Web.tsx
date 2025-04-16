@@ -11,14 +11,14 @@ function Web() {
   return (
     <>
       <Header />
-      <main className="overflow-x-hidden">
+      <div className="overflow-x-hidden">
         <Hero />
         <PrimaryFeatures />
         <SecondaryFeatures />
         <CallToAction />
         <Testimonials />
         <Faqs />
-      </main>
+      </div>
       <Footer />
     </>
   );

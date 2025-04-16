@@ -13,7 +13,9 @@ export const Footer = () => {
       <Container>
         <div className="py-16">
           <div className="flex items-center justify-between">
-            <Logo />
+            <LocalNavLink href="#hero" className="flex-shrink-0">
+              <Logo />
+            </LocalNavLink>
             <LocalNavLink
               href="tel:8559708419"
               className="flex items-center gap-1.5"
