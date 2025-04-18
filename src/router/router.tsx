@@ -1,27 +1,30 @@
-import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
-import { Filtering } from '../pages/filtering/Filtering.tsx';
+import { createBrowserRouter } from 'react-router-dom';
+import { Filtering } from '../pages/protected/filtering/Filtering.tsx';
 import { Subscriptions } from '../pages/protected/subscriptions/Subscriptions.tsx';
-import { Order } from '../pages/order/Order.tsx';
+import { Order } from '../pages/protected/order/Order.tsx';
 import { Listings } from '../pages/protected/listing/Listings.tsx';
-import Web from '../pages/web/Web.tsx';
-import { Settings } from '../pages/settings/Settings.tsx';
+import { Home } from '../pages/web/home/Home.tsx';
+import { Settings } from '../pages/protected/settings/Settings.tsx';
 import ErrorPage from '../components/ErrorPage.tsx';
-import { Dashboard } from '../pages/dashboard/Dashboard.tsx';
-import Login from '../pages/login/Login.tsx';
-import Register from '../pages/register/Register.tsx';
-import VerifyEmail from '../pages/verify-email/VerifyEmail.tsx';
-import { PublicRoute } from '../pages/public/components/public-route/PublicRoute.tsx';
+import { Dashboard } from '../pages/protected/dashboard/Dashboard.tsx';
+import Login from '../pages/auth/login/Login.tsx';
+import Register from '../pages/auth/register/Register.tsx';
+import { VerifyEmail } from '../pages/auth/verify-email/VerifyEmail.tsx';
+import { PublicRoute } from '../pages/auth/components/PublicRoute.tsx';
 import { ProtectedLayout } from '../layouts/protected/ProtectedLayout.tsx';
-import { ProtectedRoute } from '../pages/protected/components/protected-route/ProtectedRoute.tsx';
 import { routes } from './routes.ts';
-import { SuccessfullSubscription } from '../pages/successfull-subscription/SuccessfullSubscription.tsx';
-import { ForgotPassword } from '../pages/forgot-password/ForgotPassword.tsx';
-import { SetPassword } from '../pages/set-password/SetPassword.tsx';
-import { SlimLayout } from '../pages/web/components/SlimLayout.tsx';
+import { SuccessfullSubscription } from '../pages/protected/successfull-subscription/SuccessfullSubscription.tsx';
+import { ForgotPassword } from '../pages/auth/forgot-password/ForgotPassword.tsx';
 import { PostcardDesigns } from '../pages/protected/postcard-designs/PostcardDesigns.tsx';
-import { Blogs } from '../pages/blogs/Blogs.tsx';
-import { ContactUs } from '../pages/contact-us/ContactUs.tsx';
+import { Blogs } from '../pages/web/blogs/Blogs.tsx';
+import { ContactUs } from '../pages/web/contact-us/ContactUs.tsx';
 import { PublicLayout } from '../layouts/public/PublicLayout.tsx';
+import { ResetPassword } from '../pages/auth/reset-password/ResetPassword.tsx';
+import { VerifyLayout } from '../layouts/verify/VerifyLayout.tsx';
+import { SetPassword } from '../pages/verify/set-password/SetPassword.tsx';
+import { NotVerifiedEmail } from '../pages/verify/not-verified-email/NotVerifiedEmail.tsx';
+import { ProtectedRoute } from '../pages/protected/components/ProtectedRoute.tsx';
+import { VerifyRoute } from '../pages/verify/components/VerifyRoute.tsx';
 
 const router = createBrowserRouter([
   {
@@ -29,11 +32,13 @@ const router = createBrowserRouter([
     element: <PublicLayout />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <Web /> },
+      { index: true, element: <Home /> },
       { path: routes.web.blogs, element: <Blogs /> },
       { path: routes.web.contactUs, element: <ContactUs /> },
     ],
   },
+  { path: routes.verifyEmail, element: <VerifyEmail /> },
+  { path: routes.resetPassword, element: <ResetPassword /> },
   {
     path: routes.auth.root,
     element: <PublicRoute />,
@@ -47,20 +52,13 @@ const router = createBrowserRouter([
   {
     path: routes.verify.root,
     element: (
-      <SlimLayout>
-        <Outlet />
-      </SlimLayout>
+      <VerifyRoute>
+        <VerifyLayout />
+      </VerifyRoute>
     ),
     children: [
-      { index: true, element: <Navigate to={routes.verify.setPassword} /> },
-      {
-        path: 'set-password',
-        element: <SetPassword />,
-      },
-      {
-        path: 'verify-email',
-        element: <VerifyEmail />,
-      },
+      { path: routes.verify.setPassword, element: <SetPassword /> },
+      { path: routes.verify.notVerifiedEmail, element: <NotVerifiedEmail /> },
     ],
   },
   {
@@ -78,7 +76,6 @@ const router = createBrowserRouter([
       { path: 'subscriptions', element: <Subscriptions /> },
       { path: 'order', element: <Order /> },
       { path: 'settings', element: <Settings /> },
-      { path: 'verify-email', element: <VerifyEmail /> },
       {
         path: 'successfull-subscription',
         element: <SuccessfullSubscription />,

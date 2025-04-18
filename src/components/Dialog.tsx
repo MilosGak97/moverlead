@@ -9,7 +9,7 @@ import { twMerge } from 'tailwind-merge';
 export type DialogProps = {
   children: ReactNode;
   isDialogOpen: boolean;
-  onClose: () => void;
+  onClose?: () => void;
   className?: string;
   wrapperClassName?: string;
 };
@@ -24,7 +24,9 @@ export const Dialog = ({
   return (
     <HeadlessUiDialog
       open={isDialogOpen}
-      onClose={onClose}
+      onClose={() => {
+        if (onClose) onClose();
+      }}
       className="relative z-50"
       transition
     >

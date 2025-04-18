@@ -1,5 +1,3 @@
-import { ChevronDownIcon } from '@heroicons/react/16/solid';
-
 interface Tab {
   name: string;
   isSelected: boolean;
@@ -17,16 +15,10 @@ function classNames(...classes: string[]) {
 const Tabs = ({ tabs, onTabClick }: TabProps) => {
   return (
     <div>
-      <div className="grid grid-cols-1 sm:hidden mt-8">
-        <ChevronDownIcon
-          aria-hidden="true"
-          className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end fill-gray-500"
-        />
-      </div>
-      <div className="hidden sm:block">
+      <div>
         <nav
           aria-label="Tabs"
-          className="isolate flex divide-x divide-gray-200 rounded-lg shadow"
+          className="isolate flex flex-col sm:flex-row divide-y sm:divide-y-0 sm:divide-x divide-gray-200 rounded-lg shadow"
         >
           {tabs.map((tab, tabIdx) => (
             <button

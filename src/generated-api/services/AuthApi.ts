@@ -47,6 +47,17 @@ export class AuthApi {
     });
   }
   /**
+   * Send a verification email
+   * @returns MessageResponseDto
+   * @throws ApiError
+   */
+  public authControllerSendVerificationEmail(): CancelablePromise<MessageResponseDto> {
+    return this.httpRequest.request({
+      method: 'POST',
+      url: '/api/auth/verify/verify-email',
+    });
+  }
+  /**
    * Endpoint for JWT token from verify email link
    * @returns MessageResponseDto
    * @throws ApiError

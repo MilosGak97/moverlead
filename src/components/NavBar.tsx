@@ -4,13 +4,12 @@ import {
   MagnifyingGlassIcon,
 } from '@heroicons/react/20/solid';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { api } from '../api/api.ts';
 import { useNavigate } from 'react-router-dom';
 import { routes } from '../router/routes.ts';
 import { QueryKeys } from '../enums/queryKeys.ts';
 import Avatar from './Avatar.tsx';
-import { WhoAmIResponse } from '../generated-api/index.ts';
 
 type Props = {
   setSidebarOpen: () => void;
@@ -20,9 +19,10 @@ const NavBar = ({ setSidebarOpen }: Props) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const userData: WhoAmIResponse | undefined = queryClient.getQueryData([
-    QueryKeys.WHO_AM_I,
-  ]);
+  const { data } = useQuery({
+    queryKey: [QueryKeys.WHO_AM_I],
+    queryFn: () => api.auth.authControllerGetProfile(),
+  });
 
   const { mutate } = useMutation({
     mutationFn: () => api.auth.authControllerLogout(),
@@ -86,13 +86,13 @@ const NavBar = ({ setSidebarOpen }: Props) => {
             <Menu as="div" className="relative">
               <MenuButton className="-m-1.5 flex items-center p-1.5">
                 <span className="sr-only">Open user menu</span>
-                <Avatar imageUrl={userData?.logoUrl || ''} />
+                <Avatar imageUrl={data?.logoUrl || ''} />
                 <span className="hidden lg:flex lg:items-center">
                   <span
                     aria-hidden="true"
                     className="ml-4 text-sm/6 font-semibold text-gray-900"
                   >
-                    {userData?.companyName || ''}
+                    {data?.companyName || ''}
                   </span>
                   <ChevronDownIcon
                     aria-hidden="true"

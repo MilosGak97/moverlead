@@ -32,15 +32,15 @@ const sidebarItems = [
     current: false,
   },
   {
-    name: 'Subscriptions',
-    href: routes.subscriptions,
-    icon: CreditCardIcon,
-    current: false,
-  },
-  {
     name: 'Postcard Designs',
     href: routes.postcardDesigns,
     icon: PostcardIcon,
+    current: false,
+  },
+  {
+    name: 'Subscriptions',
+    href: routes.subscriptions,
+    icon: CreditCardIcon,
     current: false,
   },
 ];

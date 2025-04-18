@@ -29,6 +29,7 @@ const ListingsView = () => {
     selectedStatesList,
     filteredStatus,
     propertyStatus,
+    setStates,
   } = useListingFilterContext();
 
   const selectedListingCount = selectedListings.length;
@@ -46,6 +47,7 @@ const ListingsView = () => {
     data: subscribedStates,
     isLoading: isLoadingSubscribedStates,
     isError: isErrorSubscribedStates,
+    isSuccess,
     refetch: refetchSubscribedStates,
   } = useQuery({
     queryKey: [QueryKeys.ACTIVE_SUBSCRIPTIONS_STATES],
@@ -54,7 +56,7 @@ const ListingsView = () => {
 
   useSuccessGetData({
     data: subscribedStates,
-    callback: (subscribedStates) => console.log(subscribedStates),
+    callback: (subscribedStates) => setStates(subscribedStates),
   });
 
   const {
@@ -81,6 +83,7 @@ const ListingsView = () => {
         limit,
         offset,
       }),
+    enabled: isSuccess,
   });
 
   const {

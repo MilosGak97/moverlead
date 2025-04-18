@@ -26,8 +26,9 @@ type StateContainerEmptyProps =
 export type StateContainerProps = {
   isLoading: boolean;
   isError: boolean;
+  errorTitle?: string;
   onErrorButtonClick?: () => void;
-  children: ReactNode;
+  children?: ReactNode;
   isCentered?: boolean;
   includePadding?: boolean;
   wrapperClassName?: string;
@@ -36,6 +37,7 @@ export type StateContainerProps = {
 export const StateContainer = ({
   isLoading,
   isError,
+  errorTitle = 'Something went wrong!',
   onErrorButtonClick,
   children,
   isEmpty,
@@ -64,7 +66,7 @@ export const StateContainer = ({
       <div
         className={`h-full w-full grid place-content-center ${paddingClass} gap-4 ${positionClass}`}
       >
-        <p>Something went wrong!</p>
+        <p>{errorTitle}</p>
         {onErrorButtonClick && (
           <Button onClick={onErrorButtonClick}>Try again!</Button>
         )}

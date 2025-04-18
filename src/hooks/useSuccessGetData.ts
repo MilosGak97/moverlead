@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 type UseSuccessGetDataProps<T> = {
   data?: T;
@@ -9,8 +9,11 @@ export const useSuccessGetData = <T>({
   data,
   callback,
 }: UseSuccessGetDataProps<T>) => {
+  const count = useRef(0);
+
   useEffect(() => {
-    if (data) {
+    if (data && !count.current) {
+      count.current += 1;
       callback(data);
     }
   }, [callback, data]);

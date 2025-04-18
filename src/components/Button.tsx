@@ -75,6 +75,8 @@ export const Button = ({
   className,
   ...buttonProps
 }: ButtonProps) => {
+  const isBacgroundTransparent = color === 'none' || color === 'noneDark';
+
   return (
     <button
       className={twMerge(buttonVariants({ size, color, rounded }), className)}
@@ -85,7 +87,10 @@ export const Button = ({
       <ContentWrapper isLoading={isLoading}>{children}</ContentWrapper>
       {isLoading && (
         <div className="absolute grid w-full h-full place-content-center top-0 left-0">
-          <ClipLoader color="white" size={'1.5rem'} />
+          <ClipLoader
+            color={isBacgroundTransparent ? '#0f172a ' : 'white'}
+            size={'1.5rem'}
+          />
         </div>
       )}
     </button>

@@ -2,7 +2,6 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { ActiveStatesResponseDto } from '../models/ActiveStatesResponseDto';
 import type { County } from '../models/County';
 import type { FilteringActionDto } from '../models/FilteringActionDto';
 import type { FilteringResponseDto } from '../models/FilteringResponseDto';
@@ -212,33 +211,24 @@ export class PropertiesApi {
   }
   /**
    * Get all active states
-   * @returns ActiveStatesResponseDto
+   * @returns StateResponseDto
    * @throws ApiError
    */
-  public propertiesControllerGetActiveStates(): CancelablePromise<ActiveStatesResponseDto> {
+  public propertiesControllerGetActiveStates(): CancelablePromise<Array<StateResponseDto>> {
     return this.httpRequest.request({
       method: 'GET',
       url: '/api/properties/active-states',
     });
   }
   /**
+   * General webhook
    * @returns any
    * @throws ApiError
    */
-  public propertiesControllerWebhook({
-    webhookSecret,
-    daysOnZillow,
-  }: {
-    webhookSecret: string,
-    daysOnZillow: string,
-  }): CancelablePromise<any> {
+  public propertiesControllerHandleWebhook(): CancelablePromise<any> {
     return this.httpRequest.request({
       method: 'POST',
       url: '/api/properties/webhook',
-      query: {
-        'webhookSecret': webhookSecret,
-        'daysOnZillow': daysOnZillow,
-      },
     });
   }
 }

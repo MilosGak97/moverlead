@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type PatchCompanyDto = {
+  companyName?: string;
   address?: string;
   address2?: string;
   city?: string;
