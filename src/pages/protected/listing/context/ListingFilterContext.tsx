@@ -59,6 +59,8 @@ export const ListingFilterProvider = ({
   const [filteredStatus, setFilteredStatus] = useState<FilteredStatus[]>([]);
   const [propertyStatus, setPropertyStatus] = useState<PropertyStatus[]>([]);
 
+  console.log(states);
+
   const selectedStatesList = useMemo(
     () => states.map((state) => state.abbreviation),
     [states]

@@ -2,7 +2,7 @@ import { ChevronDownIcon } from '@heroicons/react/16/solid';
 
 interface Tab {
   name: string;
-  current: boolean;
+  isSelected: boolean;
 }
 
 interface TabProps {
@@ -18,18 +18,6 @@ const Tabs = ({ tabs, onTabClick }: TabProps) => {
   return (
     <div>
       <div className="grid grid-cols-1 sm:hidden mt-8">
-        {/* Use an "onChange" listener to redirect the user to the selected tab URL. */}
-        <select
-          defaultValue={tabs.find((tab) => tab.current)?.name || ''}
-          onChange={(e) => onTabClick(e.target.value)}
-          aria-label="Select a tab"
-          className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:outline-primary"
-        >
-          {tabs.map((tab) => (
-            <option key={tab.name}>{tab.name}</option>
-          ))}
-        </select>
-
         <ChevronDownIcon
           aria-hidden="true"
           className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end fill-gray-500"
@@ -44,9 +32,9 @@ const Tabs = ({ tabs, onTabClick }: TabProps) => {
             <button
               key={tab.name}
               onClick={() => onTabClick(tab.name)}
-              aria-current={tab.current ? 'page' : undefined}
+              aria-current={tab.isSelected ? 'page' : undefined}
               className={classNames(
-                tab.current
+                tab.isSelected
                   ? 'text-gray-900'
                   : 'text-gray-500 hover:text-gray-700',
                 tabIdx === 0 ? 'rounded-l-lg' : '',
@@ -58,7 +46,7 @@ const Tabs = ({ tabs, onTabClick }: TabProps) => {
               <span
                 aria-hidden="true"
                 className={classNames(
-                  tab.current ? 'bg-primary' : 'bg-transparent',
+                  tab.isSelected ? 'bg-primary' : 'bg-transparent',
                   'absolute inset-x-0 bottom-0 h-0.5'
                 )}
               />

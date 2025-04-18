@@ -20,7 +20,7 @@ const VerifyEmail = () => {
     mutationFn: () => {
       setError(null);
       setSuccess(null);
-      return api.auth.authControllerVerifyEmail({ requestBody: { pin } });
+      return api.auth.authControllerVerifyEmail({ token: pin });
     },
     onSuccess: (response) => {
       addSuccessToast(response.message);

@@ -15,6 +15,7 @@ import { ItemsTable } from '../../../components/ItemsTable.tsx';
 import { Button } from '../../../components/Button.tsx';
 import { useNavigate } from 'react-router-dom';
 import { routes } from '../../../router/routes.ts';
+import { useSuccessGetData } from '../../../hooks/useSuccessGetData.ts';
 
 const ListingsView = () => {
   const navigate = useNavigate();
@@ -41,19 +42,20 @@ const ListingsView = () => {
     propertyStatus,
   ];
 
-  //TODO - zameni kada se upgrade endpoint
-  // const {
-  //   data: subscribedStates,
-  //   isLoading: isLoadingSubscribedStates,
-  //   isError: isErrorSubscribedStates,
-  //   refetch: refetchSubscribedStates,
-  // } = useQuery({
-  //   queryKey: [QueryKeys.SUBSCRIPTIONS],
-  //   queryFn: () =>
-  //     api.properties.propertiesControllerGetSubscriptions({
-  //       stripeSubscriptionStatus: SubscriptionStatus.ACTIVE,
-  //     }),
-  // });
+  const {
+    data: subscribedStates,
+    isLoading: isLoadingSubscribedStates,
+    isError: isErrorSubscribedStates,
+    refetch: refetchSubscribedStates,
+  } = useQuery({
+    queryKey: [QueryKeys.ACTIVE_SUBSCRIPTIONS_STATES],
+    queryFn: () => api.properties.propertiesControllerGetActiveStates(),
+  });
+
+  useSuccessGetData({
+    data: subscribedStates,
+    callback: (subscribedStates) => console.log(subscribedStates),
+  });
 
   const {
     items,
@@ -81,7 +83,11 @@ const ListingsView = () => {
       }),
   });
 
-  const { isLoading: isLoadingStates, isError: isErrorStates } = useQuery({
+  const {
+    isLoading: isLoadingStates,
+    isError: isErrorStates,
+    refetch: refetchStates,
+  } = useQuery({
     queryKey: [QueryKeys.STATES],
     queryFn: () => api.properties.propertiesControllerListStates(),
   });
@@ -121,8 +127,9 @@ const ListingsView = () => {
     );
   }
 
-  const isLoading = isLoadingListing || isLoadingStates;
-  const isError = isErrorListing || isErrorStates;
+  const isLoading =
+    isLoadingListing || isLoadingStates || isLoadingSubscribedStates;
+  const isError = isErrorListing || isErrorStates || isErrorSubscribedStates;
 
   useEffect(() => {
     if (checkbox.current) {
@@ -160,7 +167,9 @@ const ListingsView = () => {
       <ItemsTable
         isLoading={isLoading}
         isError={isError}
-        onErrorButtonClick={refetch}
+        onErrorButtonClick={() =>
+          Promise.all([refetch(), refetchStates(), refetchSubscribedStates()])
+        }
         isEmpty={!items.length}
         emptyTitle={'No properties available at the moment.'}
         emptyDescription={'Check again tomorrow or subscribe to more counites'}

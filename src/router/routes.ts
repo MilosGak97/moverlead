@@ -1,4 +1,9 @@
 export const routes = {
+  web: {
+    root: '/',
+    contactUs: '/contact-us',
+    blogs: '/blogs',
+  },
   auth: {
     root: '/auth',
     login: '/auth/login',
@@ -9,6 +14,7 @@ export const routes = {
   verify: {
     root: '/verify',
     setPassword: '/verify/set-password',
+    verifyEmail: 'verify/verify-email',
   },
   dashboard: '/portal/dashboard',
   listing: '/portal/listings',

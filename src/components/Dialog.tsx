@@ -4,14 +4,23 @@ import {
   DialogPanel,
 } from '@headlessui/react';
 import { ReactNode } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 export type DialogProps = {
   children: ReactNode;
   isDialogOpen: boolean;
   onClose: () => void;
+  className?: string;
+  wrapperClassName?: string;
 };
 
-export const Dialog = ({ children, isDialogOpen, onClose }: DialogProps) => {
+export const Dialog = ({
+  children,
+  isDialogOpen,
+  onClose,
+  className,
+  wrapperClassName,
+}: DialogProps) => {
   return (
     <HeadlessUiDialog
       open={isDialogOpen}
@@ -26,10 +35,17 @@ export const Dialog = ({ children, isDialogOpen, onClose }: DialogProps) => {
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex min-h-full items-center justify-center p-4 w-full">
           <DialogPanel
-            className="relative flex background-white w-full max-w-lg"
+            className={twMerge(
+              'relative flex background-white w-full max-w-lg',
+              wrapperClassName
+            )}
             transition
           >
-            <div className="bg-white p-4 rounded-xl w-full">{children}</div>
+            <div
+              className={twMerge('bg-white p-4 rounded-xl w-full', className)}
+            >
+              {children}
+            </div>
           </DialogPanel>
         </div>
       </div>

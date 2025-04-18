@@ -1,17 +1,20 @@
 type PostcardImageGroupProps = {
   images: string[];
   includeBorder?: boolean;
+  onClick: () => void;
 };
 
 export const PostcardImagesGroup = ({
   images,
   includeBorder = true,
+  onClick,
 }: PostcardImageGroupProps) => {
   return (
     <div
       className={`w-full grid sm:grid-cols-[repeat(auto-fit,_minmax(27.5rem,_1fr))] gap-4 ${
         includeBorder && 'pb-8 lg:pb-12 border-b-2 border-slate-300'
       }`}
+      onClick={onClick}
     >
       {images.map((image) => (
         <div

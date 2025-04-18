@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { ActiveStatesResponseDto } from '../models/ActiveStatesResponseDto';
 import type { County } from '../models/County';
 import type { FilteringActionDto } from '../models/FilteringActionDto';
 import type { FilteringResponseDto } from '../models/FilteringResponseDto';
@@ -207,6 +208,17 @@ export class PropertiesApi {
       query: {
         'stripeSubscriptionStatus': stripeSubscriptionStatus,
       },
+    });
+  }
+  /**
+   * Get all active states
+   * @returns ActiveStatesResponseDto
+   * @throws ApiError
+   */
+  public propertiesControllerGetActiveStates(): CancelablePromise<ActiveStatesResponseDto> {
+    return this.httpRequest.request({
+      method: 'GET',
+      url: '/api/properties/active-states',
     });
   }
   /**

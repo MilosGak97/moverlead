@@ -8,6 +8,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../api/api.ts';
 import { useNavigate } from 'react-router-dom';
 import { routes } from '../router/routes.ts';
+import { QueryKeys } from '../enums/queryKeys.ts';
+import Avatar from './Avatar.tsx';
+import { WhoAmIResponse } from '../generated-api/index.ts';
 
 type Props = {
   setSidebarOpen: () => void;
@@ -16,6 +19,10 @@ type Props = {
 const NavBar = ({ setSidebarOpen }: Props) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+
+  const userData: WhoAmIResponse | undefined = queryClient.getQueryData([
+    QueryKeys.WHO_AM_I,
+  ]);
 
   const { mutate } = useMutation({
     mutationFn: () => api.auth.authControllerLogout(),
@@ -27,8 +34,8 @@ const NavBar = ({ setSidebarOpen }: Props) => {
   });
 
   const userNavigation = [
-    { name: 'Your profile', href: '#' },
-    { name: 'Sign out', onClick: () => mutate() }, // Updated to include the logout function
+    { name: 'Your profile', onClick: () => navigate(routes.settings) },
+    { name: 'Sign out', onClick: () => mutate() },
   ];
 
   return (
@@ -79,17 +86,13 @@ const NavBar = ({ setSidebarOpen }: Props) => {
             <Menu as="div" className="relative">
               <MenuButton className="-m-1.5 flex items-center p-1.5">
                 <span className="sr-only">Open user menu</span>
-                <img
-                  alt=""
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                  className="size-8 rounded-full bg-gray-50"
-                />
+                <Avatar imageUrl={userData?.logoUrl || ''} />
                 <span className="hidden lg:flex lg:items-center">
                   <span
                     aria-hidden="true"
                     className="ml-4 text-sm/6 font-semibold text-gray-900"
                   >
-                    Tom Cook
+                    {userData?.companyName || ''}
                   </span>
                   <ChevronDownIcon
                     aria-hidden="true"
@@ -103,21 +106,12 @@ const NavBar = ({ setSidebarOpen }: Props) => {
               >
                 {userNavigation.map((item) => (
                   <MenuItem key={item.name}>
-                    {item.onClick ? (
-                      <button
-                        onClick={item.onClick}
-                        className="block w-full text-left px-3 py-1 text-sm/6 text-gray-900 data-[focus]:bg-gray-50 data-[focus]:outline-none"
-                      >
-                        {item.name}
-                      </button>
-                    ) : (
-                      <a
-                        href={item.href}
-                        className="block px-3 py-1 text-sm/6 text-gray-900 data-[focus]:bg-gray-50 data-[focus]:outline-none"
-                      >
-                        {item.name}
-                      </a>
-                    )}
+                    <button
+                      onClick={item.onClick}
+                      className="block w-full text-left px-3 py-1 text-sm/6 text-gray-900 data-[focus]:bg-gray-50 data-[focus]:outline-none"
+                    >
+                      {item.name}
+                    </button>
                   </MenuItem>
                 ))}
               </MenuItems>
