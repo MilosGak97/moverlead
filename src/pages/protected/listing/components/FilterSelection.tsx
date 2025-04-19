@@ -38,30 +38,7 @@ const filtersListing = {
   },
 };
 
-{
-  /* FILTER SUBSCRIPTION */
-}
-
-const filtersSubscription = {
-  price: {
-    title: 'Status',
-    options: [
-      { value: 'available', label: 'Available' },
-      { value: 'subscribed', label: 'Subscribed' },
-    ],
-  },
-
-  price2: {
-    title: 'Tier',
-    options: [
-      { value: 'tier1', label: 'Tier 1' },
-      { value: 'tier2', label: 'Tier 2' },
-      { value: 'tier3', label: 'Tier 3' },
-    ],
-  },
-};
-
-const FilterListings = ({
+export const FilterListings = ({
   totalCount,
   selectedItemsCount,
 }: {
@@ -168,65 +145,3 @@ const FilterListings = ({
     </div>
   );
 };
-
-const FilterSubscription = () => {
-  return (
-    <div className="mt-8 bg-white">
-      <Disclosure
-        as="section"
-        aria-labelledby="filter-heading"
-        className="grid items-center border-b border-t border-gray-200"
-      >
-        <h2 id="filter-heading" className="sr-only">
-          Filters
-        </h2>
-        <div className="relative col-start-1 row-start-1 py-4">
-          <div className="mx-auto flex w-full space-x-6 divide-x divide-gray-200 px-4 text-sm sm:px-6 lg:px-8">
-            <div>
-              <DisclosureButton className="group flex items-center font-medium text-gray-700">
-                <FunnelIcon
-                  aria-hidden="true"
-                  className="mr-2 size-5 flex-none text-gray-400 group-hover:text-gray-500"
-                />
-                2 Filters
-              </DisclosureButton>
-            </div>
-            <div className="pl-6">
-              <button
-                type="button"
-                className="text-gray-500 hover:cursor-pointer"
-              >
-                Clear all
-              </button>
-            </div>
-          </div>
-        </div>
-        <DisclosurePanel className="border-t border-gray-200 py-10">
-          <div className="mx-auto grid max-w-7xl grid-cols-2 gap-x-4 px-4 text-sm sm:px-6 md:gap-x-6 lg:px-8">
-            <div className="grid auto-rows-min grid-cols-1 gap-y-10 md:grid-cols-2 md:gap-x-6">
-              <ComboSelect />
-              <OptionSelect
-                filterGroup={filtersSubscription.price}
-                selectedValues={[]}
-                onOptionSelected={(selectedOption) =>
-                  console.log(selectedOption)
-                }
-              />
-            </div>
-            <div className="grid auto-rows-min grid-cols-1 gap-y-10 md:grid-cols-2 md:gap-x-6">
-              <OptionSelect
-                filterGroup={filtersSubscription.price2}
-                selectedValues={[]}
-                onOptionSelected={(selectedOption) =>
-                  console.log(selectedOption)
-                }
-              />
-            </div>
-          </div>
-        </DisclosurePanel>
-      </Disclosure>
-    </div>
-  );
-};
-
-export { FilterListings, FilterSubscription };

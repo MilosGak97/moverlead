@@ -1,8 +1,8 @@
-import { Button } from '../../../components/Button';
 import { Container } from '../../../components/Container';
 import { CurvyLineIcon } from '../../../components/iconography/CurvyLineIcon';
 import { SocialNetworkLinks } from '../home/components/SocialNetworkLinks';
 import { BlogPost } from './components/BlogPost';
+import { SubscribeToBlogs } from './components/subscribe-to-blogs/SubscribeToBlogs';
 import { blogPosts } from './data/blogPosts';
 
 export const Blogs = () => {
@@ -47,27 +47,7 @@ export const Blogs = () => {
           ))}
         </div>
       </Container>
-      <div className="bg-primary py-6 text-white">
-        <Container className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-          <div className="flex flex-col gap-2 col-span-3">
-            <h2 className=" font-bold text-3xl">Subscribe to our blog</h2>
-            <p>
-              Get practical tips, marketing ideas, and industry insights to help
-              your moving business grow straight to your inbox.
-            </p>
-          </div>
-          <div className="flex flex-col sm:flex-row items-center gap-6 col-span-2">
-            <input
-              type="text"
-              className="w-full rounded-md bg-white p-2 text-base text-gray-900 outline-none placeholder:text-slate-400"
-              placeholder="Email address"
-            />
-            <Button color="white" className="text-primary w-full">
-              Subscribe
-            </Button>
-          </div>
-        </Container>
-      </div>
+      <SubscribeToBlogs />
     </>
   );
 };

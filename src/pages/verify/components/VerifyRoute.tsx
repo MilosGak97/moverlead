@@ -1,9 +1,9 @@
 import { ReactNode } from 'react';
 import { useAuth } from '../../../hooks/useAuth';
-import { PuffLoader } from 'react-spinners';
 import { Navigate, useLocation } from 'react-router-dom';
 import { routes } from '../../../router/routes';
 import { UserStatus } from '../../../enums/userStatus';
+import { RouteLoading } from '../../../shared/components/route-loading/RouteLoading';
 
 type VerifyRouteProps = {
   children: ReactNode;
@@ -17,11 +17,7 @@ export const VerifyRoute = ({ children }: VerifyRouteProps) => {
     return <Navigate to={routes.auth.login} />;
 
   if (isLoading) {
-    return (
-      <div className="h-screen w-screen grid place-content-center ">
-        <PuffLoader color="#4379F2" />
-      </div>
-    );
+    return <RouteLoading />;
   }
 
   if (isError) {

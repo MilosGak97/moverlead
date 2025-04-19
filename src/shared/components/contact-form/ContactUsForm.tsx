@@ -1,25 +1,41 @@
+import { useFormContext } from 'react-hook-form';
 import { Button } from '../../../components/Button';
 import { ContactUsInput } from './ContactUsInput';
+import { ContactUsFormData } from '../../schemas/contactUsSchema';
 
 type ContactUsFormProps = {
+  onFormSubmit: (data: ContactUsFormData) => void;
+  isLoading: boolean;
   displayWhite?: boolean;
 };
 
-export const ContactUsForm = ({ displayWhite = true }: ContactUsFormProps) => {
+export const ContactUsForm = ({
+  onFormSubmit,
+  isLoading,
+  displayWhite = true,
+}: ContactUsFormProps) => {
   const labelClass = displayWhite ? 'text-white' : 'text-slate-900';
   const inputClass = displayWhite
     ? 'bg-white/5 text-white'
     : 'bg-transparent border border-slate-200 bg-slate-50 text-slate-900 focus:border-primary focus:bg-white focus:outline-none ';
 
+  const {
+    register,
+    formState: { isDirty, isValid, errors },
+    handleSubmit,
+  } = useFormContext<ContactUsFormData>();
+
   return (
-    <form>
-      <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+    <form onSubmit={handleSubmit(onFormSubmit)}>
+      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
         <ContactUsInput
           id="first-name"
           label="First name"
           wrapperClassName="sm:col-span-1"
           className={inputClass}
           labelClassName={labelClass}
+          error={errors?.firstName?.message}
+          {...register('firstName')}
         />
         <ContactUsInput
           id="last-name"
@@ -27,6 +43,8 @@ export const ContactUsForm = ({ displayWhite = true }: ContactUsFormProps) => {
           wrapperClassName="sm:col-span-1"
           className={inputClass}
           labelClassName={labelClass}
+          error={errors?.lastName?.message}
+          {...register('lastName')}
         />
         <ContactUsInput
           id="email"
@@ -34,14 +52,18 @@ export const ContactUsForm = ({ displayWhite = true }: ContactUsFormProps) => {
           type="email"
           className={inputClass}
           labelClassName={labelClass}
+          error={errors?.email?.message}
+          {...register('email')}
         />
         <ContactUsInput
           id="phone-number"
           label="Phone number"
           className={inputClass}
           labelClassName={labelClass}
+          error={errors?.phone?.message}
+          {...register('phone')}
         />
-        <div className="sm:col-span-2">
+        <div className="relative sm:col-span-2">
           <label
             htmlFor="message"
             className={`block text-sm/6 font-semibold ${labelClass}`}
@@ -51,15 +73,29 @@ export const ContactUsForm = ({ displayWhite = true }: ContactUsFormProps) => {
           <div className="mt-2.5">
             <textarea
               id="message"
-              name="message"
               rows={4}
               className={`block w-full rounded-md px-3.5 py-2 text-base ${inputClass}`}
+              {...register('message')}
             />
           </div>
+          <p
+            className={
+              'text-sm text-red-500 absolute bottom-0 translate-y-[calc(100%+0.25rem)]'
+            }
+          >
+            {errors?.message?.message}
+          </p>
         </div>
       </div>
       <div className="mt-8">
-        <Button className="w-full">Send message</Button>
+        <Button
+          className="w-full"
+          disabled={!isValid || !isDirty || isLoading}
+          isLoading={isLoading}
+          onClick={handleSubmit(onFormSubmit)}
+        >
+          Send message
+        </Button>
       </div>
     </form>
   );

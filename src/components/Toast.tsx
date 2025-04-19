@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 
 type ToastProps = {
   text: string;
@@ -13,7 +14,7 @@ export const Toast = ({
   position = 'bottomRight',
   renderAdditionalComponent,
 }: ToastProps) => {
-  return (
+  return createPortal(
     <div
       className={`fixed ${
         position === 'topCenter'
@@ -25,6 +26,7 @@ export const Toast = ({
     >
       {text}
       {renderAdditionalComponent}
-    </div>
+    </div>,
+    document.body
   );
 };

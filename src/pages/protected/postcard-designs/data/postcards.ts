@@ -18,6 +18,10 @@ import ninthPostcardFront from '../images/postcard-front-9.webp';
 import ninthPostcardBack from '../images/postcard-back-9.webp';
 import tenthPostcardFront from '../images/postcard-front-10.webp';
 import tenthPostcardBack from '../images/postcard-back-10.webp';
+import eleventhPostcardFront from '../images/postcard-front-11.webp';
+import eleventhPostcardBack from '../images/postcard-back-11.webp';
+import twelfthPostcardFront from '../images/postcard-front-12.webp';
+import twelfthPostcardBack from '../images/postcard-back-12.webp';
 
 export const postcards = [
   {
@@ -59,5 +63,13 @@ export const postcards = [
   {
     id: '10',
     images: [tenthPostcardFront, tenthPostcardBack],
+  },
+  {
+    id: '11',
+    images: [eleventhPostcardFront, eleventhPostcardBack],
+  },
+  {
+    id: '12',
+    images: [twelfthPostcardFront, twelfthPostcardBack],
   },
 ];

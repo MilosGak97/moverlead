@@ -1,9 +1,9 @@
 import { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
-import { PuffLoader } from 'react-spinners';
 import { useAuth } from '../../../hooks/useAuth';
 import { routes } from '../../../router/routes';
 import { UserStatus } from '../../../enums/userStatus';
+import { RouteLoading } from '../../../shared/components/route-loading/RouteLoading';
 
 type ProtectedRouteProps = {
   children: ReactNode;
@@ -13,11 +13,7 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const { data, isLoading, isError } = useAuth();
 
   if (isLoading) {
-    return (
-      <div className="h-screen w-screen grid place-content-center ">
-        <PuffLoader color="#4379F2" />
-      </div>
-    );
+    return <RouteLoading />;
   }
 
   if (isError) {

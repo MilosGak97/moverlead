@@ -20,7 +20,8 @@ const buttonVariants = cva(
         none: 'bg-transparent text-slate-900 border-slate-200 hover:border-slate-300 active:bg-slate-100 disabled:border-slate-100 disabled:text-slate-300 disabled:bg-transparent',
         noneDark:
           'border-slate-900 text-slate-900 hover:bg-gray-50 active:bg-gray-100 disabled:bg-gray-100 disabled:text-gray-300 disabled:border-transparent',
-        white: 'bg-white text-slate-900 hover:bg-blue-50 active:bg-blue-100',
+        white:
+          'bg-white text-slate-900 hover:bg-blue-50 active:bg-blue-100 disabled:opacity-40 disabled:hover:bg-white',
         success:
           'bg-success hover:bg-successHover active:bg-successActive disabled:bg-blue-200',
       },
@@ -75,7 +76,8 @@ export const Button = ({
   className,
   ...buttonProps
 }: ButtonProps) => {
-  const isBacgroundTransparent = color === 'none' || color === 'noneDark';
+  const isBacgroundTransparent =
+    color === 'none' || color === 'noneDark' || color === 'white';
 
   return (
     <button

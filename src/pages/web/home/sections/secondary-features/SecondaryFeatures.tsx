@@ -5,7 +5,7 @@ import React from 'react';
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
 import clsx from 'clsx';
 
-import screenshotContacts from './images/contacts.png';
+import postcardsImage from './images/postcards.webp';
 import realtorDataImage from './images/realtorData.webp';
 import completedMovesImage from './images/completedMoves.webp';
 
@@ -87,7 +87,7 @@ const features: Array<Feature> = [
     summary: 'Effortless Direct Mail Campaigns',
     description:
       'Generate label-ready documents for USPS, UPS, and other mailing services in just a few clicks. Streamline your outreach by easily preparing and sending targeted mailers to high-intent moving leads.',
-    image: screenshotContacts,
+    image: postcardsImage,
     icon: function ContactsIcon() {
       return (
         <>

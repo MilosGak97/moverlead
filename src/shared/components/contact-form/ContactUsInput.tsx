@@ -4,17 +4,18 @@ import { twMerge } from 'tailwind-merge';
 type ContactUsInputProps = {
   id: string;
   label: string;
+  error?: string;
   wrapperClassName?: string;
   labelClassName?: string;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 export const ContactUsInput = forwardRef<HTMLInputElement, ContactUsInputProps>(
   (
-    { id, label, wrapperClassName, className, labelClassName, ...rest },
+    { id, label, error, wrapperClassName, className, labelClassName, ...rest },
     ref
   ) => {
     return (
-      <div className={twMerge('sm:col-span-2', wrapperClassName)}>
+      <div className={twMerge('relative sm:col-span-2', wrapperClassName)}>
         <label
           htmlFor={id}
           className={twMerge(
@@ -35,6 +36,13 @@ export const ContactUsInput = forwardRef<HTMLInputElement, ContactUsInputProps>(
             {...rest}
           />
         </div>
+        <p
+          className={
+            'text-sm text-red-500 absolute bottom-0 translate-y-[calc(100%+0.25rem)]'
+          }
+        >
+          {error}
+        </p>
       </div>
     );
   }

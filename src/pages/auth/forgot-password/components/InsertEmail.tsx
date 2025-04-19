@@ -26,7 +26,6 @@ export const InsertEmailView = ({ onMutationSuccess }: InsertEmailProps) => {
 
   const { mutate, isPending } = useMutation({
     mutationFn: ({ email }: ForgotPasswordFormData) => {
-      console.log(email);
       return api.auth.authControllerForgotPassword({
         requestBody: { email },
       });
