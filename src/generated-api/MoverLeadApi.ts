@@ -7,6 +7,7 @@ import type { OpenAPIConfig } from './core/OpenAPI';
 import { AxiosHttpRequest } from './core/AxiosHttpRequest';
 import { AuthApi } from './services/AuthApi';
 import { AwsApi } from './services/AwsApi';
+import { CommonApi } from './services/CommonApi';
 import { PropertiesApi } from './services/PropertiesApi';
 import { ScrapperApi } from './services/ScrapperApi';
 import { SettingsApi } from './services/SettingsApi';
@@ -15,6 +16,7 @@ type HttpRequestConstructor = new (config: OpenAPIConfig) => BaseHttpRequest;
 export class MoverLeadApi {
   public readonly auth: AuthApi;
   public readonly aws: AwsApi;
+  public readonly common: CommonApi;
   public readonly properties: PropertiesApi;
   public readonly scrapper: ScrapperApi;
   public readonly settings: SettingsApi;
@@ -34,6 +36,7 @@ export class MoverLeadApi {
     });
     this.auth = new AuthApi(this.request);
     this.aws = new AwsApi(this.request);
+    this.common = new CommonApi(this.request);
     this.properties = new PropertiesApi(this.request);
     this.scrapper = new ScrapperApi(this.request);
     this.settings = new SettingsApi(this.request);

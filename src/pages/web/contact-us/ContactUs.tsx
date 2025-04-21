@@ -25,9 +25,9 @@ export const ContactUsView = () => {
 
   const { mutate, isPending } = useMutation({
     mutationFn: (data: ContactUsFormData) => {
-      //TODO - pass data to the mutation
-      console.log(data);
-      return api.properties.propertiesControllerHandleWebhook();
+      return api.common.commonControllerContactFormWebhook({
+        requestBody: data,
+      });
     },
     onSuccess: () => {
       addSuccessContactUsToast(

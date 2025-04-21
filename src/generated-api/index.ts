@@ -12,6 +12,7 @@ export type { OpenAPIConfig } from './core/OpenAPI';
 
 export type { BrightdataVersion } from './models/BrightdataVersion';
 export type { ChangePasswordDto } from './models/ChangePasswordDto';
+export type { ContactFormWebhookDto } from './models/ContactFormWebhookDto';
 export type { County } from './models/County';
 export type { CreateCheckoutSessionDto } from './models/CreateCheckoutSessionDto';
 export type { CreateCheckoutSessionResponseDto } from './models/CreateCheckoutSessionResponseDto';
@@ -30,17 +31,20 @@ export type { GetZillowUrlsForCountyDto } from './models/GetZillowUrlsForCountyD
 export type { ListingsExportDto } from './models/ListingsExportDto';
 export type { MessageResponseDto } from './models/MessageResponseDto';
 export type { PatchCompanyDto } from './models/PatchCompanyDto';
+export type { PostcardFormWebhookDto } from './models/PostcardFormWebhookDto';
 export type { RegisterDto } from './models/RegisterDto';
 export type { ResetPasswordDto } from './models/ResetPasswordDto';
 export type { RunScrapperV2Dto } from './models/RunScrapperV2Dto';
 export type { StartScrapperDto } from './models/StartScrapperDto';
 export type { StateResponseDto } from './models/StateResponseDto';
+export type { SubscribeToBlogDto } from './models/SubscribeToBlogDto';
 export type { SubscriptionItemsDto } from './models/SubscriptionItemsDto';
 export type { ValidateUserDto } from './models/ValidateUserDto';
 export type { WhoAmIResponse } from './models/WhoAmIResponse';
 
 export { AuthApi } from './services/AuthApi';
 export { AwsApi } from './services/AwsApi';
+export { CommonApi } from './services/CommonApi';
 export { PropertiesApi } from './services/PropertiesApi';
 export { ScrapperApi } from './services/ScrapperApi';
 export { SettingsApi } from './services/SettingsApi';

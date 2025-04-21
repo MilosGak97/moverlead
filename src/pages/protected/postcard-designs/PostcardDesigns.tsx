@@ -1,7 +1,7 @@
 import { Container } from '../../../components/Container';
 import { CurvyLineIcon } from '../../../components/iconography/CurvyLineIcon';
 import { PostcardImagesGroup } from './components/PostcardImagesGroup';
-import { postcards } from './data/postcards';
+import { PostcardItem, postcards } from './data/postcards';
 import { PhoneIcon } from '@heroicons/react/20/solid';
 import { EmailIcon } from '../../../components/iconography/EmailIcon';
 import { ContactPopup } from './components/ContactPopup';
@@ -9,21 +9,21 @@ import { useState } from 'react';
 
 export const PostcardDesigns = () => {
   const [isContactPopupOpen, setIsContactPopupOpen] = useState(false);
-  const [selectedPostcardImages, setSelectedPostcardImages] = useState<
-    string[]
-  >([]);
+  const [selectedPostcard, setSelectedPostcard] = useState<PostcardItem | null>(
+    null
+  );
 
   const handleClosePopup = () => {
     setIsContactPopupOpen(false);
     setTimeout(() => {
-      setSelectedPostcardImages([]);
+      setSelectedPostcard(null);
     }, 300);
   };
 
   return (
     <>
       <ContactPopup
-        selectedPostCardImages={selectedPostcardImages}
+        selectedPostcard={selectedPostcard}
         isDialogOpen={isContactPopupOpen}
         onClose={handleClosePopup}
       />
@@ -99,13 +99,13 @@ export const PostcardDesigns = () => {
               </h2>
             </div>
             <div className="mt-10 flex flex-col items-center gap-8 lg:gap-12">
-              {postcards.map(({ id, images }, index) => (
+              {postcards.map((postcard, index) => (
                 <PostcardImagesGroup
-                  key={id}
-                  images={images}
+                  key={postcard.id}
+                  images={postcard.images}
                   includeBorder={index !== postcards.length - 1}
                   onClick={() => {
-                    setSelectedPostcardImages(images);
+                    setSelectedPostcard(postcard);
                     setIsContactPopupOpen(true);
                   }}
                 />

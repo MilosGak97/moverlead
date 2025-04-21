@@ -1,5 +1,6 @@
 import { Bars3Icon, BellIcon } from '@heroicons/react/24/outline';
 import {
+  ArrowDownTrayIcon,
   ChevronDownIcon,
   MagnifyingGlassIcon,
 } from '@heroicons/react/20/solid';
@@ -10,6 +11,8 @@ import { useNavigate } from 'react-router-dom';
 import { routes } from '../router/routes.ts';
 import { QueryKeys } from '../enums/queryKeys.ts';
 import Avatar from './Avatar.tsx';
+import { Modal } from './Modal.tsx';
+import { useState } from 'react';
 
 type Props = {
   setSidebarOpen: () => void;
@@ -18,13 +21,14 @@ type Props = {
 const NavBar = ({ setSidebarOpen }: Props) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const [isSignoutModalOpen, setIsSignoutModalOpen] = useState(false);
 
   const { data } = useQuery({
     queryKey: [QueryKeys.WHO_AM_I],
     queryFn: () => api.auth.authControllerGetProfile(),
   });
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: () => api.auth.authControllerLogout(),
     onSuccess: () => {
       queryClient.invalidateQueries();
@@ -35,12 +39,27 @@ const NavBar = ({ setSidebarOpen }: Props) => {
 
   const userNavigation = [
     { name: 'Your profile', onClick: () => navigate(routes.settings) },
-    { name: 'Sign out', onClick: () => mutate() },
+    { name: 'Sign out', onClick: () => setIsSignoutModalOpen(true) },
   ];
 
   return (
     <>
-      <div className=" top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+      <Modal
+        title={'Are you sure you want to sign out?'}
+        description={
+          'You’ll need to log in again to access your dashboard and data.'
+        }
+        isDialogOpen={isSignoutModalOpen}
+        onClose={() => setIsSignoutModalOpen(false)}
+        onConfirmButtonClick={mutate}
+        icon={<ArrowDownTrayIcon />}
+        isConfirmButtonLoading={isPending}
+        isConfirmButtonDisabled={isPending}
+        isCancelButtonDisabled={isPending}
+        primaryButtonClassName={'bg-red-700 hover:bg-red-800 active:bg-red-900'}
+        iconWrapperClassName="bg-red-700"
+      />
+      <div className=" top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8 ">
         <button
           type="button"
           onClick={setSidebarOpen}

@@ -10,14 +10,16 @@ import {
 import { useMutation } from '@tanstack/react-query';
 import { Toast } from '../../../../components/Toast';
 import { api } from '../../../../api/api';
+import { PostcardItem } from '../data/postcards';
 
-type ContactPopupProps = { selectedPostCardImages: string[] } & Omit<
+type ContactPopupProps = { selectedPostcard: PostcardItem | null } & Omit<
   DialogProps,
   'children'
 >;
 
 export const ContactPopupView = ({
-  selectedPostCardImages,
+  selectedPostcard,
+  onClose,
   ...dialogProps
 }: ContactPopupProps) => {
   const { toastText, addToast } = useToast();
@@ -30,15 +32,16 @@ export const ContactPopupView = ({
 
   const { mutate, isPending } = useMutation({
     mutationFn: (data: ContactUsFormData) => {
-      //TODO - pass data to the mutation
-      console.log(data);
-      return api.properties.propertiesControllerHandleWebhook();
+      return api.common.commonControllerPostcardFormWebhook({
+        requestBody: { postcardId: selectedPostcard?.id || '', ...data },
+      });
     },
     onSuccess: () => {
       addSuccessPostcarcContactToast(
         'Your postcard request was sent successfully. We`ll be in touch soon.'
       );
       reset();
+      if (onClose) onClose();
     },
     onError: () => addToast(),
   });
@@ -51,12 +54,14 @@ export const ContactPopupView = ({
     <>
       <Dialog
         {...dialogProps}
-        className="p-8 border border-white/50"
+        includeClosingIcon
+        onClose={onClose}
+        className="p-8 pt-14 border border-white/50"
         wrapperClassName="max-w-3xl"
       >
         <div className="flex flex-col gap-6">
           <div className="grid grid-cols-2">
-            {selectedPostCardImages.map((image, index) => (
+            {selectedPostcard?.images.map((image, index) => (
               <div
                 key={image}
                 className={`relative overflow-hidden border-2 border-slate-300 ${

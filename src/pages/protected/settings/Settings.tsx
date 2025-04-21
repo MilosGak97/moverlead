@@ -12,15 +12,19 @@ import { QueryKeys } from '../../../enums/queryKeys';
 import { api } from '../../../api/api';
 import { StateContainer } from '../../../components/StateContainer';
 import { ControlledForm } from '../../../components/ControlledForm';
+import { useSearchParams } from 'react-router-dom';
 
-const tabs = [
+// eslint-disable-next-line react-refresh/only-export-components
+export const settingsTabs = [
   { name: 'Account Settings', component: <CompanyInformation /> },
   { name: 'Update Password', component: <UpdatePassword /> },
   { name: 'Campaign Settings', component: <CampaignSettings /> },
 ];
 
 const SettingsView = () => {
-  const [selectedTab, setSelectedTab] = useState(tabs[0].name);
+  const [searchParams] = useSearchParams();
+  const selectedTabName = searchParams.get('tab') || settingsTabs[0].name;
+  const [selectedTab, setSelectedTab] = useState(selectedTabName);
 
   const handleTabClick = (name: string) => {
     setSelectedTab(name);
@@ -30,13 +34,13 @@ const SettingsView = () => {
     <>
       <div className="lg:px-8">
         <Tabs
-          tabs={tabs.map((tab) => ({
+          tabs={settingsTabs.map((tab) => ({
             ...tab,
             isSelected: selectedTab === tab.name,
           }))}
           onTabClick={handleTabClick}
         />
-        {tabs.map(({ name, component }) => (
+        {settingsTabs.map(({ name, component }) => (
           <div key={name} className={name === selectedTab ? '' : 'hidden'}>
             {component}
           </div>

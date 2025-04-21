@@ -28,9 +28,9 @@ export const SubscribeToBlogsView = () => {
 
   const { mutate, isPending } = useMutation({
     mutationFn: ({ email }: SubscribeToBlogsFormData) => {
-      //TODO - pass email to the mutation
-      console.log(email);
-      return api.properties.propertiesControllerHandleWebhook();
+      return api.common.commonControllerSubscribeToBlogWebhook({
+        requestBody: { email },
+      });
     },
     onSuccess: () => {
       addSuccessSubscribedToast('Successfully subscribed to our blog.');
@@ -72,7 +72,7 @@ export const SubscribeToBlogsView = () => {
             color="white"
             className="text-primary w-full"
             disabled={!isDirty || !isValid || isPending}
-            isLoading={true}
+            isLoading={isPending}
             onClick={handleSubmit(handleSubscribeToBlogsFormSubmit)}
           >
             Subscribe

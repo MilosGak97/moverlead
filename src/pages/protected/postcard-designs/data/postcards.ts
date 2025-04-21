@@ -23,7 +23,12 @@ import eleventhPostcardBack from '../images/postcard-back-11.webp';
 import twelfthPostcardFront from '../images/postcard-front-12.webp';
 import twelfthPostcardBack from '../images/postcard-back-12.webp';
 
-export const postcards = [
+export type PostcardItem = {
+  id: string;
+  images: string[];
+};
+
+export const postcards: PostcardItem[] = [
   {
     id: '1',
     images: [firstPostcardFront, firstPostcardBack],

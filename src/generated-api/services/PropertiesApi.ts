@@ -221,14 +221,23 @@ export class PropertiesApi {
     });
   }
   /**
-   * General webhook
    * @returns any
    * @throws ApiError
    */
-  public propertiesControllerHandleWebhook(): CancelablePromise<any> {
+  public propertiesControllerWebhook({
+    webhookSecret,
+    daysOnZillow,
+  }: {
+    webhookSecret: string,
+    daysOnZillow: string,
+  }): CancelablePromise<any> {
     return this.httpRequest.request({
       method: 'POST',
       url: '/api/properties/webhook',
+      query: {
+        'webhookSecret': webhookSecret,
+        'daysOnZillow': daysOnZillow,
+      },
     });
   }
 }

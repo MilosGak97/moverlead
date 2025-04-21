@@ -62,35 +62,6 @@ export const Stats = ({
               <p className="text-2xl font-semibold text-gray-900">
                 {item.stat}
               </p>
-              {/* <p
-                className={classNames(
-                  item.changeType === 'increase'
-                    ? 'text-green-600'
-                    : 'text-red-600',
-                  'ml-2 flex items-baseline text-sm font-semibold'
-                )}
-              >
-                {item.changeType === 'increase' ? (
-                  <ArrowUpIcon
-                    aria-hidden="true"
-                    className="size-5 shrink-0 self-center text-green-500"
-                  />
-                ) : (
-                  <ArrowDownIcon
-                    aria-hidden="true"
-                    className="size-5 shrink-0 self-center text-red-500"
-                  />
-                )}
-
-                <span className="sr-only">
-                  {' '}
-                  {item.changeType === 'increase'
-                    ? 'Increased'
-                    : 'Decreased'}{' '}
-                  by{' '}
-                </span>
-                {item.change}
-              </p> */}
               <div className="absolute inset-x-0 bottom-0 bg-gray-50 px-4 py-4 sm:px-6">
                 <div className="text-sm">
                   <a
@@ -108,7 +79,3 @@ export const Stats = ({
     </div>
   );
 };
-
-// function classNames(...classes: string[]) {
-//   return classes.filter(Boolean).join(' ');
-// }
