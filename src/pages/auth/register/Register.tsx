@@ -23,6 +23,7 @@ const Register = () => {
     lastName: '',
     companyName: '',
     email: '',
+    phoneNumber: '',
     password: '',
     repeatPassword: '',
   });
@@ -40,7 +41,9 @@ const Register = () => {
     onSuccess: () => {
       setIsRegistrationSuccess(true);
     },
-    onError: () => addToast(),
+    onError: (err) => {
+      addToast(err.message);
+    },
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -126,6 +129,15 @@ const Register = () => {
             autoComplete="email"
             required
             value={formData.email}
+            onChange={handleInputChange}
+          />
+          <TextField
+            className="col-span-full"
+            label="Phone number"
+            name="phoneNumber"
+            type="text"
+            required
+            value={formData.phoneNumber}
             onChange={handleInputChange}
           />
           <TextField

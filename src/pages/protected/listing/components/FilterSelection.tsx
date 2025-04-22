@@ -118,9 +118,9 @@ export const FilterListings = ({
           className="border-t border-gray-200 py-10"
           unmount={false}
         >
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
-            <div className="grid sm:grid-cols-5 sm:col-span-3 text-sm gap-6">
-              <div className="sm:col-span-2">
+          <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
+            <div className="grid xl:grid-cols-5 xl:col-span-3 text-sm gap-6">
+              <div className="sm:col-span-3 xl:col-span-2">
                 <ComboSelect />
               </div>
               <div className="sm:col-span-3">

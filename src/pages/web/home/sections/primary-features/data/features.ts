@@ -22,20 +22,21 @@ export const features: FeatureItem[] = [
     id: '2',
     title: 'High-Intent Moving Leads',
     description:
-      'Our platform filters listings to highlight homes that are actively preparing for a move, so you can connect with homeowners at the right time.',
+      'Our platform highlights homes getting ready for a move, helping you connect with motivated homeowners at the right time.',
     image: listingImage,
   },
   {
     id: '3',
     title: 'Postcards Design',
     description:
-      'Gain access to beautifully designed postcards completely free. Choose a design and we’ll help you connect with homeowners effectively.',
+      'Choose from a variety of free postcard templates and connect with homeowners in a more personal and effective way.',
     image: postcardsImage,
   },
   {
     id: '4',
     title: 'Smart Billing',
-    description: 'Pay only for the counties that you need and use.',
+    description:
+      'Only pay for the counties you’re actively using, with transparent pricing and full control over your monthly spending.',
     image: subscriptionsImage,
   },
 ];

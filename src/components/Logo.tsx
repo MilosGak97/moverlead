@@ -1,4 +1,4 @@
-import logo from '../assets/images/logo-color.png';
+import logo from '../assets/logos/logo-color.png';
 
 export function Logo(): JSX.Element {
   return (

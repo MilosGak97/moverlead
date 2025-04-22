@@ -6,6 +6,7 @@ export type RegisterDto = {
   firstName: string;
   lastName: string;
   email: string;
+  phoneNumber: string;
   companyName: string;
   password: string;
   repeatPassword: string;

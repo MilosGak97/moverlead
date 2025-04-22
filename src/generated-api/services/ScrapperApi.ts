@@ -7,6 +7,7 @@ import type { FetchDataDto } from '../models/FetchDataDto';
 import type { GetZillowUrlsForCountyDto } from '../models/GetZillowUrlsForCountyDto';
 import type { RunScrapperV2Dto } from '../models/RunScrapperV2Dto';
 import type { StartScrapperDto } from '../models/StartScrapperDto';
+import type { TestScrapperDto } from '../models/TestScrapperDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 export class ScrapperApi {
@@ -23,6 +24,22 @@ export class ScrapperApi {
     return this.httpRequest.request({
       method: 'POST',
       url: '/api/scrapper/reddis/trigger-scrapping',
+      body: requestBody,
+      mediaType: 'application/json',
+    });
+  }
+  /**
+   * @returns any
+   * @throws ApiError
+   */
+  public scrapperControllerTestScrapper({
+    requestBody,
+  }: {
+    requestBody: TestScrapperDto,
+  }): CancelablePromise<any> {
+    return this.httpRequest.request({
+      method: 'POST',
+      url: '/api/scrapper/test-scrapper',
       body: requestBody,
       mediaType: 'application/json',
     });

@@ -25,11 +25,11 @@ const Login = () => {
     onSuccess: () => {
       navigate(routes.dashboard);
     },
-    onError: () => {
+    onError: (error) => {
       setEmailError(true);
       setPasswordError(true);
 
-      addToast('Invalid email or password. Please try again.');
+      addToast(error.message);
       setTimeout(() => {
         setEmailError(false);
         setPasswordError(false);

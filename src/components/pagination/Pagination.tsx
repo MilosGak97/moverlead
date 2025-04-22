@@ -28,7 +28,7 @@ const PaginationContentWrapper = ({
   className?: string;
 }) => {
   return (
-    <div className={`w-full flex justify-center gap-10 ${className}`}>
+    <div className={`w-full flex justify-center gap-6 sm:gap-10 ${className}`}>
       {children}
     </div>
   );
@@ -101,6 +101,7 @@ export const Pagination = ({
               disabled={currentPage === pageIndicator}
               onClick={() => onPageClick(pageIndicator)}
               color={'noneDark'}
+              className="px-2 sm:px-3"
             >
               {pageIndicator}
             </Button>

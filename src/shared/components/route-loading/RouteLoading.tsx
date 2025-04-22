@@ -1,4 +1,4 @@
-import logo2DImage from '../../../assets/images/logo-2d.gif';
+import logo2DImage from '../../../assets/logos/logo-2d.gif';
 
 export const RouteLoading = () => {
   return (

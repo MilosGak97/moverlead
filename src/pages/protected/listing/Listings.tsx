@@ -59,6 +59,8 @@ const ListingsView = () => {
     callback: (subscribedStates) => setStates(subscribedStates),
   });
 
+  console.log(date);
+
   const {
     items,
     totalItems,

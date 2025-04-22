@@ -39,6 +39,7 @@ export type { StartScrapperDto } from './models/StartScrapperDto';
 export type { StateResponseDto } from './models/StateResponseDto';
 export type { SubscribeToBlogDto } from './models/SubscribeToBlogDto';
 export type { SubscriptionItemsDto } from './models/SubscriptionItemsDto';
+export type { TestScrapperDto } from './models/TestScrapperDto';
 export type { ValidateUserDto } from './models/ValidateUserDto';
 export type { WhoAmIResponse } from './models/WhoAmIResponse';
 

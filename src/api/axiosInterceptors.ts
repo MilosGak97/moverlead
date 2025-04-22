@@ -291,9 +291,12 @@ export const catchErrorCodes = (
     ...options.errors,
   };
 
-  const error = errors[result.status];
-  if (error) {
-    throw new ApiError(options, result, error);
+  const errorStatus = errors[result.status];
+
+  if (errorStatus) {
+    const errorMessage = result.body?.message || errors[result.status];
+
+    throw new ApiError(options, result, errorMessage);
   }
 
   if (!result.ok) {

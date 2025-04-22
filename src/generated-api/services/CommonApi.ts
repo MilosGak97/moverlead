@@ -31,14 +31,14 @@ export class CommonApi {
    * @returns any
    * @throws ApiError
    */
-  public commonControllerSubscribeToBlogWebhook({
+  public commonControllerPostcardFormWebhook({
     requestBody,
   }: {
-    requestBody: SubscribeToBlogDto,
+    requestBody: PostcardFormWebhookDto,
   }): CancelablePromise<any> {
     return this.httpRequest.request({
       method: 'POST',
-      url: '/api/common/webhook/subscribe-to-blog',
+      url: '/api/common/webhook/postcard-form',
       body: requestBody,
       mediaType: 'application/json',
     });
@@ -48,14 +48,14 @@ export class CommonApi {
    * @returns any
    * @throws ApiError
    */
-  public commonControllerPostcardFormWebhook({
+  public commonControllerSubscribeToBlogWebhook({
     requestBody,
   }: {
-    requestBody: PostcardFormWebhookDto,
+    requestBody: SubscribeToBlogDto,
   }): CancelablePromise<any> {
     return this.httpRequest.request({
       method: 'POST',
-      url: '/api/common/webhook/postcard-form',
+      url: '/api/common/webhook/subscribe-to-blog',
       body: requestBody,
       mediaType: 'application/json',
     });

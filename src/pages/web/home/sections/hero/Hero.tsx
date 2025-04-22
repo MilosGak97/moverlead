@@ -3,7 +3,7 @@ import ecoBins from './images/eco_bins_logo.png';
 import vanExpress from './images/van_express_logo.png';
 import viteMoving from './images/vite_moving_logo.png';
 import transWorldMovers from './images/trans_world_movers.png';
-import incomeImage from './images/income.png';
+import incomeImage from '../../../../../assets/images/income.png';
 import { useNavigate } from 'react-router-dom';
 import { CurvyLineIcon } from '../../../../../components/iconography/CurvyLineIcon';
 import { Container } from '../../../../../components/Container';

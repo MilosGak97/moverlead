@@ -7,7 +7,7 @@ import {
   CreditCardIcon,
 } from '@heroicons/react/24/outline';
 import SidebarItem from './SidebarItem.tsx';
-import logo from '../assets/images/logo.png';
+import logo from '../assets/logos/logo.png';
 import { NavLink } from 'react-router-dom';
 import { routes } from '../router/routes.ts';
 import { PostcardIcon } from './iconography/PostcardIcon.tsx';
