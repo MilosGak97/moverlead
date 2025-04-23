@@ -3,7 +3,7 @@ import ecoBins from './images/eco_bins_logo.png';
 import vanExpress from './images/van_express_logo.png';
 import viteMoving from './images/vite_moving_logo.png';
 import transWorldMovers from './images/trans_world_movers.png';
-import incomeImage from '../../../../../assets/images/income.png';
+import laptopIncomeImage from '../../../../../assets/images/laptop-income.webp';
 import { useNavigate } from 'react-router-dom';
 import { CurvyLineIcon } from '../../../../../components/iconography/CurvyLineIcon';
 import { Container } from '../../../../../components/Container';
@@ -52,8 +52,8 @@ export const Hero = () => {
           <CalendlyButton className="w-full sm:w-auto bg-transparent text-slate-900 border-slate-200 hover:border-slate-300 hover:bg-transparent active:bg-slate-100" />
         </div>
         <div className="flex justify-center">
-          <div className="sm:max-w-lg w-full my-12 sm:my-16 ">
-            <img src={incomeImage} alt="Invoice" className="w-full" />
+          <div className="sm:max-w-xl w-full my-12 sm:my-16">
+            <img src={laptopIncomeImage} alt="Invoice" className="w-full" />
           </div>
         </div>
         <div>

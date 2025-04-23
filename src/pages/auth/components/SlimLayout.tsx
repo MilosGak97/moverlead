@@ -1,5 +1,6 @@
 import React from 'react';
 
+import laptopIncomeImage from '../../../assets/images/laptop-income.webp';
 import backgroundImage from './images/background-auth.jpg';
 
 export function SlimLayout({ children }: { children: React.ReactNode }) {
@@ -15,9 +16,9 @@ export function SlimLayout({ children }: { children: React.ReactNode }) {
             src={backgroundImage}
             alt="Blue background"
           />
-          {/* <div className="relative sm:max-w-lg w-full z-10">
-            <img src={incomeImage} alt="Invoice" className="w-full" />
-          </div> */}
+          <div className="relative sm:max-w-xl w-full z-10">
+            <img src={laptopIncomeImage} alt="Invoice" className="w-full" />
+          </div>
         </div>
       </div>
     </>
