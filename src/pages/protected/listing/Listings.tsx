@@ -59,8 +59,6 @@ const ListingsView = () => {
     callback: (subscribedStates) => setStates(subscribedStates),
   });
 
-  console.log(date);
-
   const {
     items,
     totalItems,
@@ -76,8 +74,8 @@ const ListingsView = () => {
     queryFn: (limit, offset) =>
       api.properties.propertiesControllerGetListings({
         state: selectedStatesList,
-        dateTo: date.to || undefined,
-        dateFrom: date.from || undefined,
+        dateTo: date.to ? new Date(date.to).toISOString() : undefined,
+        dateFrom: date.from ? new Date(date.from).toISOString() : undefined,
         propertyValueTo: propertyValue.to || undefined,
         propertyValueFrom: propertyValue.from || undefined,
         propertyStatus,

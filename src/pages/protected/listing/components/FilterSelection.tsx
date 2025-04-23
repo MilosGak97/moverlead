@@ -6,10 +6,10 @@ import {
 import { FunnelIcon } from '@heroicons/react/20/solid';
 import { ComboSelect } from './ComboSelect.tsx';
 import { OptionSelect } from '../../../../components/OptionSelect.tsx';
-import { InputsSelect } from './InputsSelect.tsx';
 import { FilteredStatus } from '../../../../enums/filteredStatus.ts';
 import { PropertyStatus } from '../../../../enums/propertyStatus.ts';
 import { useListingFilterContext } from '../context/ListingFilterContext.tsx';
+import { InputsSelect } from './inputs-selection/InputsSelect.tsx';
 
 {
   /* FILTER LISTINGS */
