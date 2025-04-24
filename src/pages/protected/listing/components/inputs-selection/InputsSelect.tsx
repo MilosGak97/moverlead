@@ -1,22 +1,23 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, memo, useEffect, useState } from 'react';
 import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/themes/dark.css';
 import 'flatpickr/dist/flatpickr.css';
-import confirmDatePlugin from 'flatpickr/dist/plugins/confirmDate/confirmDate';
 import './flatpickr.css';
 
 import { useDebounceValue } from '../../../../../hooks/useDebounceValue';
 import { useListingFilterContext } from '../../context/ListingFilterContext';
+import { endOfDay, startOfDay } from 'date-fns';
 
-export const InputsSelect = () => {
+const todayStart = startOfDay(new Date());
+const todayEnd = endOfDay(new Date());
+
+export const InputsSelect = memo(() => {
   const { propertyValue, setPropertyValue, date, setDate } =
     useListingFilterContext();
   const [localPropertyValue, setLocalPropertyValue] = useState(propertyValue);
-  const [localDate, setLocalDate] = useState(date);
 
   const debouncedPropertyValue = useDebounceValue(localPropertyValue, 500);
-  const debouncedDate = useDebounceValue(localDate, 500);
 
   const handlePropertyValueChange = (
     e: ChangeEvent<HTMLInputElement>,
@@ -29,9 +30,14 @@ export const InputsSelect = () => {
 
   const handleDateChange = (fieldKey: keyof typeof date, value: Date[]) => {
     const selected = value[0];
-    setLocalDate((prev) => ({
+    if (!selected) return;
+
+    const adjustedDate =
+      fieldKey === 'from' ? startOfDay(selected) : endOfDay(selected);
+
+    setDate((prev) => ({
       ...prev,
-      [fieldKey]: selected?.toISOString() || '',
+      [fieldKey]: adjustedDate,
     }));
   };
 
@@ -40,18 +46,8 @@ export const InputsSelect = () => {
   }, [debouncedPropertyValue, setPropertyValue]);
 
   useEffect(() => {
-    setDate(debouncedDate);
-  }, [debouncedDate, setDate]);
-
-  useEffect(() => {
     setLocalPropertyValue(propertyValue);
   }, [propertyValue]);
-
-  useEffect(() => {
-    setLocalDate(date);
-  }, [date]);
-
-  console.log(localDate.from || '', 'localDateFrom');
 
   return (
     <fieldset className="flex flex-col gap-4">
@@ -84,15 +80,14 @@ export const InputsSelect = () => {
           <div className="flex flex-col md:flex-row gap-4">
             <Flatpickr
               options={{
-                enableTime: true,
-                dateFormat: 'Y-m-d h:i K',
-                maxDate: 'today',
+                dateFormat: 'Y-m-d',
+                maxDate: date.to || todayStart,
                 static: true,
                 disableMobile: true,
-                plugins: [confirmDatePlugin({})],
+                defaultDate: date.from ? date.from : todayStart,
               }}
-              value={localDate.from || ''}
-              onClose={(value) => handleDateChange('from', value)}
+              value={date.from ? date.from : todayStart}
+              onChange={(value) => handleDateChange('from', value)}
               render={({ render: _, ...props }, ref) => (
                 <input
                   {...props}
@@ -105,15 +100,15 @@ export const InputsSelect = () => {
             />
             <Flatpickr
               options={{
-                enableTime: true,
-                dateFormat: 'Y-m-d H:i K',
-                maxDate: 'today',
+                dateFormat: 'Y-m-d',
+                maxDate: todayEnd,
+                minDate: date.from,
                 static: true,
                 disableMobile: true,
-                plugins: [confirmDatePlugin({})],
+                defaultDate: date.to ? date.to : todayEnd,
               }}
-              value={localDate.to || ''}
-              onClose={(value) => handleDateChange('to', value)}
+              value={date.to ? date.to : todayEnd}
+              onChange={(value) => handleDateChange('to', value)}
               render={({ render: _, ...props }, ref) => (
                 <input
                   {...props}
@@ -129,4 +124,4 @@ export const InputsSelect = () => {
       </div>
     </fieldset>
   );
-};
+});

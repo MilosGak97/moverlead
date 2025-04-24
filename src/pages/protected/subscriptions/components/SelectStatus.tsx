@@ -46,7 +46,6 @@ export const SelectStatus = ({
           ref={inputRef}
           className="block w-full rounded-md bg-white py-1.5 pl-3 pr-12 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-900 focus:outline focus:outline-2 focus:outline-blue-600 sm:text-sm overflow-hidden overflow-ellipsis"
           onChange={(event) => {
-            console.log(event.target.value);
             setInputValue(event.target.value);
           }}
           onBlur={() => setInputValue('')}

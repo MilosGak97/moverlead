@@ -152,7 +152,7 @@ const ListingsView = () => {
           </div>
 
           <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-            <Button onClick={() => console.log('Add more leads')}>
+            <Button onClick={() => navigate(routes.order)}>
               Add More Leads
             </Button>
           </div>

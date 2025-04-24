@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { QueryKeys } from '../../../enums/queryKeys';
 import { api } from '../../../api/api';
 import { SelectState } from './components/SelectState';
@@ -50,18 +50,26 @@ export const Order = () => {
     enabled: !!selectedState,
   });
 
-  const { mutate, isPending } = useMutation({
+  const { mutateAsync, isPending } = useMutation({
     mutationFn: () =>
       api.stripe.stripeControllerCreateCheckoutSessionMultiple({
         requestBody: {
           priceIds: cartCounties.map((county) => county.priceId) as string[],
         },
       }),
-    onSuccess: (data) => {
-      window.open(data.checkoutUrl);
-    },
-    onError: addStripePaymentFailedToastText,
   });
+
+  const handleCheckoutClick = useCallback(async () => {
+    try {
+      const { checkoutUrl } = await mutateAsync();
+      const newWindow = window.open(checkoutUrl, '_blank');
+      if (!newWindow) {
+        window.location.assign(checkoutUrl);
+      }
+    } catch {
+      addStripePaymentFailedToastText();
+    }
+  }, [addStripePaymentFailedToastText, mutateAsync]);
 
   const toggleSelectAllCounties = () => {
     if (!counties) return;
@@ -157,11 +165,12 @@ export const Order = () => {
               </div>
               <div className="grid xs:grid-cols-2 flex-shrink-0 gap-2">
                 <Button
-                  onClick={mutate as () => void}
+                  onClick={handleCheckoutClick}
                   disabled={!cartCounties.length || isPending}
+                  isLoading={isPending}
                   className="w-full h-fit"
                 >
-                  {isPending ? 'Loading...' : 'Checkout'}
+                  Checkout
                 </Button>
                 <Button
                   onClick={() => setCartCounties([])}

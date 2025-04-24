@@ -35,6 +35,10 @@
   }
 }
 
+.flatpickr-innerContainer {
+  padding: 0.5rem 0;
+}
+
 .flatpickr-wrapper {
   width: 100%;
 }

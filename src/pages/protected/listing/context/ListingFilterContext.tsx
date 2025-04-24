@@ -10,7 +10,7 @@ import {
 import { FilteredStatus } from '../../../../enums/filteredStatus';
 import { PropertyStatus } from '../../../../enums/propertyStatus';
 
-type DateRange = { from: string; to: string };
+type DateRange = { from: string | Date; to: string | Date };
 type ValueRange = { from: number | null; to: number | null };
 export type StateOption = { abbreviation: string; name: string };
 
