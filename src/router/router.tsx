@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Outlet } from 'react-router-dom';
 import { Filtering } from '../pages/protected/filtering/Filtering.tsx';
 import { Subscriptions } from '../pages/protected/subscriptions/Subscriptions.tsx';
 import { Order } from '../pages/protected/order/Order.tsx';
@@ -25,6 +25,7 @@ import { SetPassword } from '../pages/verify/set-password/SetPassword.tsx';
 import { NotVerifiedEmail } from '../pages/verify/not-verified-email/NotVerifiedEmail.tsx';
 import { ProtectedRoute } from '../pages/protected/components/ProtectedRoute.tsx';
 import { VerifyRoute } from '../pages/verify/components/VerifyRoute.tsx';
+import { BlogDetails } from '../pages/web/blogs/blog-details/BlogDetails.tsx';
 
 const router = createBrowserRouter([
   {
@@ -33,7 +34,14 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <Home /> },
-      { path: routes.web.blogs, element: <Blogs /> },
+      {
+        path: routes.web.blogs.root,
+        element: <Outlet />,
+        children: [
+          { index: true, element: <Blogs /> },
+          { path: routes.web.blogs.blogDetails, element: <BlogDetails /> },
+        ],
+      },
       { path: routes.web.contactUs, element: <ContactUs /> },
     ],
   },

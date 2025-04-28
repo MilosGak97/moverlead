@@ -41,8 +41,8 @@ export const Footer = () => {
                 FAQ
               </LocalNavLink>
               <LocalNavLink
-                onClick={() => navigate(routes.web.blogs)}
-                isActive={pathname === routes.web.blogs}
+                onClick={() => navigate(routes.web.blogs.root)}
+                isActive={pathname === routes.web.blogs.root}
               >
                 Blogs
               </LocalNavLink>

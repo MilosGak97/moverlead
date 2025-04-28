@@ -2,7 +2,10 @@ export const routes = {
   web: {
     root: '/',
     contactUs: '/contact-us',
-    blogs: '/blogs',
+    blogs: {
+      root: '/blogs',
+      blogDetails: '/blogs/:blogId',
+    },
   },
   auth: {
     root: '/auth',

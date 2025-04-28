@@ -32,7 +32,7 @@ export const BlogPost = ({
           </time>
         </div>
         <div className="group relative">
-          <h3 className="mt-3 text-lg/6 font-semibold text-slate-900 group-hover:text-slate-600">
+          <h3 className="mt-3 text-lg/6 font-semibold text-slate-900 group-hover:text-slate-600 line-clamp-2">
             {title}
           </h3>
           <p className="mt-5 line-clamp-3 text-sm/6 text-slate-600">

@@ -16,7 +16,7 @@ export const SocialNetworkLinks = ({
   return (
     <div className={twMerge('flex gap-x-6', wrapperClassName)}>
       <Link
-        to="http://facebook.com/moverlead"
+        to="https://facebook.com/moverlead"
         target="_blank"
         className={twMerge(
           'group w-6 h-6 text-slate-500 hover:text-slate-700',

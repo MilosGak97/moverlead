@@ -1,11 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { generatePath, useNavigate } from 'react-router-dom';
 import { Container } from '../../../components/Container';
 import { CurvyLineIcon } from '../../../components/iconography/CurvyLineIcon';
 import { SocialNetworkLinks } from '../home/components/SocialNetworkLinks';
 import { BlogPost } from './components/BlogPost';
 import { SubscribeToBlogs } from './components/subscribe-to-blogs/SubscribeToBlogs';
 import { blogPosts } from './data/blogPosts';
+import { routes } from '../../../router/routes';
 
 export const Blogs = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <Container>
@@ -38,11 +43,15 @@ export const Blogs = () => {
           <SocialNetworkLinks wrapperClassName="gap-4" />
         </div>
         <div className="my-16 sm:my-20 grid grid-cols-[repeat(auto-fill,_minmax(20rem,_1fr))] gap-8">
-          {blogPosts.map(({ id, ...props }) => (
+          {blogPosts.map(({ id, content, ...props }) => (
             <BlogPost
               key={id}
               {...props}
-              onClick={() => console.log(props.title)}
+              onClick={() =>
+                navigate(
+                  generatePath(routes.web.blogs.blogDetails, { blogId: id })
+                )
+              }
             />
           ))}
         </div>

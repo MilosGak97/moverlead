@@ -1,18 +1,12 @@
-import { ClockIcon } from '@heroicons/react/24/outline';
+import { ComingSoon } from '../../../../shared/components/ComingSoon';
 
 export const CampaignSettings = () => {
   return (
-    <div className="grid place-content-center mt-8">
-      <div className="flex flex-col gap-4 items-center text-center">
-        <ClockIcon className="text-primary w-16" />
-        <h1 className="text-3xl font-bold text-slate-900">
-          Campaign Settings Coming Soon!
-        </h1>
-        <p className="text-slate-700">
-          We're building campaign settings to help you manage your leads. More
-          info coming soon.
-        </p>
-      </div>
+    <div className="mt-8">
+      <ComingSoon
+        title="Campaign Settings Coming Soon!"
+        description="We're building campaign settings to help you manage your leads. More info coming soon."
+      />
     </div>
   );
 };
