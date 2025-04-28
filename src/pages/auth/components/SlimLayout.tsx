@@ -1,6 +1,6 @@
 import React from 'react';
 
-import laptopIncomeImage from '../../../assets/images/laptop-income.webp';
+import laptopIncomeImage from './images/laptop-income.webp';
 import backgroundImage from './images/background-auth.jpg';
 
 export function SlimLayout({ children }: { children: React.ReactNode }) {

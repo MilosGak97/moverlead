@@ -16,7 +16,7 @@ import { useSearchParams } from 'react-router-dom';
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const settingsTabs = [
-  { name: 'Account Settings', component: <CompanyInformation /> },
+  { name: 'Company Info', component: <CompanyInformation /> },
   { name: 'Update Password', component: <UpdatePassword /> },
   { name: 'Campaign Settings', component: <CampaignSettings /> },
 ];

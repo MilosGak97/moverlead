@@ -18,17 +18,20 @@ export const filterButtonOptions = [
     icon: ArrowLeftIcon,
     value: FilteredStatus.EMPTY,
     reverse: true,
+    displayOnSmallDevices: true,
   },
   {
     id: filterButtonOptionIds.noData,
     label: 'No Data',
     icon: ArrowUpIcon,
     value: FilteredStatus.NO_DATA,
+    displayOnSmallDevices: false,
   },
   {
     id: filterButtonOptionIds.furnished,
     label: 'Furnished',
     icon: ArrowRightIcon,
     value: FilteredStatus.FURNISHED,
+    displayOnSmallDevices: true,
   },
 ];

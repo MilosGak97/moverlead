@@ -13,6 +13,7 @@ import {
   filterButtonOptionIds,
   filterButtonOptions,
 } from './data/filterButtonOptions';
+import { useSwipeable } from 'react-swipeable';
 
 const PAGINATION_LIMIT = 20;
 
@@ -72,6 +73,16 @@ export const Filtering = () => {
     [isPending, mutate]
   );
 
+  const containerSwipeHandlers = useSwipeable({
+    onSwipedLeft: () =>
+      onFilterButtonClick(FilteredStatus.EMPTY, filterButtonOptionIds.empty),
+    onSwipedRight: () =>
+      onFilterButtonClick(
+        FilteredStatus.FURNISHED,
+        filterButtonOptionIds.furnished
+      ),
+  });
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'e' || event.key === 'ArrowLeft' || event.key === 'E') {
@@ -119,27 +130,36 @@ export const Filtering = () => {
       onEmptyClick={() => navigate(routes.order)}
       isCentered
     >
-      <div className="grid grid-cols-[repeat(auto-fill,_minmax(17.5rem,_1fr))] gap-4">
-        {(data?.selectedProperties?.[currentProperty]?.photos || []).map(
-          (picture, index) => (
-            <div
-              key={`${picture}${index}`}
-              className="overflow-hidden rounded-lg shadow-lg"
-            >
-              <img
-                src={picture}
-                alt={`Property ${index + 1}`}
-                className="w-full h-auto object-cover transition-transform duration-300 hover:scale-105"
-              />
-            </div>
-          )
-        )}
-      </div>
-
-      {!isPropertyFilteringEmpty && (
+      <>
+        <div
+          className="grid grid-cols-[repeat(auto-fill,_minmax(17.5rem,_1fr))] gap-4"
+          {...containerSwipeHandlers}
+        >
+          {(data?.selectedProperties?.[currentProperty]?.photos || []).map(
+            (picture, index) => (
+              <div
+                key={`${picture}${index}`}
+                className="overflow-hidden rounded-lg shadow-lg"
+              >
+                <img
+                  src={picture}
+                  alt={`Property ${index + 1}`}
+                  className="w-full h-auto object-cover transition-transform duration-300 hover:scale-105"
+                />
+              </div>
+            )
+          )}
+        </div>
         <div className="fixed bottom-0 sm:bottom-4 left-1/2 transform -translate-x-1/2 flex flex-col sm:flex-row gap-2 xl:gap-4 w-full sm:w-fit p-4 sm:p-0">
           {filterButtonOptions.map(
-            ({ id, value, label, icon: Icon, reverse }) => (
+            ({
+              id,
+              value,
+              label,
+              icon: Icon,
+              reverse,
+              displayOnSmallDevices,
+            }) => (
               <Button
                 key={id}
                 onClick={() => onFilterButtonClick(value, id)}
@@ -149,20 +169,30 @@ export const Filtering = () => {
                 } ${activeButton === id && 'bg-primaryActive'}`}
               >
                 {label}
-                <span className="hidden sm:flex items-center">
-                  (<Icon className={'w-5 h-5'} />)
+                <span
+                  className={`${
+                    !displayOnSmallDevices && 'hidden'
+                  } flex items-center`}
+                >
+                  (
+                  {displayOnSmallDevices && (
+                    <span className="sm:hidden">Swipe&nbsp;</span>
+                  )}{' '}
+                  <Icon className={'w-5 h-5'} />)
                 </span>
               </Button>
             )
           )}
         </div>
-      )}
-
-      <div className="fixed md:bottom-4 md:top-auto top-20 right-8">
-        <div className="px-6 py-3 bg-primary text-white text-xl font-medium rounded-lg shadow-md min-w-20 w-full text-center">
-          {isPending ? '...' : (data?.count || 0) - currentProperty}
+        <div
+          className="fixed md:bottom-4 md:top-auto top-20 right-8"
+          onClick={() => console.log('AAA')}
+        >
+          <div className="px-6 py-3 bg-primary text-white text-xl font-medium rounded-lg shadow-md min-w-20 w-full text-center">
+            {isPending ? '...' : (data?.count || 0) - currentProperty}
+          </div>
         </div>
-      </div>
+      </>
       {toastText && <Toast text={toastText} />}
     </StateContainer>
   );

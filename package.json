@@ -34,6 +34,7 @@
     "react-router-dom": "^7.1.1",
     "react-router-hash-link": "^2.4.3",
     "react-spinners": "^0.15.0",
+    "react-swipeable": "^7.0.2",
     "react-verification-input": "^4.2.2",
     "socket.io-client": "^4.8.1",
     "tailwind-merge": "^3.2.0",
@@ -44,9 +45,9 @@
   "devDependencies": {
     "@eslint/js": "^9.17.0",
     "@types/node": "^22.10.5",
-    "@types/react-flatpickr": "^3.8.11",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
+    "@types/react-flatpickr": "^3.8.11",
     "@types/react-router-hash-link": "^2.4.9",
     "eslint": "^9.17.0",
     "eslint-plugin-react-hooks": "^5.0.0",
