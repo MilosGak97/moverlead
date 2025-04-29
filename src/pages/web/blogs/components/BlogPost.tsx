@@ -15,18 +15,18 @@ export const BlogPost = ({
 }: BlogPostProps) => {
   return (
     <article
-      className="flex flex-col items-start justify-between border bg-slate-50 border-slate-200 hover:border-slate-400 p-4 rounded-2xl cursor-pointer"
+      className="group flex flex-col items-start justify-between border bg-slate-50 border-slate-200 hover:border-slate-400 p-4 rounded-2xl cursor-pointer"
       onClick={onClick}
     >
-      <div className="relative w-full">
+      <div className="relative w-full overflow-hidden rounded-2xl">
         <img
           src={coverUrl}
-          className="aspect-video w-full rounded-2xl bg-slate-100 object-cover sm:aspect-2/1 lg:aspect-3/2"
+          className="group-hover:scale-105 aspect-video w-full bg-slate-100 object-cover sm:aspect-2/1 lg:aspect-3/2 transition-transform"
         />
         <div className="absolute inset-0 rounded-2xl ring-1 ring-slate-900/10 ring-inset" />
       </div>
       <div className="max-w-xl">
-        <div className="mt-8 flex items-center gap-x-4 text-xs">
+        <div className="mt-6 flex items-center gap-x-4 text-xs">
           <time dateTime={date} className="text-slate-500">
             {date}
           </time>

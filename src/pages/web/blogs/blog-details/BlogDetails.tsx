@@ -10,8 +10,10 @@ export const BlogDetails = () => {
 
   return (
     <Container>
-      <div className="relative py-20">
-        {Content || (
+      <div className="relative py-10 md:py-20">
+        {Content ? (
+          <div className="text-base md:text-lg">{Content}</div>
+        ) : (
           <ComingSoon
             title="Coming Soon"
             description="We're working on bringing you the full article. Stay tuned for updates!"
