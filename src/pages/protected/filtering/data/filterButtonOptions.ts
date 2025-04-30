@@ -1,13 +1,9 @@
-import {
-  ArrowLeftIcon,
-  ArrowRightIcon,
-  ArrowUpIcon,
-} from '@heroicons/react/20/solid';
+import { LeftArrowIcon } from '../../../../components/iconography/LeftArrowIcon';
+import { RightArrowIcon } from '../../../../components/iconography/RightArrowIcon';
 import { FilteredStatus } from '../../../../enums/filteredStatus';
 
 export const filterButtonOptionIds = {
   empty: 'filtering--empty-btn',
-  noData: 'filtering--no-data-btn',
   furnished: 'filtering--furnished-btn',
 };
 
@@ -15,23 +11,14 @@ export const filterButtonOptions = [
   {
     id: filterButtonOptionIds.empty,
     label: 'Empty',
-    icon: ArrowLeftIcon,
+    icon: LeftArrowIcon,
     value: FilteredStatus.EMPTY,
     reverse: true,
-    displayOnSmallDevices: true,
-  },
-  {
-    id: filterButtonOptionIds.noData,
-    label: 'No Data',
-    icon: ArrowUpIcon,
-    value: FilteredStatus.NO_DATA,
-    displayOnSmallDevices: false,
   },
   {
     id: filterButtonOptionIds.furnished,
-    label: 'Furnished',
-    icon: ArrowRightIcon,
+    label: 'Full',
+    icon: RightArrowIcon,
     value: FilteredStatus.FURNISHED,
-    displayOnSmallDevices: true,
   },
 ];

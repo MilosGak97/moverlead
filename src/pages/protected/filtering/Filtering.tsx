@@ -8,7 +8,6 @@ import { Toast } from '../../../components/Toast';
 import { useToast } from '../../../hooks/useToast';
 import { useNavigate } from 'react-router-dom';
 import { routes } from '../../../router/routes';
-import { Button } from '../../../components/Button';
 import {
   filterButtonOptionIds,
   filterButtonOptions,
@@ -96,15 +95,6 @@ export const Filtering = () => {
           FilteredStatus.FURNISHED,
           filterButtonOptionIds.furnished
         );
-      } else if (
-        event.key === 'n' ||
-        event.key === 'ArrowUp' ||
-        event.key === 'N'
-      ) {
-        onFilterButtonClick(
-          FilteredStatus.NO_DATA,
-          filterButtonOptionIds.noData
-        );
       }
     };
 
@@ -139,7 +129,7 @@ export const Filtering = () => {
             (picture, index) => (
               <div
                 key={`${picture}${index}`}
-                className="overflow-hidden rounded-lg shadow-lg"
+                className="overflow-hidden rounded-lg shadow-lg px-6"
               >
                 <img
                   src={picture}
@@ -150,37 +140,25 @@ export const Filtering = () => {
             )
           )}
         </div>
-        <div className="fixed bottom-0 sm:bottom-4 left-1/2 transform -translate-x-1/2 flex flex-col sm:flex-row gap-2 xl:gap-4 w-full sm:w-fit p-4 sm:p-0">
+        <div className="fixed bottom-0 right-0 flex justify-center gap-4 xl:gap-10 w-full lg:w-[calc(100%-288px)] p-4">
           {filterButtonOptions.map(
-            ({
-              id,
-              value,
-              label,
-              icon: Icon,
-              reverse,
-              displayOnSmallDevices,
-            }) => (
-              <Button
+            ({ id, value, label, icon: Icon, reverse }, index) => (
+              <button
                 key={id}
                 onClick={() => onFilterButtonClick(value, id)}
-                size={'large'}
-                className={`text-nowrap flex items-center justify-center gap-2 w-full ${
+                className={`relative w-24 lg:w-32 text-primary hover:text-primaryHover ${
                   reverse && 'flex-row-reverse'
-                } ${activeButton === id && 'bg-primaryActive'}`}
+                } ${activeButton === id && 'text-primaryActive'}`}
               >
-                {label}
+                <Icon />
                 <span
-                  className={`${
-                    !displayOnSmallDevices && 'hidden'
-                  } flex items-center`}
+                  className={`absolute text-white top-6 lg:top-9 font-medium text-xl lg:text-2xl ${
+                    index % 2 ? 'left-5 lg:left-7' : 'right-5 lg:right-7'
+                  }`}
                 >
-                  (
-                  {displayOnSmallDevices && (
-                    <span className="sm:hidden">Swipe&nbsp;</span>
-                  )}{' '}
-                  <Icon className={'w-5 h-5'} />)
+                  {label}
                 </span>
-              </Button>
+              </button>
             )
           )}
         </div>
